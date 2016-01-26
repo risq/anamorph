@@ -1,0 +1,9 @@
+{% if err %}
+  <h3>{{err}}</h3>
+{% else %}
+  <h4>Current display: {{id}}</h4>
+  <p>
+    <b>Status:</b> {{state.display.status}} <i>(remote: {{state.remote.status}})</i>
+  </p>
+  <a href="/remote/{{state.uid}}" target="_blank">/remote/{{state.uid}}</a>
+{% endif %}

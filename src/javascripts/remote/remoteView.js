@@ -3,14 +3,13 @@ import debug from 'debug';
 import urlParse from 'url-parse';
 import socket from 'socket.io-client';
 
-import contentTpl from './display.html';
+import contentTpl from './remote.html';
 
-const dbg = debug('outsight:displayView');
+const dbg = debug('outsight:remoteView');
 
 export default class DisplayView {
   constructor(url) {
     dbg('initialize');
-    this.id = this.getIdFromUrl(url);
     this.$els = {
       content: $('.content'),
     };
@@ -20,12 +19,18 @@ export default class DisplayView {
     this.io.on('state', this.onState.bind(this));
     this.io.on('disconnect', this.onDisconnect.bind(this));
     this.io.on('display:register:status', this.onDisplayRegisterStatus.bind(this));
-    this.io.emit('display:register', {id: this.id});
+
+    this.uid = this.getUidFromUrl(url);
+    if (this.uid) {
+      this.io.emit('remote:register', {uid: this.uid});
+    }
   }
 
-  onDisplayRegisterStatus({err}) {
+  onDisplayRegisterStatus({err, displayId}) {
+    dbg('onDisplayRegisterStatus', err, displayId);
     if (!err) {
-      this.status = 'connected';
+      this.displayId = displayId;
+      this.status = `connected to display #${displayId}`;
     } else {
       this.status = 'disconnected';
       this.err = err;
@@ -36,8 +41,10 @@ export default class DisplayView {
 
   onState(state) {
     dbg(state);
-    this.state = state[`user${this.id}`];
-    this.render();
+    if (this.displayId) {
+      this.state = state[`user${this.displayId}`];
+      this.render();
+    }
   }
 
   onDisconnect() {
@@ -47,16 +54,16 @@ export default class DisplayView {
 
   render() {
     this.$els.content.html(contentTpl.render({
-      id: this.id,
+      uid: this.uid,
       err: this.err,
       state: this.state,
     }));
   }
 
-  getIdFromUrl(url) {
+  getUidFromUrl(url) {
     const idTest = urlParse(window.location.href)
       .pathname
-      .match(/\/display\/(1|2)/);
+      .match(/\/remote\/(.*)/);
 
     return idTest ? idTest[1] : null;
   }
