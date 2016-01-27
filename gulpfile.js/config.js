@@ -1,6 +1,6 @@
 module.exports = {
   root: {
-    src: './src',
+    src: './src/client',
     dest: './public',
   },
 
@@ -26,7 +26,7 @@ module.exports = {
       entries: {
         app: ['./app.js'],
         remote: ['./remote.js'],
-        display: ['./display.js'],
+        client: ['./client.js'],
       },
       extensions: ['js'],
     },

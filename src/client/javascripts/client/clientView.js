@@ -3,11 +3,11 @@ import debug from 'debug';
 import urlParse from 'url-parse';
 import socket from 'socket.io-client';
 
-import contentTpl from './display.html';
+import contentTpl from './client.html';
 
-const dbg = debug('outsight:displayView');
+const dbg = debug('outsight:clientView');
 
-export default class DisplayView {
+export default class ClientView {
   constructor(url) {
     dbg('initialize');
     this.id = this.getIdFromUrl(url);
@@ -19,11 +19,11 @@ export default class DisplayView {
 
     this.io.on('state', this.onState.bind(this));
     this.io.on('disconnect', this.onDisconnect.bind(this));
-    this.io.on('display:register:status', this.onDisplayRegisterStatus.bind(this));
-    this.io.emit('display:register', {id: this.id});
+    this.io.on('client:register:status', this.onClientRegisterStatus.bind(this));
+    this.io.emit('client:register', {id: this.id});
   }
 
-  onDisplayRegisterStatus({err}) {
+  onClientRegisterStatus({err}) {
     if (!err) {
       this.status = 'connected';
     } else {
@@ -36,7 +36,7 @@ export default class DisplayView {
 
   onState(state) {
     dbg(state);
-    this.state = state[`user${this.id}`];
+    this.state = state[`client${this.id}`];
     this.render();
   }
 
@@ -56,7 +56,7 @@ export default class DisplayView {
   getIdFromUrl(url) {
     const idTest = urlParse(window.location.href)
       .pathname
-      .match(/\/display\/(1|2)/);
+      .match(/\/client\/(1|2)/);
 
     return idTest ? idTest[1] : null;
   }

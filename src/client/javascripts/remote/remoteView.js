@@ -10,7 +10,7 @@ import contentTpl from './remote.html';
 
 const dbg = debug('outsight:remoteView');
 
-export default class DisplayView {
+export default class RemoteView {
   constructor({url, $root}) {
     dbg('Initialize');
 
@@ -26,22 +26,22 @@ export default class DisplayView {
 
     this.io.on('state', this.onState.bind(this));
     this.io.on('disconnect', this.onDisconnect.bind(this));
-    this.io.on('display:register:status', this.onDisplayRegisterStatus.bind(this));
+    this.io.on('remote:register:status', this.onRemoteRegisterStatus.bind(this));
 
-    this.uid = this.getUidFromUrl(url);
-    if (this.uid) {
-      this.io.emit('remote:register', {uid: this.uid});
+    this.syncId = this.getUidFromUrl(url);
+    if (this.syncId) {
+      this.io.emit('remote:register', {syncId: this.syncId});
     }
 
     Facebook.on('login:status', this.onLoginStatus.bind(this));
     Facebook.on('get:name', this.onGetName.bind(this));
   }
 
-  onDisplayRegisterStatus({err, displayId}) {
-    dbg('onDisplayRegisterStatus', err, displayId);
+  onRemoteRegisterStatus({err, id}) {
+    dbg('onRemoteRegisterStatus', err, id);
     if (!err) {
-      this.displayId = displayId;
-      this.status = `connected to display #${displayId}`;
+      this.clientId = id;
+      this.status = `connected to client #${id}`;
       Facebook.init();
     } else {
       this.status = 'disconnected';
@@ -53,8 +53,8 @@ export default class DisplayView {
 
   onState(state) {
     dbg(state);
-    if (this.displayId) {
-      this.state = state[`user${this.displayId}`];
+    if (this.clientId) {
+      this.state = state[`client${this.clientId}`];
       this.render();
     }
   }
@@ -66,7 +66,6 @@ export default class DisplayView {
 
   render() {
     this.$els.content.html(contentTpl.render({
-      uid: this.uid,
       err: this.err,
       state: this.state,
     }));
