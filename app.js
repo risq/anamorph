@@ -75,6 +75,7 @@ function unregisterDisplay(id) {
   console.log('Unregister display', id);
   state[`user${id}`].display.status = 'disconnected';
   state.status === 'waitingDisplays';
+  unregisterRemote(id);
   emitState();
 }
 
@@ -87,13 +88,14 @@ function registerRemote(uid, socket) {
 
       state[`user${displayId}`].remote.status = `connected`,
       socket.on('disconnect', () => unregisterRemote(displayId));
+      socket.on('remote:auth', (authResponse) => onUserAuth(displayId, authResponse));
       socket.emit(`display:register:status`, {err: null, displayId});
 
     } else {
       socket.emit(`display:register:status`, {err: `Remote already registered for display ${displayId}`});
     }
   } else {
-    socket.emit(`display:register:status`, {err: `Cannot find display`});
+    socket.emit(`display:register:status`, {err: `Cannot find display ${displayId}`});
   }
 
   emitState();
@@ -107,19 +109,21 @@ function unregisterRemote(displayId) {
 
 function getDisplayIdFromUid(uid) {
   return uid === state.user1.uid ? 1 :
-    uid === state.user1.uid ? 2 : null;
+    uid === state.user2.uid ? 2 : null;
 }
 
 function displayIsConnected(displayId) {
-  return displayId &&
-    state[`user${displayId}`] &&
+  return state[`user${displayId}`] &&
     state[`user${displayId}`].display.status === `connected`;
 }
 
 function remoteIsConnected(displayId) {
-  return displayId &&
-    state[`user${displayId}`] &&
+  return state[`user${displayId}`] &&
     state[`user${displayId}`].remote.status === `connected`;
+}
+
+function onUserAuth(displayId, authResponse) {
+  console.log('onUserAuth', displayId, authResponse);
 }
 
 function emitState() {

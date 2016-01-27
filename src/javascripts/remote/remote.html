@@ -2,6 +2,9 @@
   <h3>{{err}}</h3>
 {% else %}
   <h4>uid: {{uid}}</h4>
+  {% if state.name %}
+    <h3>{{state.name}}</h3>
+  {% endif %}
   <p>
     <b>Status:</b> {{state.remote.status}}
   </p>

@@ -33,7 +33,10 @@ module.exports = function(env) {
           loader: 'nunjucks-loader'
         }
       ]
-    }
+    },
+    externals: {
+      fb: "FB"
+    },
   }
 
   if(env !== 'test') {
