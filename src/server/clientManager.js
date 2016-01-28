@@ -1,5 +1,6 @@
 'use strict';
 const events = require('events');
+const dbg = require('debug')('mirage:clientManager');
 
 const Client = require('./client');
 
@@ -23,14 +24,14 @@ module.exports = new class ClientManager {
   }
 
   registerClient(id, socket) {
-    console.log(`Registering client ${id}`);
+    dbg(`Registering client ${id}`);
 
     if (!this.getClient(id).isRegistered()) {
       this.getClient(id).register(socket);
       socket.on(`disconnect`, () => this.unregisterClient(id));
       socket.emit(`client:register:status`, {err: null});
     } else {
-      console.log(`Client ${id} already registered`);
+      dbg(`Client ${id} already registered`);
       socket.emit(`client:register:status`, {err: `Client ${id} already registered`});
     }
 
@@ -38,12 +39,12 @@ module.exports = new class ClientManager {
   }
 
   unregisterClient(id) {
-    console.log(`Unregistering client ${id}`);
+    dbg(`Unregistering client ${id}`);
 
     if (this.getClient(id).isRegistered()) {
       this.getClient(id).unregister();
     } else {
-      console.log(`Client ${id} already unregistered`);
+      dbg(`Client ${id} already unregistered`);
     }
 
     this.onStateChange();
@@ -52,26 +53,29 @@ module.exports = new class ClientManager {
   registerRemote(syncId, socket) {
     const client = this.getClientBySyncId(syncId);
 
-    console.log(`Registering remote for client ${client.id}`);
+    dbg(`Registering remote for client ${client.id}`);
 
     if (client && client.isRegistered()) {
       if (!client.remoteIsRegistered()) {
         client.registerRemote(socket);
         socket.on('disconnect', () => this.unregisterRemote(client.id));
-        socket.on('remote:auth', authResponse => console.log(authResponse));
         socket.emit(`remote:register:status`, {err: null, id: client.id});
 
         this.onStateChange();
       } else {
-        socket.emit(`remote:register:status`, {err: `Remote already registered for client ${client.id}`});
+        const err = `Remote already registered for client ${client.id}`;
+        socket.emit(`remote:register:status`, {err});
+        dbg(err);
       }
     } else {
-      socket.emit(`remote:register:status`, {err: `Cannot find client ${client.id}`});
+      const err = `Cannot find client ${client.id}`;
+      socket.emit(`remote:register:status`, {err});
+      dbg(err);
     }
   }
 
   unregisterRemote(id) {
-    console.log(`Unregistering remote for client ${id}`);
+    dbg(`Unregistering remote for client ${id}`);
     this.getClient(id).unregisterRemote();
 
     this.onStateChange();
