@@ -2,6 +2,7 @@ const path = require('path');
 const express = require('express');
 const shortid = require('shortid');
 const dbg = require('debug')('mirage:app');
+const config = require('./config/config.json');
 
 const socketManager = require('./src/server/socketManager');
 
@@ -12,14 +13,9 @@ socketManager.init(server);
 
 app.use(express.static('public'));
 
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || config.port || 8080;
 
-const clientConfig = {
-  domain: '172.28.59.111',
-  port,
-};
-
-app.get('/config', (req, res) => res.json(clientConfig));
+app.get('/config', (req, res) => res.json(config));
 app.get('/remote(/*)?', (req, res) => res.sendFile(path.join(__dirname, './public', 'remote.html')));
 app.get('/client/1|2', (req, res) => res.sendFile(path.join(__dirname, './public', 'client.html')));
 

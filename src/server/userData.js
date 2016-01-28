@@ -14,6 +14,6 @@ module.exports = class UserData {
   fetchFacebookData(accessToken) {
     return new FacebookDataFetcher(accessToken)
       .fetch()
-      .then(data => dbg(`Found ${data.posts.length} posts`));
+      .then(data => data.posts.forEach(post => dbg(post)));
   }
 };
