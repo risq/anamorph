@@ -53,9 +53,9 @@ module.exports = new class ClientManager {
   registerRemote(syncId, socket) {
     const client = this.getClientBySyncId(syncId);
 
-    dbg(`Registering remote for client ${client.id}`);
-
     if (client && client.isRegistered()) {
+      dbg(`Registering remote for client ${client.id}`);
+
       if (!client.remoteIsRegistered()) {
         client.registerRemote(socket);
         socket.on('disconnect', () => this.unregisterRemote(client.id));

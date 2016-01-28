@@ -11,7 +11,7 @@ import contentTpl from './remote.html';
 const dbg = debug('mirage:remoteView');
 
 export default class RemoteView {
-  constructor({url, $root}) {
+  constructor({url, socketUrl, $root}) {
     dbg('Initialize');
 
     this.$els = {
@@ -22,7 +22,7 @@ export default class RemoteView {
     this.eventEmitter = new EventEmitter();
 
     this.status = `disconnected`;
-    this.io = socket('http://localhost:8080');
+    this.io = socket(socketUrl);
 
     this.io.on('state', this.onState.bind(this));
     this.io.on('disconnect', this.onDisconnect.bind(this));

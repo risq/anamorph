@@ -8,14 +8,14 @@ import contentTpl from './client.html';
 const dbg = debug('mirage:clientView');
 
 export default class ClientView {
-  constructor(url) {
+  constructor({url, socketUrl}) {
     dbg('initialize');
     this.id = this.getIdFromUrl(url);
     this.$els = {
       content: $('.content'),
     };
     this.status = `disconnected`;
-    this.io = socket('http://localhost:8080');
+    this.io = socket(socketUrl);
 
     this.io.on('state', this.onState.bind(this));
     this.io.on('disconnect', this.onDisconnect.bind(this));

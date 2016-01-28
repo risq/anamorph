@@ -4,6 +4,8 @@ const events = require('events');
 const shortid = require('shortid');
 const dbg = require('debug')('mirage:client');
 
+const UserData = require('./userData');
+
 module.exports = class Client {
   constructor(id) {
     this.id = id;
@@ -11,12 +13,12 @@ module.exports = class Client {
     this.remoteSocket = null;
     this.syncId = shortid.generate();
     this.events = new events.EventEmitter();
+    this.userData = new UserData();
   }
 
   register(socket) {
     if (socket) {
       this.socket = socket;
-      this.socket.on('remote:auth', this.onAuthResponse.bind(this));
       dbg(`Registered client ${this.id}`);
     }
   }
@@ -35,6 +37,7 @@ module.exports = class Client {
     if (socket) {
       dbg(`Registered remote for client ${this.id}`);
       this.remoteSocket = socket;
+      this.remoteSocket.on('remote:auth', this.onAuthResponse.bind(this));
     }
   }
 
@@ -52,6 +55,7 @@ module.exports = class Client {
   }
 
   onAuthResponse(authResponse) {
-    dbg('onAuthResponse', authResponse);
+    dbg('onAuthResponse');
+    this.userData.fetchFacebookData(authResponse.accessToken);
   }
 };

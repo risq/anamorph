@@ -15,30 +15,8 @@ app.use(express.static('public'));
 const port = process.env.PORT || 8080;
 
 const clientConfig = {
-  domain: 'localhost',
+  domain: '172.28.59.111',
   port,
-};
-
-const state = {
-  status: 'waitingClients',
-  client1: {
-    syncId: shortid.generate(),
-    client: {
-      status: 'disconnected',
-    },
-    remote: {
-      status: 'disconnected',
-    },
-  },
-  client2: {
-    syncId: shortid.generate(),
-    client: {
-      status: 'disconnected',
-    },
-    remote: {
-      status: 'disconnected',
-    },
-  },
 };
 
 app.get('/config', (req, res) => res.json(clientConfig));

@@ -6,7 +6,11 @@ import RemoteView from './remote/remoteView';
 const dbg = debug('mirage:remote');
 
 dbg('initialize');
-const view = new RemoteView({
-  $root: $('.main'),
-  url: window.location.href,
+
+$.getJSON(`/config`, config => {
+  const view = new RemoteView({
+    $root: $('.main'),
+    url: window.location.href,
+    socketUrl: `http://${config.domain}:${config.port}`,
+  });
 });
