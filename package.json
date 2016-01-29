@@ -27,6 +27,7 @@
     "fbgraph": "^1.1.0",
     "jquery": "^2.2.0",
     "shortid": "^2.2.4",
+    "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.4",
     "url-parse": "^1.0.5"
   },
