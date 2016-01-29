@@ -13,9 +13,9 @@ socketManager.init(server);
 
 app.use(express.static('public'));
 
-const port = process.env.PORT || config.port || 8080;
+const port = process.env.PORT || config.server.port || 8080;
 
-app.get('/config', (req, res) => res.json(config));
+app.get('/config', (req, res) => res.json(config.client));
 app.get('/remote(/*)?', (req, res) => res.sendFile(path.join(__dirname, './public', 'remote.html')));
 app.get('/client/1|2', (req, res) => res.sendFile(path.join(__dirname, './public', 'client.html')));
 
