@@ -15,11 +15,19 @@ export default new class Facebook {
   init() {
     dbg('Initialize');
 
-    FB.init({
-      appId: '143279879370260',
-      xfbml: true,
-      version: 'v2.5',
-    });
+    if (this.appId) {
+      FB.init({
+        appId: this.appId,
+        xfbml: true,
+        version: 'v2.5',
+      });
+    } else {
+      dbg('App ID is not defined');
+    }
+  }
+
+  setAppId(appId) {
+    this.appId = appId;
   }
 
   checkLoginState() {

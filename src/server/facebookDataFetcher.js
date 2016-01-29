@@ -38,6 +38,7 @@ module.exports = class FacebookDataFetcher {
     }).then(res => {
       dbg(`Found ${res.data.length} posts`);
       this.data.posts.push(...res.data);
+      
       if (res.paging && res.paging.next) {
         return this.fetchFeed(res.paging.next);
       }
