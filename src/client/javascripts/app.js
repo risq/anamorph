@@ -4,7 +4,7 @@ import debug from 'debug';
 
 import stateTemplate from '../html/shared/state.html';
 
-const dbg = debug('mirage:app');
+const dbg = debug('anamorph:app');
 const $state = $('.content');
 
 $.getJSON(`/config`, config => {

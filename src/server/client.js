@@ -2,7 +2,7 @@
 
 const events = require('events');
 const shortid = require('shortid');
-const dbg = require('debug')('mirage:client');
+const dbg = require('debug')('anamorph:client');
 
 const UserData = require('./userData');
 

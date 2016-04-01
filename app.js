@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express');
 const shortid = require('shortid');
-const dbg = require('debug')('mirage:app');
+const dbg = require('debug')('anamorph:app');
 const config = require('./config/config.json');
 
 const socketManager = require('./src/server/socketManager');

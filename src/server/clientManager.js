@@ -1,6 +1,6 @@
 'use strict';
 const events = require('events');
-const dbg = require('debug')('mirage:clientManager');
+const dbg = require('debug')('anamorph:clientManager');
 
 const Client = require('./client');
 

@@ -8,7 +8,7 @@ import Facebook from '../facebook/facebook.js';
 
 import contentTpl from './remote.html';
 
-const dbg = debug('mirage:remoteView');
+const dbg = debug('anamorph:remoteView');
 
 export default class RemoteView {
   constructor({url, socketUrl, $root}) {

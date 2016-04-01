@@ -1,7 +1,7 @@
 'use strict';
 
 const events = require('events');
-const dbg = require('debug')('mirage:userData');
+const dbg = require('debug')('anamorph:userData');
 
 const FacebookDataFetcher = require('./facebookDataFetcher');
 

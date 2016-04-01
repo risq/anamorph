@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 import ClientView from './client/clientView';
 
-const dbg = debug('mirage:client');
+const dbg = debug('anamorph:client');
 
 dbg('initialize');
 

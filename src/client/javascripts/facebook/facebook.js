@@ -2,7 +2,7 @@ import FB from 'fb';
 import debug from 'debug';
 import {EventEmitter} from 'events';
 
-const dbg = debug('mirage:facebook');
+const dbg = debug('anamorph:facebook');
 
 export default new class Facebook {
   constructor() {

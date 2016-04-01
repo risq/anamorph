@@ -1,7 +1,7 @@
 'use strict';
 
 const clientManager = require('./clientManager');
-const dbg = require('debug')('mirage:stateManager');
+const dbg = require('debug')('anamorph:stateManager');
 
 module.exports = new class StateManager {
   constructor() {

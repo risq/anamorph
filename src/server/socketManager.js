@@ -1,6 +1,6 @@
 'use strict';
 const socketio = require('socket.io');
-const dbg = require('debug')('mirage:socketManager');
+const dbg = require('debug')('anamorph:socketManager');
 
 const clientManager = require('./clientManager');
 const stateManager = require('./stateManager');

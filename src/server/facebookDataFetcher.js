@@ -4,7 +4,7 @@ const events = require('events');
 const bluebird = require('bluebird');
 const fbgraph = require('fbgraph');
 const getFb = bluebird.promisify(fbgraph.get);
-const dbg = require('debug')('mirage:facebookDataFetcher');
+const dbg = require('debug')('anamorph:facebookDataFetcher');
 
 module.exports = class FacebookDataFetcher {
   constructor(accessToken) {

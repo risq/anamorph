@@ -5,7 +5,7 @@ import socket from 'socket.io-client';
 
 import contentTpl from './client.html';
 
-const dbg = debug('mirage:clientView');
+const dbg = debug('anamorph:clientView');
 
 export default class ClientView {
   constructor({url, socketUrl}) {

@@ -1,22 +1,22 @@
 {
-  "name": "gulp-starter",
-  "version": "2.2.0",
-  "description": "A full featured configurable gulp asset pipeline and static site builder",
+  "name": "anamorph",
+  "version": "0.0.1",
+  "description": "Anamorph",
   "engines": {
     "node": "0.12.2",
     "npm": "2.7.4"
   },
-  "homepage": "http://code.viget.com/gulp-starter/",
+  "homepage": "https://github.com/risq/anamorph",
   "repository": {
     "type": "git",
-    "url": "git://github.com/vigetlabs/gulp-starter.git"
+    "url": "git@github.com:risq/anamorph.git"
   },
   "scripts": {
     "deploy": "gulp deploy",
     "production": "gulp production",
     "demo": "gulp production && gulp server",
     "gulp": "gulp",
-    "dev": "DEBUG=\"mirage:*\" gulp",
+    "dev": "DEBUG=\"anamorph:*\" gulp",
     "test": "gulp production && karma start --single-run"
   },
   "dependencies": {

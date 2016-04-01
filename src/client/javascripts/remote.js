@@ -4,7 +4,7 @@ import $ from 'jquery';
 import Facebook from './facebook/facebook.js';
 import RemoteView from './remote/remoteView';
 
-const dbg = debug('mirage:remote');
+const dbg = debug('anamorph:remote');
 
 dbg('initialize');
 
