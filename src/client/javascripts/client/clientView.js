@@ -56,7 +56,7 @@ export default class ClientView {
   getIdFromUrl(url) {
     const idTest = urlParse(window.location.href)
       .pathname
-      .match(/\/client\/(1|2)/);
+      .match(/\/client\/(\d*)/);
 
     return idTest ? idTest[1] : null;
   }
