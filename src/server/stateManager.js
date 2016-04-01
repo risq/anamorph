@@ -8,21 +8,13 @@ module.exports = new class StateManager {
 
   }
 
-  getState() {
-    const client1 = clientManager.getClient(1);
-    const client2 = clientManager.getClient(2);
+  getState(id) {
+    const client = clientManager.getClient(id);
 
     return {
-      client1: {
-        syncId: client1.syncId,
-        status: client1.isRegistered() ? `connected` : `disconnected`,
-        remoteStatus: client1.remoteIsRegistered() ? `connected` : `disconnected`,
-      },
-      client2: {
-        syncId: client2.syncId,
-        status: client2.isRegistered() ? `connected` : `disconnected`,
-        remoteStatus: client2.remoteIsRegistered() ? `connected` : `disconnected`,
-      },
+      syncId: client.syncId,
+      status: client.isRegistered() ? `connected` : `disconnected`,
+      remoteStatus: client.remoteIsRegistered() ? `connected` : `disconnected`,
     };
   }
 

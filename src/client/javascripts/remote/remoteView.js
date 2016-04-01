@@ -54,7 +54,7 @@ export default class RemoteView {
   onState(state) {
     dbg(state);
     if (this.clientId) {
-      this.state = state[`client${this.clientId}`];
+      this.state = state;
       this.render();
     }
   }

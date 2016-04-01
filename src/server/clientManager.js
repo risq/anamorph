@@ -6,15 +6,15 @@ const Client = require('./client');
 
 module.exports = new class ClientManager {
   constructor(server) {
-    this.clients = {
-      1: new Client(1),
-      2: new Client(2),
-    };
-
+    this.clients = [];
     this.events = new events.EventEmitter();
   }
 
   getClient(id) {
+    if (!this.clients[id]) {
+      this.clients[id] = new Client(id);
+    }
+
     return this.clients[id];
   }
 
@@ -35,7 +35,7 @@ module.exports = new class ClientManager {
       socket.emit(`client:register:status`, {err: `Client ${id} already registered`});
     }
 
-    this.onStateChange();
+    this.onStateChange(this.getClient(id));
   }
 
   unregisterClient(id) {
@@ -47,7 +47,7 @@ module.exports = new class ClientManager {
       dbg(`Client ${id} already unregistered`);
     }
 
-    this.onStateChange();
+    this.onStateChange(this.getClient(id));
   }
 
   registerRemote(syncId, socket) {
@@ -61,7 +61,7 @@ module.exports = new class ClientManager {
         socket.on('disconnect', () => this.unregisterRemote(client.id));
         socket.emit(`remote:register:status`, {err: null, id: client.id});
 
-        this.onStateChange();
+        this.onStateChange(client);
       } else {
         const err = `Remote already registered for client ${client.id}`;
         socket.emit(`remote:register:status`, {err});
@@ -78,10 +78,10 @@ module.exports = new class ClientManager {
     dbg(`Unregistering remote for client ${id}`);
     this.getClient(id).unregisterRemote();
 
-    this.onStateChange();
+    this.onStateChange(this.getClient(id));
   }
 
-  onStateChange() {
-    this.events.emit('state:change');
+  onStateChange(client) {
+    this.events.emit('state:change', client);
   }
 };

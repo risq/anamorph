@@ -36,7 +36,7 @@ export default class ClientView {
 
   onState(state) {
     dbg(state);
-    this.state = state[`client${this.id}`];
+    this.state = state;
     this.render();
   }
 
