@@ -14,6 +14,8 @@ module.exports = class UserData {
   fetchFacebookData(accessToken) {
     return new FacebookDataFetcher(accessToken)
       .fetch()
-      .then(data => data.posts.forEach(post => dbg(post)));
+       // .then(data => dbg(data.name))
+       // .then(data => dbg("user min age: "+data.age_min));
+        .then(data => data.posts.forEach(post => dbg(post)));
   }
 };

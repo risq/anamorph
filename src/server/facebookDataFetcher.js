@@ -18,20 +18,31 @@ module.exports = class FacebookDataFetcher {
   fetch() {
     const data = {};
     return this.fetchName()
+      .then(data => this.fetchAge())
       .then(data => this.fetchFeed())
       .then(() => this.data)
       .catch(err => dbg(`Error: ${err.message}`));
   }
 
   fetchName() {
-    dbg(`Fetching facebook data`);
+    dbg(`Fetching user name`);
 
     return this.get(`/me`).then(res => {
       this.data.name = res.name;
     });
   }
 
+  fetchAge() {
+    dbg(`Fetching user Age`);
+
+    return this.get(`/me?fields=age_range`).then(res => {
+      this.data.age_min = res.age_range.min;
+    });
+  }
+
   fetchFeed(url) {
+    dbg(`Fetching user feed`);
+
     url = url || `/me/feed`;
     return this.get(url, {
       limit: 100,
