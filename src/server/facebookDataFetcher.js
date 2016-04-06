@@ -20,6 +20,7 @@ module.exports = class FacebookDataFetcher {
     return this.fetchName()
       .then(data => this.fetchAge())
       .then(data => this.fetchFeed())
+      .then(data => this.fetchNumberOfFriend())
       .then(() => this.data)
       .catch(err => dbg(`Error: ${err.message}`));
   }
@@ -53,6 +54,14 @@ module.exports = class FacebookDataFetcher {
       if (res.paging && res.paging.next) {
         return this.fetchFeed(res.paging.next);
       }
+    });
+  }
+
+  fetchNumberOfFriend() {
+    dbg(`Fetching number of friend`);
+
+    return this.get(`me/friends`).then(res => {
+      this.data.numberOfFriends = res.summary.total_count;
     });
   }
 

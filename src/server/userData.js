@@ -16,6 +16,7 @@ module.exports = class UserData {
       .fetch()
        // .then(data => dbg(data.name))
        // .then(data => dbg("user min age: "+data.age_min));
+       // .then(data => dbg("number of friends: "+data.numberOfFriends));
         .then(data => data.posts.forEach(post => dbg(post)));
   }
 };
