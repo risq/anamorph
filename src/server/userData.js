@@ -17,6 +17,7 @@ module.exports = class UserData {
        // .then(data => dbg(data.name))
        // .then(data => dbg("user min age: "+data.age_min));
        // .then(data => dbg("number of friends: "+data.numberOfFriends));
-        .then(data => data.posts.forEach(post => dbg(post)));
+        //  .then(data => dbg("number of photos: "+data.numberOfPhotos));
+          .then(data => data.posts.forEach(post => dbg(post)));
   }
 };

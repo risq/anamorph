@@ -21,6 +21,7 @@ module.exports = class FacebookDataFetcher {
       .then(data => this.fetchAge())
       .then(data => this.fetchFeed())
       .then(data => this.fetchNumberOfFriend())
+      .then(data => this.fetchNumberOfPhotos())
       .then(() => this.data)
       .catch(err => dbg(`Error: ${err.message}`));
   }
@@ -62,6 +63,24 @@ module.exports = class FacebookDataFetcher {
 
     return this.get(`me/friends`).then(res => {
       this.data.numberOfFriends = res.summary.total_count;
+    });
+  }
+
+  fetchNumberOfPhotos(url) {
+    dbg(`Fetching number of photos`);
+
+    url = url || `/me?fields=photos`;
+    return this.get(url, {
+      limit: 0,
+    }).then(res => {
+      //dbg(`Found ${res.photos.data.length} photos`);
+
+      if (res.paging && res.paging.next) {
+        return this.fetchFeed(res.paging.next);
+      }
+      else{
+        this.data.numberOfPhotos = res.photos.data.length;
+      }
     });
   }
 
