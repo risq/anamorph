@@ -67,14 +67,12 @@ module.exports = class FacebookDataFetcher {
   }
 
   fetchNumberOfPhotos(url) {
-    dbg(`Fetching number of photos`);
+    dbg(`Fetching number of photos where the user is identified`);
 
     url = url || `/me?fields=photos`;
     return this.get(url, {
       limit: 0,
     }).then(res => {
-      //dbg(`Found ${res.photos.data.length} photos`);
-
       if (res.paging && res.paging.next) {
         return this.fetchFeed(res.paging.next);
       }
