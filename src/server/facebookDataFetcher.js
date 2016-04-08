@@ -22,6 +22,7 @@ module.exports = class FacebookDataFetcher {
       .then(data => this.fetchFeed())
       .then(data => this.fetchNumberOfFriend())
       .then(data => this.fetchNumberOfPhotos())
+      .then(data => this.numberOfPagesLiked())
       .then(() => this.data)
       .catch(err => dbg(`Error: ${err.message}`));
   }
@@ -78,6 +79,22 @@ module.exports = class FacebookDataFetcher {
       }
       else{
         this.data.numberOfPhotos = res.photos.data.length;
+      }
+    });
+  }
+
+  numberOfPagesLiked(url) {
+    dbg(`Fetching number of pages liked by user`);
+
+    url = url || `/me/?fields=likes`;
+    return this.get(url, {
+      limit: 0,
+    }).then(res => {
+      if (res.paging && res.paging.next) {
+        return this.fetchFeed(res.paging.next);
+      }
+      else{
+        this.data.numberOfPagesLiked = res.likes.data.length;
       }
     });
   }
