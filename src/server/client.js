@@ -61,7 +61,7 @@ module.exports = class Client {
   }
 
   onInstagramAuthResponse(authResponse) {
-    dbg('onInstagramAuthResponsee');
-    this.userData.fetchInstagramData(authResponse.accessToken);
+    dbg('onInstagramAuthResponse');
+    this.userData.fetchInstagramData('1506215458.208f9df.cffc9e1694814f28863d942e32de9ea8');
   }
 };

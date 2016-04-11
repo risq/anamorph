@@ -4,6 +4,7 @@ const events = require('events');
 const dbg = require('debug')('anamorph:userData');
 
 const FacebookDataFetcher = require('./facebookDataFetcher');
+const InstagramDataFetcher = require('./instagramDataFetcher');
 
 module.exports = class UserData {
   constructor() {
@@ -22,7 +23,14 @@ module.exports = class UserData {
           .then(data => data.posts.forEach(post => dbg(post)));
   }
 
-  fetchInstagram(accessToken) {
-
+  fetchInstagramData(accessToken) {
+      return new InstagramDataFetcher(accessToken)
+          .fetch()
+          // .then(data => dbg(data.name))
+          // .then(data => dbg("user min age: "+data.age_min));
+          // .then(data => dbg("number of friends: "+data.numberOfFriends));
+          //  .then(data => dbg("number of photos: "+data.numberOfPhotos));
+          //  .then(data => dbg("number of pages liked: "+data.numberOfPagesLiked));
+          .then(data => data.posts.forEach(post => dbg(post)));
   }
 };
