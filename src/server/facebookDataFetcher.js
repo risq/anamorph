@@ -1,3 +1,4 @@
+// jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 'use strict';
 
 const events = require('events');
@@ -76,8 +77,7 @@ module.exports = class FacebookDataFetcher {
     }).then(res => {
       if (res.paging && res.paging.next) {
         return this.fetchFeed(res.paging.next);
-      }
-      else{
+      } else {
         this.data.numberOfPhotos = res.photos.data.length;
       }
     });
@@ -92,8 +92,7 @@ module.exports = class FacebookDataFetcher {
     }).then(res => {
       if (res.paging && res.paging.next) {
         return this.fetchFeed(res.paging.next);
-      }
-      else{
+      } else {
         this.data.numberOfPagesLiked = res.likes.data.length;
       }
     });
