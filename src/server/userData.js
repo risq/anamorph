@@ -4,6 +4,7 @@ const events = require('events');
 const dbg = require('debug')('anamorph:userData');
 
 const FacebookDataFetcher = require('./facebookDataFetcher');
+const InstagramDataFetcher = require('./instagramDataFetcher');
 
 module.exports = class UserData {
   constructor() {

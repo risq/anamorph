@@ -28,6 +28,7 @@ module.exports = class FacebookDataFetcher {
       .catch(err => dbg(`Error: ${err.message}`));
   }
 
+  //Fetching user name
   fetchName() {
     dbg(`Fetching user name`);
 
@@ -36,6 +37,7 @@ module.exports = class FacebookDataFetcher {
     });
   }
 
+  //Fetching user Age
   fetchAge() {
     dbg(`Fetching user Age`);
 
@@ -44,6 +46,7 @@ module.exports = class FacebookDataFetcher {
     });
   }
 
+  //Fetching user feed
   fetchFeed(url) {
     dbg(`Fetching user feed`);
 
@@ -60,6 +63,7 @@ module.exports = class FacebookDataFetcher {
     });
   }
 
+  //Fetching number of friend
   fetchNumberOfFriend() {
     dbg(`Fetching number of friend`);
 
@@ -68,6 +72,7 @@ module.exports = class FacebookDataFetcher {
     });
   }
 
+  //Fetching number of photos where the user is identified
   fetchNumberOfPhotos(url) {
     dbg(`Fetching number of photos where the user is identified`);
 
@@ -83,6 +88,7 @@ module.exports = class FacebookDataFetcher {
     });
   }
 
+  //Fetching number of pages liked by user
   numberOfPagesLiked(url) {
     dbg(`Fetching number of pages liked by user`);
 
