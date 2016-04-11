@@ -43,6 +43,8 @@ export default class RemoteView {
       this.clientId = id;
       this.status = `connected to client #${id}`;
       Facebook.init();
+
+      this.io.emit('remote:auth:instagram', "");
     } else {
       this.status = 'disconnected';
       this.err = err;
