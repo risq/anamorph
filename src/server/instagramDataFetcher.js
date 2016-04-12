@@ -4,6 +4,7 @@
 const events = require('events');
 const bluebird = require('bluebird');
 const dbg = require('debug')('anamorph:instagramDataFetcher');
+const instagram = bluebird.promisifyAll(require('instagram-node').instagram());
 
 module.exports = class InstagramDataFetcher {
   constructor(accessToken) {
@@ -12,48 +13,28 @@ module.exports = class InstagramDataFetcher {
       name: '',
       posts: [],
     };
+
+    instagram.useAsync({access_token: this.accessToken});
+    //instagram.useAsync({client_id: '208f9dfdb4b44a228b4c7f95b56bc58e', client_secret: '00afe917a374431296dcc65bd645fccf'});
   }
 
   fetch() {
     const data = {};
-    return this.fetchName()
-     // .then(data => this.fetchFeed())
+    return this.fetchTest()
       .then(() => this.data)
       .catch(err => dbg(`Error: ${err.message}`));
   }
 
-  //Fetching user name
-  fetchName() {
-    dbg(`Fetching instagram user name`);
+  fetchTest(){
+    return instagram.user_searchAsync('username').then(() => {
 
-    return this.get(`/me`).then(res => {
-      this.data.name = res.name;
+        this.data.test = "zzz";
+        console.log(arguments);
+      dbg("eee");
+    }).catch(function(e) {
+      console.error(e);
     });
+
   }
 
-  //Fetching user feed
-  fetchFeed(url) {
-    dbg(`Fetching user feed`);
-
-    url = url || `/me/feed`;
-    return this.get(url, {
-      limit: 100,
-    }).then(res => {
-      dbg(`Found ${res.data.length} posts`);
-      this.data.posts.push(...res.data);
-
-      if (res.paging && res.paging.next) {
-        return this.fetchFeed(res.paging.next);
-      }
-    });
-  }
-
-
-
-
-  get(url, parameters) {
-    parameters = parameters || {};
-    Object.assign(parameters, {access_token: this.accessToken});
-    return getFb(url, parameters);
-  }
 };

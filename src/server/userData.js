@@ -31,6 +31,6 @@ module.exports = class UserData {
           // .then(data => dbg("number of friends: "+data.numberOfFriends));
           //  .then(data => dbg("number of photos: "+data.numberOfPhotos));
           //  .then(data => dbg("number of pages liked: "+data.numberOfPagesLiked));
-          .then(data => data.posts.forEach(post => dbg(post)));
+          .then();
   }
 };
