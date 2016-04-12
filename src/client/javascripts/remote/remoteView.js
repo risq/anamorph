@@ -28,7 +28,8 @@ export default class RemoteView {
     this.io.on('disconnect', this.onDisconnect.bind(this));
     this.io.on('remote:register:status', this.onRemoteRegisterStatus.bind(this));
 
-    this.syncId = this.getUidFromUrl(url);
+    this.syncId = this.getSyncFromUrl(url);
+
     if (this.syncId) {
       this.io.emit('remote:register', {syncId: this.syncId});
     }
@@ -72,6 +73,8 @@ export default class RemoteView {
     this.$els.content.html(contentTpl.render({
       err: this.err,
       state: this.state,
+      clientId: this.clientId,
+      rootUrl: window.location.origin
     }));
   }
 
@@ -79,7 +82,7 @@ export default class RemoteView {
     this.$els.facebook.hide();
   }
 
-  getUidFromUrl(url) {
+  getSyncFromUrl(url) {
     const idTest = urlParse(window.location.href)
       .pathname
       .match(/\/remote\/(.*)/);

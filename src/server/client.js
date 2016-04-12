@@ -38,7 +38,7 @@ module.exports = class Client {
       dbg(`Registered remote for client ${this.id}`);
       this.remoteSocket = socket;
       this.remoteSocket.on('remote:auth', this.onAuthResponse.bind(this));
-      this.remoteSocket.on('remote:auth:instagram', this.onInstagramAuthResponse.bind(this));
+      // this.remoteSocket.on('remote:auth:instagram', this.onInstagramAuthResponse.bind(this));
     }
   }
 
@@ -60,9 +60,8 @@ module.exports = class Client {
     this.userData.fetchFacebookData(authResponse.accessToken);
   }
 
-  onInstagramAuthResponse(authResponse) {
-    dbg('onInstagramAuthResponse');
-    dbg(authResponse);
-    this.userData.fetchInstagramData(authResponse);
+  onInstagramAuthResponse(code) {
+    dbg('onInstagramAuthResponse', code);
+    this.userData.fetchInstagramData(this.id, code);
   }
 };

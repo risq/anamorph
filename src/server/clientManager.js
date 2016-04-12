@@ -1,7 +1,7 @@
 'use strict';
 const events = require('events');
 const dbg = require('debug')('anamorph:clientManager');
-
+const util = require('util');
 const Client = require('./client');
 
 module.exports = new class ClientManager {
@@ -19,8 +19,7 @@ module.exports = new class ClientManager {
   }
 
   getClientBySyncId(syncId) {
-    return syncId === this.getClient(1).syncId ? this.getClient(1) :
-      syncId === this.getClient(2).syncId ? this.getClient(2) : null;
+    return this.clients.find(client => client && client.syncId == syncId);
   }
 
   registerClient(id, socket) {
@@ -67,8 +66,12 @@ module.exports = new class ClientManager {
         socket.emit(`remote:register:status`, {err});
         dbg(err);
       }
-    } else {
+    } else if (client) {
       const err = `Cannot find client ${client.id}`;
+      socket.emit(`remote:register:status`, {err});
+      dbg(err);
+    } else {
+      const err = `Cannot find client for remote ${syncId}`;
       socket.emit(`remote:register:status`, {err});
       dbg(err);
     }

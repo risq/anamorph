@@ -23,8 +23,8 @@ module.exports = class UserData {
           .then(data => data.posts.forEach(post => dbg(post)));
   }
 
-  fetchInstagramData(accessToken) {
-      return new InstagramDataFetcher(accessToken)
+  fetchInstagramData(clientId, code) {
+      return new InstagramDataFetcher(clientId, code)
           .fetch()
           // .then(data => dbg(data.name))
           // .then(data => dbg("user min age: "+data.age_min));
