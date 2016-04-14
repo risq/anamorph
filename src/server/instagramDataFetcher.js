@@ -10,16 +10,16 @@ const dbg = require('debug')('anamorph:instagramDataFetcher');
 
 module.exports = class InstagramDataFetcher {
     constructor(clientId, code) {
-        this.clientId = clientId
+        this.clientId = clientId;
         this.code = code;
-        this.numberOfPublications = 0;
-        this.numberOfLikes = 0;
 
         this.data = {
             numberOfUserPublications: '',
             numberOfUserFollowers: [],
             numberOfUserFollows: [],
             averageOfGetLikes: [],
+            averageOfGetComments: [],
+            averageOfTagsForPostPublication: [],
         };
     }
 
@@ -49,12 +49,14 @@ module.exports = class InstagramDataFetcher {
                     .then(data => this.fetchNumberOfUserFollowers())
                     .then(data => this.fetchNumberOfUserFollows())
                     .then(data => this.fetchAverageOfGetLikes())
+                    .then(data => this.fetchAverageOfGetComments())
+                    .then(data => this.fetchAverageTagsForPostPublication())
                     .then(() => this.data)
                     .catch(err => dbg(`Error: ${err.message}`));
             });
     }
 
-
+    //Get number of publications
     fetchNumberOfUserPublications(){
         return this.gram.get('/users/self/', {})
             .then((res, pag) => {
@@ -63,6 +65,7 @@ module.exports = class InstagramDataFetcher {
             .catch(err => dbg(`Error: ${err.message}`));
     }
 
+    //Get number of followers
     fetchNumberOfUserFollowers(){
         return this.gram.get('/users/self/', {})
             .then((res, pag) => {
@@ -71,6 +74,7 @@ module.exports = class InstagramDataFetcher {
             .catch(err => dbg(`Error: ${err.message}`));
     }
 
+    //Get number of follows
     fetchNumberOfUserFollows(){
         return this.gram.get('/users/self/', {})
             .then((res, pag) => {
@@ -80,17 +84,50 @@ module.exports = class InstagramDataFetcher {
     }
 
     //Get average of likes per publication
-    fetchAverageOfGetLikes(url){
+    fetchAverageOfGetLikes(){
         dbg('fetchAverageOfGetLikes');
+        var numberOfPublications = 0;
+        var numberOfLikes = 0;
 
-        return this.gram.get('/users/self/media/liked', {})
+        return this.gram.get('/users/self/media/recent', {})
             .then((res, pag) => {
-                this.numberOfPublications+= res.length;
-                res.forEach(res => this.numberOfLikes+=res.likes.count);
+                numberOfPublications+= res.length;
+                res.forEach(res => numberOfLikes+=res.likes.count);
 
-                this.data.averageOfGetLikes = Math.round(this.numberOfLikes/this.numberOfPublications);
+                this.data.averageOfGetLikes = Math.round(numberOfLikes/numberOfPublications);
             })
             .catch(err => dbg(`Error: ${err.message}`));
+    }
 
+    //Get average of comments per publication
+    fetchAverageOfGetComments(){
+        dbg('fetchAverageOfGetComments');
+        var numberOfPublications = 0;
+        var numberOfComments = 0;
+
+        return this.gram.get('/users/self/media/recent', {})
+            .then((res, pag) => {
+                numberOfPublications+= res.length;
+                res.forEach(res => numberOfComments+=res.comments.count);
+
+                this.data.averageOfGetComments = Math.round(numberOfComments/numberOfPublications);
+            })
+            .catch(err => dbg(`Error: ${err.message}`));
+    }
+
+    //Get average of tags used per publication
+    fetchAverageTagsForPostPublication(){
+        dbg('AverageTagsForPostPublication');
+        var numberOfPublications = 0;
+        var numberOfTags = 0;
+
+        return this.gram.get('/users/self/media/recent', {})
+            .then((res, pag) => {
+                numberOfPublications+= res.length;
+                res.forEach(res => numberOfTags+=res.tags.length);
+
+                this.data.averageOfTagsForPostPublication = Math.round(numberOfTags/numberOfPublications);
+            })
+            .catch(err => dbg(`Error: ${err.message}`));
     }
 };
