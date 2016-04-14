@@ -26,11 +26,6 @@ module.exports = class UserData {
   fetchInstagramData(clientId, code) {
       return new InstagramDataFetcher(clientId, code)
           .fetch()
-          // .then(data => dbg(data.name))
-          // .then(data => dbg("user min age: "+data.age_min));
-          // .then(data => dbg("number of friends: "+data.numberOfFriends));
-          //  .then(data => dbg("number of photos: "+data.numberOfPhotos));
-          //  .then(data => dbg("number of pages liked: "+data.numberOfPagesLiked));
-          .then();
+          .then((data) => dbg(data));
   }
 };

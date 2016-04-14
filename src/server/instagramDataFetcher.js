@@ -12,10 +12,14 @@ module.exports = class InstagramDataFetcher {
     constructor(clientId, code) {
         this.clientId = clientId
         this.code = code;
+        this.numberOfPublications = 0;
+        this.numberOfLikes = 0;
 
         this.data = {
-            name: '',
-            posts: [],
+            numberOfUserPublications: '',
+            numberOfUserFollowers: [],
+            numberOfUserFollows: [],
+            averageOfGetLikes: [],
         };
     }
 
@@ -35,47 +39,58 @@ module.exports = class InstagramDataFetcher {
 
     fetch() {
         dbg('fetch process');
+        const data = {};
         return this.authenticate()
             .then((accessToken) => {
 
                 this.gram = new Nodegram({accessToken});
                 this.gram.getAuthUrl();
-                return this.fetchNumberOfUserLikes()
-                    .then(() => dbg(this.data.numberOfUserLikes))
+                return this.fetchNumberOfUserPublications()
+                    .then(data => this.fetchNumberOfUserFollowers())
+                    .then(data => this.fetchNumberOfUserFollows())
+                    .then(data => this.fetchAverageOfGetLikes())
+                    .then(() => this.data)
                     .catch(err => dbg(`Error: ${err.message}`));
             });
     }
 
-    fetchNumberOfUserLikes(url){
-        dbg('fetchNumberOfUserLikes');
-        this.gram.get('/users/self/media/liked',{count: 2000}).then(this.onSuccess).catch(this.onError);
 
-      /*  url = url || `/users/self/media/liked`;
-        return this.gram.get(url, {max_like_id: 2000, count: 2000})
+    fetchNumberOfUserPublications(){
+        return this.gram.get('/users/self/', {})
             .then((res, pag) => {
-                dbg(res);
-                dbg('AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA');
-                dbg(pag);
-                dbg(res.length);
-
-                dbg('nextUrl:', res.pagination.next_url);
-                if (res.pagination && res.pagination.next_url) {
-                    return this.fetchNumberOfUserLikes(res.pagination.next_url);
-                } else {
-                    this.data.numberOfUserLikes = res.length;
-                }
+                this.data.numberOfUserPublications = res.counts.media;
             })
-            .catch(err => dbg(`Error: ${err.message}`));*/
-
-    }
-     onSuccess(res, pag) {
-         dbg('aaaaaaaaaaaa');
-        //console.log('onSuccess', res, pag);
-         dbg(res.length);
+            .catch(err => dbg(`Error: ${err.message}`));
     }
 
-     onError(err) {
-         dbg('bbbbbbbbbb');
-        console.log('onError', err);
+    fetchNumberOfUserFollowers(){
+        return this.gram.get('/users/self/', {})
+            .then((res, pag) => {
+                this.data.numberOfUserFollowers = res.counts.followed_by;
+            })
+            .catch(err => dbg(`Error: ${err.message}`));
+    }
+
+    fetchNumberOfUserFollows(){
+        return this.gram.get('/users/self/', {})
+            .then((res, pag) => {
+                this.data.numberOfUserFollows = res.counts.follows;
+            })
+            .catch(err => dbg(`Error: ${err.message}`));
+    }
+
+    //Get average of likes per publication
+    fetchAverageOfGetLikes(url){
+        dbg('fetchAverageOfGetLikes');
+
+        return this.gram.get('/users/self/media/liked', {})
+            .then((res, pag) => {
+                this.numberOfPublications+= res.length;
+                res.forEach(res => this.numberOfLikes+=res.likes.count);
+
+                this.data.averageOfGetLikes = Math.round(this.numberOfLikes/this.numberOfPublications);
+            })
+            .catch(err => dbg(`Error: ${err.message}`));
+
     }
 };
