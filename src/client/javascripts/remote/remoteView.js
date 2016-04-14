@@ -45,9 +45,6 @@ export default class RemoteView {
       this.status = `connected to client #${id}`;
       Facebook.init();
 
-      var accessToken    = window.location.href.substring(window.location.href.lastIndexOf( "?code=" )+6 );
-
-      this.io.emit('remote:auth:instagram', accessToken);
     } else {
       this.status = 'disconnected';
       this.err = err;

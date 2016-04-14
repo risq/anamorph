@@ -23,6 +23,10 @@ app.get('/insta', (req, res) => {
   clientManager.getClient(req.query.clientId)
     .onInstagramAuthResponse(req.query.code);
 });
+app.get('/twitter', (req, res) => {
+  clientManager.getClient(req.query.clientId)
+      .onTwitterAuthResponse();
+});
 
 server.listen(port, () => {
   dbg(`Express server listening on port ${port}`);

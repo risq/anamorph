@@ -64,4 +64,9 @@ module.exports = class Client {
     dbg('onInstagramAuthResponse', code);
     this.userData.fetchInstagramData(this.id, code);
   }
+
+  onTwitterAuthResponse() {
+    dbg('onTwitterAuthResponse');
+    this.userData.fetchTwitterData(this.id);
+  }
 };
