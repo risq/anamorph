@@ -1,11 +1,11 @@
 'use strict';
+
 const events = require('events');
 const dbg = require('debug')('anamorph:clientManager');
-const util = require('util');
 const Client = require('./client');
 
 module.exports = new class ClientManager {
-  constructor(server) {
+  constructor() {
     this.clients = [];
     this.events = new events.EventEmitter();
   }
@@ -19,7 +19,7 @@ module.exports = new class ClientManager {
   }
 
   getClientBySyncId(syncId) {
-    return this.clients.find(client => client && client.syncId == syncId);
+    return this.clients.find(client => client && client.syncId === syncId);
   }
 
   registerClient(id, socket) {
@@ -27,11 +27,15 @@ module.exports = new class ClientManager {
 
     if (!this.getClient(id).isRegistered()) {
       this.getClient(id).register(socket);
-      socket.on(`disconnect`, () => this.unregisterClient(id));
-      socket.emit(`client:register:status`, {err: null});
+      socket.on('disconnect', () => this.unregisterClient(id));
+      socket.emit('client:register:status', {
+        err: null,
+      });
     } else {
       dbg(`Client ${id} already registered`);
-      socket.emit(`client:register:status`, {err: `Client ${id} already registered`});
+      socket.emit('client:register:status', {
+        err: `Client ${id} already registered`,
+      });
     }
 
     this.onStateChange(this.getClient(id));
@@ -58,21 +62,26 @@ module.exports = new class ClientManager {
       if (!client.remoteIsRegistered()) {
         client.registerRemote(socket);
         socket.on('disconnect', () => this.unregisterRemote(client.id));
-        socket.emit(`remote:register:status`, {err: null, id: client.id});
+        socket.emit('remote:register:status', {
+          err: null,
+          id: client.id,
+        });
 
         this.onStateChange(client);
       } else {
         const err = `Remote already registered for client ${client.id}`;
-        socket.emit(`remote:register:status`, {err});
+        socket.emit('remote:register:status', {
+          err,
+        });
         dbg(err);
       }
     } else if (client) {
       const err = `Cannot find client ${client.id}`;
-      socket.emit(`remote:register:status`, {err});
+      socket.emit('remote:register:status', { err });
       dbg(err);
     } else {
       const err = `Cannot find client for remote ${syncId}`;
-      socket.emit(`remote:register:status`, {err});
+      socket.emit('remote:register:status', { err });
       dbg(err);
     }
   }

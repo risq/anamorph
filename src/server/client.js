@@ -5,6 +5,7 @@ const shortid = require('shortid');
 const dbg = require('debug')('anamorph:client');
 
 const UserData = require('./userData');
+const AuthManager = require('./authManager');
 
 module.exports = class Client {
   constructor(id) {
@@ -14,6 +15,7 @@ module.exports = class Client {
     this.syncId = shortid.generate();
     this.events = new events.EventEmitter();
     this.userData = new UserData();
+    this.authManager = new AuthManager(id);
   }
 
   register(socket) {
@@ -37,8 +39,7 @@ module.exports = class Client {
     if (socket) {
       dbg(`Registered remote for client ${this.id}`);
       this.remoteSocket = socket;
-      this.remoteSocket.on('remote:auth', this.onAuthResponse.bind(this));
-      this.remoteSocket.on('remote:auth:twitter', this.onTwitterAuthResponse.bind(this));
+      this.remoteSocket.on('remote:auth:facebook', this.onFacebookAuthResponse.bind(this));
     }
   }
 
@@ -55,18 +56,20 @@ module.exports = class Client {
     this.events.emit('state:change');
   }
 
-  onAuthResponse(authResponse) {
-    dbg('onAuthResponse');
+  onFacebookAuthResponse(authResponse) {
+    dbg('onFacebookAuthResponse');
     this.userData.fetchFacebookData(authResponse.accessToken);
   }
 
   onInstagramAuthResponse(code) {
-    dbg('onInstagramAuthResponse', code);
+    dbg('onInstagramAuthResponse', this.id, code);
     this.userData.fetchInstagramData(this.id, code);
   }
 
-  onTwitterAuthResponse(oauth_token) {
-    dbg('onTwitterAuthResponse', oauth_token);
-    this.userData.fetchTwitterData(this.id, oauth_token);
+  onTwitterAuthResponse(oauthToken) {
+    dbg('onTwitterAuthResponse', this.id, oauthToken);
+
+    this.authManager.getTwitterDataFetcher(oauthToken)
+      .then(twitterDataFetcher => this.userData.fetchTwitterData(twitterDataFetcher));
   }
 };

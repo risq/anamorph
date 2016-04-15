@@ -6,7 +6,7 @@ const clientManager = require('./clientManager');
 const stateManager = require('./stateManager');
 
 module.exports = new class SocketManager {
-  constructor(server) {
+  constructor() {
     clientManager.events.on('state:change', client => this.emitState(client));
   }
 
@@ -25,13 +25,13 @@ module.exports = new class SocketManager {
   emitState(client) {
     stateManager.getState(client.id)
       .then(state => {
-          if (client.isRegistered()) {
-            client.socket.emit('state', state);
+        if (client.isRegistered()) {
+          client.socket.emit('state', state);
 
-            if (client.remoteIsRegistered()) {
-              client.remoteSocket.emit('state', state);
-            }
+          if (client.remoteIsRegistered()) {
+            client.remoteSocket.emit('state', state);
           }
-        });
+        }
+      });
   }
 };

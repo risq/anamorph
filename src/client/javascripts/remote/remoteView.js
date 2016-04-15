@@ -94,7 +94,7 @@ export default class RemoteView {
   onLoginStatus({err, res}) {
     if (!err) {
       dbg('onLoginStatus', res);
-      this.io.emit('remote:auth', res);
+      this.io.emit('remote:auth:facebook', res);
     } else {
       this.err = err;
     }

@@ -1,6 +1,5 @@
 const path = require('path');
 const express = require('express');
-const shortid = require('shortid');
 const dbg = require('debug')('anamorph:app');
 const config = require('./config/config.json');
 
@@ -14,18 +13,26 @@ socketManager.init(server);
 
 app.use(express.static('public'));
 
-const port = process.env.PORT || config.server.port || 8080;
+const port = process.env.PORT || config.server.port || 8080;
 
 app.get('/config', (req, res) => res.json(config.client));
-app.get('/remote(/*)?', (req, res) => res.sendFile(path.join(__dirname, './public', 'remote.html')));
-app.get('/client/\\d+', (req, res) => res.sendFile(path.join(__dirname, './public', 'client.html')));
+
+app.get('/remote(/*)?', (req, res) => {
+  res.sendFile(path.join(__dirname, './public', 'remote.html'));
+});
+
+app.get('/client/\\d+', (req, res) => {
+  res.sendFile(path.join(__dirname, './public', 'client.html'));
+});
+
 app.get('/insta', (req, res) => {
   clientManager.getClient(req.query.clientId)
     .onInstagramAuthResponse(req.query.code);
 });
+
 app.get('/twitter', (req, res) => {
-  clientManager.getClient()
-      .onTwitterAuthResponse(req.query.oauth_verifier);
+  clientManager.getClient(req.query.clientId)
+    .onTwitterAuthResponse(req.query.oauth_verifier);
 });
 
 server.listen(port, () => {

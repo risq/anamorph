@@ -1,6 +1,5 @@
 'use strict';
 
-const events = require('events');
 const dbg = require('debug')('anamorph:userData');
 
 const FacebookDataFetcher = require('./facebookDataFetcher');
@@ -13,26 +12,24 @@ module.exports = class UserData {
     this.data = {};
   }
 
-    fetchFacebookData(accessToken) {
+  fetchFacebookData(accessToken) {
     return new FacebookDataFetcher(accessToken)
-      .fetch()
-       // .then(data => dbg(data.name))
-       // .then(data => dbg("user min age: "+data.age_min));
-       // .then(data => dbg("number of friends: "+data.numberOfFriends));
-        //  .then(data => dbg("number of photos: "+data.numberOfPhotos));
-        //  .then(data => dbg("number of pages liked: "+data.numberOfPagesLiked));
-          .then(data => data.posts.forEach(post => dbg(post)));
-    }
+      .fetch();
+      // .then(data => dbg(data.name))
+      // .then(data => dbg("user min age: "+data.age_min));
+      // .then(data => dbg("number of friends: "+data.numberOfFriends));
+      //  .then(data => dbg("number of photos: "+data.numberOfPhotos));
+      //  .then(data => dbg("number of pages liked: "+data.numberOfPagesLiked));
+      // .then(data => data.posts.forEach(post => dbg(post)));
+  }
 
-    fetchInstagramData(clientId, code) {
-      return new InstagramDataFetcher(clientId, code)
-          .fetch()
-          .then((data) => dbg(data));
-    }
+  fetchInstagramData(clientId, code) {
+    return new InstagramDataFetcher(clientId, code)
+      .fetch();
+      // .then((data) => dbg(data));
+  }
 
-    fetchTwitterData(clientId, oauth_verifier) {
-        return new TwitterDataFetcher(clientId, oauth_verifier)
-            .fetch()
-            .then((data) => dbg(data));
-    }
+  fetchTwitterData(twitterDataFetcher) {
+    this.twitterData = twitterDataFetcher.fetch();
+  }
 };
