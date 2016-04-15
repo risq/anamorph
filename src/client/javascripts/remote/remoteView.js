@@ -17,6 +17,7 @@ export default class RemoteView {
     this.$els = {
       content: $root.find('.content'),
       facebook: $root.find('.facebook'),
+      twitter: $root.find('.twitter'),
     };
 
     this.eventEmitter = new EventEmitter();
@@ -36,6 +37,9 @@ export default class RemoteView {
 
     Facebook.on('login:status', this.onLoginStatus.bind(this));
     Facebook.on('get:name', this.onGetName.bind(this));
+
+    //Call twitterdatafetcher on click
+    //this.$els.twitter.on('click', () => this.io.emit('remote:auth:twitter'));
   }
 
   onRemoteRegisterStatus({err, id}) {

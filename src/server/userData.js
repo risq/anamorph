@@ -30,8 +30,8 @@ module.exports = class UserData {
           .then((data) => dbg(data));
     }
 
-    fetchTwitterData(clientId) {
-        return new TwitterDataFetcher(clientId)
+    fetchTwitterData(clientId, oauth_verifier) {
+        return new TwitterDataFetcher(clientId, oauth_verifier)
             .fetch()
             .then((data) => dbg(data));
     }

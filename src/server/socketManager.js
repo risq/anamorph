@@ -23,14 +23,15 @@ module.exports = new class SocketManager {
   }
 
   emitState(client) {
-    const state = stateManager.getState(client.id);
+    stateManager.getState(client.id)
+      .then(state => {
+          if (client.isRegistered()) {
+            client.socket.emit('state', state);
 
-    if (client.isRegistered()) {
-      client.socket.emit('state', state);
-
-      if (client.remoteIsRegistered()) {
-        client.remoteSocket.emit('state', state);
-      }
-    }
+            if (client.remoteIsRegistered()) {
+              client.remoteSocket.emit('state', state);
+            }
+          }
+        });
   }
 };

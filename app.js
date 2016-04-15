@@ -24,8 +24,8 @@ app.get('/insta', (req, res) => {
     .onInstagramAuthResponse(req.query.code);
 });
 app.get('/twitter', (req, res) => {
-  clientManager.getClient(req.query.clientId)
-      .onTwitterAuthResponse();
+  clientManager.getClient()
+      .onTwitterAuthResponse(req.query.oauth_verifier);
 });
 
 server.listen(port, () => {
