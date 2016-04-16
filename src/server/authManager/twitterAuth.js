@@ -71,14 +71,16 @@ module.exports = class TwitterAuth {
           authData.requestToken,
           authData.requestTokenSecret,
           oauthToken,
-          (err, accessToken, accessTokenSecret) => {
+          (err, accessToken, accessTokenSecret, results) => {
             if (err) {
               reject(err);
             } else {
               resolve(new TwitterDataFetcher(this.api, {
                 accessToken,
                 accessTokenSecret,
-              }));
+              },
+                  results //user information
+              ));
             }
           }
         );
