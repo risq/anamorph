@@ -49,7 +49,7 @@ module.exports = class TwitterDataFetcher {
     dbg('Fetching user tweets');
 
     return new Bluebird((resolve, reject) => {
-      //Best practice to set include_rts: 1
+      //Best practice to set include_rts: 1 -> to get retweets
       this.api.getTimeline('user_timeline', {user_id: this.user.user_id, count: 200, include_rts: 1},
           this.tokens.accessToken,
           this.tokens.accessTokenSecret,
@@ -59,8 +59,17 @@ module.exports = class TwitterDataFetcher {
               reject(err);
             } else {
               //dbg(data);
-              dbg(`Found ${data.length} tweets`);
-              resolve(data);
+              dbg(`Found ${data.length} tweets + retweets`);
+                
+                var usedHashtags = [];
+                data.forEach((data => {
+                    data.entities.hashtags.forEach((hashtag) => {
+                        usedHashtags.push(hashtag.text);
+                    });
+                }));
+                dbg(`Used hashtags: ${hashtags}`);
+
+              resolve(data, usedHashtags);
             }
           }
       );
