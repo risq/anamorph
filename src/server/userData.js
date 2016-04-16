@@ -3,8 +3,6 @@
 const dbg = require('debug')('anamorph:userData');
 
 const FacebookDataFetcher = require('./facebookDataFetcher');
-const InstagramDataFetcher = require('./instagramDataFetcher');
-const TwitterDataFetcher = require('./twitterDataFetcher');
 
 module.exports = class UserData {
   constructor() {
@@ -23,13 +21,17 @@ module.exports = class UserData {
       // .then(data => data.posts.forEach(post => dbg(post)));
   }
 
-  fetchInstagramData(clientId, code) {
-    return new InstagramDataFetcher(clientId, code)
-      .fetch();
-      // .then((data) => dbg(data));
+  fetchInstagramData(instagramDataFetcher) {
+    instagramDataFetcher.fetch()
+      .then(data => {
+        this.instagramData = data;
+      });
   }
 
   fetchTwitterData(twitterDataFetcher) {
-    this.twitterData = twitterDataFetcher.fetch();
+    twitterDataFetcher.fetch()
+      .then(data => {
+        this.twitterData = data;
+      });
   }
 };

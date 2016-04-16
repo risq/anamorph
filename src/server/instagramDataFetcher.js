@@ -1,16 +1,13 @@
-// jscs:disable requireCamelCaseOrUpperCaseIdentifiers
 'use strict';
 
 const Bluebird = require('bluebird');
 const Nodegram = require('nodegram');
 
 const dbg = require('debug')('anamorph:instagramDataFetcher');
-// const instagram = bluebird.promisifyAll(require('instagram-node').instagram());
 
 module.exports = class InstagramDataFetcher {
-  constructor(clientId, code) {
-    this.clientId = clientId;
-    this.code = code;
+  constructor(tokens) {
+    this.tokens = tokens;
 
     this.data = {
       numberOfUserPublications: '',
@@ -22,36 +19,20 @@ module.exports = class InstagramDataFetcher {
     };
   }
 
-  authenticate() {
-    dbg('authenticate process');
-    const nodegram = new Nodegram({
-      clientId: '208f9dfdb4b44a228b4c7f95b56bc58e',
-      clientSecret: '00afe917a374431296dcc65bd645fccf',
-      redirectUri: `http://localhost:3000/insta?clientId=${this.clientId}`,
-    });
-
-    nodegram.getAuthUrl();
-
-    return nodegram.getAccessToken(this.code)
-      .then(res => res.access_token);
-  }
-
   fetch() {
-    dbg('fetch process');
-    return this.authenticate()
-      .then((accessToken) => {
-        this.gram = new Nodegram({ accessToken });
+    dbg('Fetching instagram data');
 
-        this.gram.getAuthUrl();
-        return this.fetchNumberOfUserPublications()
-          .then(() => this.fetchNumberOfUserFollowers())
-          .then(() => this.fetchNumberOfUserFollows())
-          .then(() => this.fetchAverageOfGetLikes())
-          .then(() => this.fetchAverageOfGetComments())
-          .then(() => this.fetchAverageTagsForPostPublication())
-          .then(() => this.data)
-          .catch(err => dbg(`Error: ${err.message}`));
-      });
+    this.gram = new Nodegram({ accessToken: this.tokens.accessToken });
+
+    this.gram.getAuthUrl();
+    return this.fetchNumberOfUserPublications()
+      .then(() => this.fetchNumberOfUserFollowers())
+      .then(() => this.fetchNumberOfUserFollows())
+      .then(() => this.fetchAverageOfGetLikes())
+      .then(() => this.fetchAverageOfGetComments())
+      .then(() => this.fetchAverageTagsForPostPublication())
+      .then(() => this.data)
+      .catch(err => dbg(`Error: ${err.message}`));
   }
 
   fetchNumberOfUserPublications() {
