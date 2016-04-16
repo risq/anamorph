@@ -61,9 +61,11 @@ module.exports = class Client {
     this.userData.fetchFacebookData(authResponse.accessToken);
   }
 
-  onInstagramAuthResponse(code) {
-    dbg('onInstagramAuthResponse', this.id, code);
-    this.userData.fetchInstagramData(this.id, code);
+  onInstagramAuthResponse(oauthToken) {
+    dbg('onInstagramAuthResponse', this.id, oauthToken);
+
+    this.authManager.getInstagramDataFetcher(oauthToken)
+      .then(instagramDataFetcher => this.userData.fetchInstagramData(instagramDataFetcher))
   }
 
   onTwitterAuthResponse(oauthToken) {
