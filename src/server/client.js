@@ -74,4 +74,11 @@ module.exports = class Client {
     this.authManager.getTwitterDataFetcher(oauthToken)
       .then(twitterDataFetcher => this.userData.fetchTwitterData(twitterDataFetcher));
   }
+
+  onLinkedinAuthResponse(code, state) {
+    dbg('onLinkedinAuthResponse', this.id, code, state);
+
+    this.authManager.getLinkedinDataFetcher(code, state)
+      .then(linkedinDataFetcher => this.userData.fetchLinkedinData(linkedinDataFetcher));
+  }
 };

@@ -34,4 +34,11 @@ module.exports = class UserData {
         this.twitterData = data;
       });
   }
+
+  fetchLinkedinData(linkedinDataFetcher) {
+    linkedinDataFetcher.fetch()
+      .then(data => {
+        this.linkedinData = data;
+      });
+  }
 };

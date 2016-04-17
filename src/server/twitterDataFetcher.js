@@ -60,7 +60,7 @@ module.exports = class TwitterDataFetcher {
             } else {
               //dbg(data);
               dbg(`Found ${data.length} tweets + retweets`);
-                
+
                 var usedHashtags = [];
                 data.forEach((data => {
                     data.entities.hashtags.forEach((hashtag) => {

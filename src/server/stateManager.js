@@ -14,6 +14,7 @@ module.exports = new class StateManager {
         remoteStatus: client.remoteIsRegistered() ? 'connected' : 'disconnected',
         auth: {
           twitterUrl: authData.twitter.authUrl,
+          linkedinUrl: authData.linkedin.authUrl,
         },
       }));
   }

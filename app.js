@@ -35,6 +35,11 @@ app.get('/twitter', (req, res) => {
     .onTwitterAuthResponse(req.query.oauth_verifier);
 });
 
+app.get('/linkedin', (req, res) => {
+   clientManager.getClient(req.query.clientId)
+    .onLinkedinAuthResponse(req.query.code, req.query.state);
+});
+
 server.listen(port, () => {
   dbg(`Express server listening on port ${port}`);
 });
