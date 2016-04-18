@@ -40,7 +40,7 @@ module.exports = class LinkedinAuth {
         dbg('Getting access token');
 
         return this.getAuthData()
-            .then(authData => new Bluebird((resolve, reject) => {
+            .then(() => new Bluebird((resolve, reject) => {
                 LinkedinAPI.auth.getAccessToken(
                     code,
                     state,
