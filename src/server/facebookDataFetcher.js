@@ -13,6 +13,7 @@ module.exports = class FacebookDataFetcher {
       name: '',
       posts: [],
       albums: [],
+      nbOfComments: 0,
     };
   }
 
@@ -27,6 +28,7 @@ module.exports = class FacebookDataFetcher {
       .then(() => this.fetchWork())
       .then(() => this.fetchEducation())
       .then(() => this.fetchNumberOfAlbums())
+      .then(() => this.fetchNumberOfCommentOnUserPosts())
       .catch(err => dbg(`Error: ${err.message}`));
   }
 
@@ -169,6 +171,30 @@ module.exports = class FacebookDataFetcher {
       else{
         dbg('Fetching number of albums');
         dbg(`Found ${this.data.albums.length} albums`);
+      }
+
+      return Bluebird.resolve(true); // TODO
+    });
+  }
+
+  fetchNumberOfCommentOnUserPosts(url) {
+
+    return this.get(url || '/me?fields=feed{comments}', {
+      limit: 100,
+    }).then(res => {
+
+      if (res.paging && res.paging.next) {
+        return this.fetchFeed(res.paging.next);
+      }
+      else{
+        dbg('Fetching number of comments on user\'s posts');
+
+        res.feed.data.forEach((data => {
+          if(typeof(data.comments) != 'undefined'){
+            this.data.nbOfComments+= data.comments.data.length;
+          }
+        }));
+        dbg(`Found: ${this.data.nbOfComments} comments`);
       }
 
       return Bluebird.resolve(true); // TODO
