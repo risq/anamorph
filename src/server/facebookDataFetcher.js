@@ -12,6 +12,7 @@ module.exports = class FacebookDataFetcher {
     this.data = {
       name: '',
       posts: [],
+      albums: [],
     };
   }
 
@@ -21,7 +22,11 @@ module.exports = class FacebookDataFetcher {
       .then(() => this.fetchFeed())
       .then(() => this.fetchNumberOfFriends())
       .then(() => this.fetchNumberOfPhotos())
-      .then(() => this.numberOfPagesLiked())
+      .then(() => this.fetchNumberOfPagesLiked())
+      .then(() => this.fetchLocation())
+      .then(() => this.fetchWork())
+      .then(() => this.fetchEducation())
+      .then(() => this.fetchNumberOfAlbums())
       .catch(err => dbg(`Error: ${err.message}`));
   }
 
@@ -48,16 +53,18 @@ module.exports = class FacebookDataFetcher {
   }
 
   fetchFeed(url) {
-    dbg('Fetching user feed');
 
     return this.get(url || '/me/feed', {
       limit: 100,
     }).then(res => {
-      dbg(`Found ${res.data.length} posts`);
       this.data.posts.push(...res.data);
 
       if (res.paging && res.paging.next) {
         return this.fetchFeed(res.paging.next);
+      }
+      else{
+        dbg('Fetching user feed');
+        dbg(`Found ${this.data.posts.length} posts`);
       }
 
       return Bluebird.resolve(true); // TODO
@@ -90,7 +97,7 @@ module.exports = class FacebookDataFetcher {
     });
   }
 
-  numberOfPagesLiked(url) {
+  fetchNumberOfPagesLiked(url) {
     dbg('Fetching number of pages liked by user');
 
     return this.get(url || '/me/?fields=likes', {
@@ -100,10 +107,69 @@ module.exports = class FacebookDataFetcher {
         return this.fetchFeed(res.paging.next);
       }
 
-      // TODO: fix bug - res only returns { id: 'xxxxxxxxxxxxxxxxx' }
+      //res only returns { id: 'xxxxxxxxxxxxxxxxx' } ?Q
 
-      // this.data.numberOfPagesLiked = res.likes.data.length;
-      // dbg(`Found ${this.data.numberOfPagesLiked} pages liked`);
+       this.data.numberOfPagesLiked = res.likes.data.length;
+       dbg(`Found ${this.data.numberOfPagesLiked} pages liked`);
+
+      return Bluebird.resolve(true); // TODO
+    });
+  }
+
+  fetchLocation() {
+    dbg('Fetching location');
+
+    return this.get('me?fields=location').then(res => {
+      this.data.locationName = res.location.name;
+      dbg(`Location :  ${this.data.locationName}`);
+
+      this.get(`${res.location.id}?fields=location`).then(res => {
+        this.data.locationLatitude = res.location.latitude;
+        this.data.locationLongitude = res.location.longitude;
+        dbg(`Latitude : ${this.data.locationLatitude}`);
+        dbg(`Longitude : ${this.data.locationLatitude}`);
+      });
+
+      return Bluebird.resolve(true); // TODO
+    });
+  }
+
+  fetchWork() {
+    dbg('Fetching work');
+
+    return this.get('me?fields=work').then(res => {
+      this.data.employer = res.work[0].employer.name; //[0] for most recent
+      dbg(`Most recent employer :  ${this.data.employer}`);
+
+      return Bluebird.resolve(true); // TODO
+    });
+  }
+
+  fetchEducation() {
+    dbg('Fetching education');
+
+    return this.get('me?fields=education').then(res => {
+      this.data.school = res.education[res.education.length - 1].school.name; //for most recent
+      dbg(`Most recent school :  ${this.data.school}`);
+
+      return Bluebird.resolve(true); // TODO
+    });
+  }
+
+  fetchNumberOfAlbums(url) {
+
+    return this.get(url || '/me?fields=albums', {
+      limit: 100,
+    }).then(res => {
+      this.data.albums.push(...res.albums.data);
+
+      if (res.paging && res.paging.next) {
+        return this.fetchFeed(res.paging.next);
+      }
+      else{
+        dbg('Fetching number of albums');
+        dbg(`Found ${this.data.albums.length} albums`);
+      }
 
       return Bluebird.resolve(true); // TODO
     });
