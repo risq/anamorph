@@ -14,7 +14,10 @@ module.exports = class FacebookDataFetcher {
       posts: [],
       albums: [],
       nbOfComments: 0,
+      frequency: [],
     };
+    this.tempDatePosts = [];
+    this.datePosts = [];
   }
 
   fetch() {
@@ -29,6 +32,7 @@ module.exports = class FacebookDataFetcher {
       .then(() => this.fetchEducation())
       .then(() => this.fetchNumberOfAlbums())
       .then(() => this.fetchNumberOfCommentOnUserPosts())
+      .then(() => this.fetchPostsFrequency())
       .catch(err => dbg(`Error: ${err.message}`));
   }
 
@@ -73,6 +77,50 @@ module.exports = class FacebookDataFetcher {
     });
   }
 
+  fetchPostsFrequency(url) {
+
+    return this.get(url || '/me/feed', {
+      limit: 100,
+    }).then(res => {
+
+      this.tempDatePosts.push(...res.data);
+
+      if (res.paging && res.paging.next) {
+        return this.fetchPostsFrequency(res.paging.next);
+      }
+      else{
+        dbg('Fetching posts frequency');
+
+        this.tempDatePosts.forEach((data => {
+          var year = 'A-'+data.created_time.substr(0, 4).toString();
+
+          if(typeof(this.datePosts[year]) != 'undefined'){
+            this.datePosts[year]+= 1;
+          }else{
+            this.datePosts[year] = 0;
+            this.datePosts[year]+= 1;
+          }
+        }));
+
+        //Calculate the number of day since the beginning of the current year
+        var now = new Date();
+        var start = new Date(now.getFullYear(), 0, 0);
+        var diff = now - start;
+        var oneDay = 1000 * 60 * 60 * 24;
+        var day = Math.floor(diff / oneDay);
+
+        //Todo -> improved this recuperation - iteration?
+        this.data.frequency['A-2016']= (this.datePosts['A-2015'] /day).toFixed(3);
+        this.data.frequency['A-2015']= (this.datePosts['A-2015'] /365).toFixed(3);
+
+        dbg('Frequency');
+        dbg(this.data.frequency);
+      }
+
+      return Bluebird.resolve(true); // TODO
+    });
+  }
+
   fetchNumberOfFriends() {
     dbg('Fetching number of friends');
 
@@ -89,7 +137,7 @@ module.exports = class FacebookDataFetcher {
       limit: 0,
     }).then(res => {
       if (res.paging && res.paging.next) {
-        return this.fetchFeed(res.paging.next);
+        return this.fetchNumberOfPhotos(res.paging.next);
       }
 
       this.data.numberOfPhotos = res.photos.data.length;
@@ -106,7 +154,7 @@ module.exports = class FacebookDataFetcher {
       limit: 0,
     }).then(res => {
       if (res.paging && res.paging.next) {
-        return this.fetchFeed(res.paging.next);
+        return this.fetchNumberOfPagesLiked(res.paging.next);
       }
 
       //res only returns { id: 'xxxxxxxxxxxxxxxxx' } ?Q
@@ -166,7 +214,7 @@ module.exports = class FacebookDataFetcher {
       this.data.albums.push(...res.albums.data);
 
       if (res.paging && res.paging.next) {
-        return this.fetchFeed(res.paging.next);
+        return this.fetchNumberOfAlbums(res.paging.next);
       }
       else{
         dbg('Fetching number of albums');
@@ -184,7 +232,7 @@ module.exports = class FacebookDataFetcher {
     }).then(res => {
 
       if (res.paging && res.paging.next) {
-        return this.fetchFeed(res.paging.next);
+        return this.fetchNumberOfCommentOnUserPosts(res.paging.next);
       }
       else{
         dbg('Fetching number of comments on user\'s posts');
