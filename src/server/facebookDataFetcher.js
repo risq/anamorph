@@ -110,7 +110,7 @@ module.exports = class FacebookDataFetcher {
         var day = Math.floor(diff / oneDay);
 
         //Todo -> improved this recuperation - iteration?
-        this.data.frequency['A-2016']= (this.datePosts['A-2015'] /day).toFixed(3);
+        this.data.frequency['A-2016']= (this.datePosts['A-2016'] /day).toFixed(3);
         this.data.frequency['A-2015']= (this.datePosts['A-2015'] /365).toFixed(3);
 
         dbg('Frequency');
