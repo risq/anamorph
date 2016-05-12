@@ -11,6 +11,17 @@ module.exports = class TwitterDataFetcher {
     this.api = api;
     this.tokens = tokens;
     this.user = user;
+
+      this.data = {
+          totalTweetsAndRetweets: 0,
+          averageRetweetPerUserPost: 0,
+          averageLikePerUserPost: 0,
+          totalRetweetForUserPosts: 0,
+          totalLikesForUserPosts: 0,
+          usedHashtags: [],
+          userLikes: 0,
+          userMentions: 0,
+      };
   }
 
   fetch() {
@@ -35,9 +46,11 @@ module.exports = class TwitterDataFetcher {
                 dbg('error: ', err);
               reject(err);
             } else {
-              dbg(`Found ${data.followers_count} followers`);
-              dbg(`Found ${data.friends_count} friends`);
-              resolve(data);
+                this.data.numberOfFollowers = data.followers_count;
+                this.data.numberOfFriends = data.friends_count;
+              dbg(`Found ${this.data.numberOfFollowers} followers`);
+              dbg(`Found ${this.data.numberOfFriends} friends`);
+              resolve(this.data);
             }
           }
       );
@@ -58,18 +71,31 @@ module.exports = class TwitterDataFetcher {
                 dbg('error: ', err);
               reject(err);
             } else {
-              //dbg(data);
-              dbg(`Found ${data.length} tweets + retweets`);
 
-                var usedHashtags = [];
+                this.data.totalTweetsAndRetweets = data.length;
+
+                dbg(`Found ${this.data.totalTweetsAndRetweets} tweets + retweets`);
+
                 data.forEach((data => {
+                    this.data.totalRetweetForUserPosts+= data.retweet_count;
+                    this.data.totalLikesForUserPosts+= data.favorite_count;
+
                     data.entities.hashtags.forEach((hashtag) => {
-                        usedHashtags.push(hashtag.text);
+                        this.data.usedHashtags.push(hashtag.text);
                     });
                 }));
-                dbg(`Used hashtags: ${hashtags}`);
+                dbg(`Used hashtags: ${this.data.usedHashtags}`);
 
-              resolve(data, usedHashtags);
+                this.data.averageRetweetPerUserPost = (this.data.totalRetweetForUserPosts/this.data.totalTweetsAndRetweets).toFixed(2);
+                this.data.averageLikePerUserPost = (this.data.totalLikesForUserPosts/this.data.totalTweetsAndRetweets).toFixed(2);
+
+                dbg(`Total retweets for user posts: ${this.data.totalRetweetForUserPosts}`);
+                dbg(`Total likes or user posts: ${this.data.totalLikesForUserPosts}`);
+
+                dbg(`Average of retweets per post: ${this.data.averageRetweetPerUserPost}`);
+                dbg(`Average of likes per post: ${this.data.averageLikePerUserPost}`);
+
+              resolve(this.data);
             }
           }
       );
@@ -89,9 +115,10 @@ module.exports = class TwitterDataFetcher {
                         dbg('error: ', err);
                         reject(err);
                     } else {
-                        //dbg(data);
-                        dbg(`Found ${data.length} mentions`);
-                        resolve(data);
+                        this.data.userMentions = data.length;
+
+                        dbg(`Found ${this.data.userMentions} mentions`);
+                        resolve(this.data);
                     }
                 }
             );
@@ -112,9 +139,10 @@ module.exports = class TwitterDataFetcher {
                         dbg('error: ', err);
                         reject(err);
                     } else {
-                        //dbg(data);
-                        dbg(`Found ${data.length} user likes`);
-                        resolve(data);
+                        this.data.userLikes = data.length;
+
+                        dbg(`Found ${this.data.userLikes} user likes`);
+                        resolve(this.data);
                     }
                 }
             );
