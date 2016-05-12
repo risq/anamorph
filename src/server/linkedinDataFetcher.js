@@ -10,6 +10,10 @@ module.exports = class LinkedinDataFetcher {
 
         this.user = user;
         this.api = api.init(this.user.access_token);
+
+        this.data = {
+            connections: '',
+        };
     }
 
     fetch() {
@@ -30,6 +34,10 @@ module.exports = class LinkedinDataFetcher {
                         reject(err);
                     } else {
                         dbg(data);
+                        this.data.email = data.emailAddress;
+                        this.data.connections = data.numConnections;
+                        dbg(`Email: ${this.data.email}`);
+                        dbg(`Number of connections: ${this.data.connections}`);
                         resolve(data);
                     }
                 }
