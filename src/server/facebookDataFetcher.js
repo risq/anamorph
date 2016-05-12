@@ -14,6 +14,7 @@ module.exports = class FacebookDataFetcher {
       posts: [],
       albums: [],
       nbOfComments: 0,
+      nbOfLike: 0,
       frequency: [],
     };
     this.tempDatePosts = [];
@@ -32,6 +33,7 @@ module.exports = class FacebookDataFetcher {
       .then(() => this.fetchEducation())
       .then(() => this.fetchNumberOfAlbums())
       .then(() => this.fetchNumberOfCommentOnUserPosts())
+      .then(() => this.fetchNumberOfLikeOnUserPosts())
       .then(() => this.fetchPostsFrequency())
       .catch(err => dbg(`Error: ${err.message}`));
   }
@@ -69,8 +71,13 @@ module.exports = class FacebookDataFetcher {
         return this.fetchFeed(res.paging.next);
       }
       else{
+
+        var date = new Date(this.data.posts[this.data.posts.length-2].created_time);
+        this.data.activeUserSince = date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear();
+
         dbg('Fetching user feed');
         dbg(`Found ${this.data.posts.length} posts`);
+        dbg(`Active user since ${this.data.activeUserSince}`);
       }
 
       return Bluebird.resolve(true); // TODO
@@ -178,9 +185,9 @@ module.exports = class FacebookDataFetcher {
         this.data.locationLongitude = res.location.longitude;
         dbg(`Latitude : ${this.data.locationLatitude}`);
         dbg(`Longitude : ${this.data.locationLatitude}`);
-      });
 
-      return Bluebird.resolve(true); // TODO
+        return Bluebird.resolve(true); // TODO
+      });
     });
   }
 
@@ -242,7 +249,37 @@ module.exports = class FacebookDataFetcher {
             this.data.nbOfComments+= data.comments.data.length;
           }
         }));
+        this.data.averageCommentOnPost = (this.data.nbOfComments/res.feed.data.length).toFixed(2);
+
         dbg(`Found: ${this.data.nbOfComments} comments`);
+        dbg(`Average comment per post: ${this.data.averageCommentOnPost}`);
+      }
+
+      return Bluebird.resolve(true); // TODO
+    });
+  }
+
+  fetchNumberOfLikeOnUserPosts(url) {
+
+    return this.get(url || '/me?fields=feed{likes}', {
+      limit: 100,
+    }).then(res => {
+
+      if (res.paging && res.paging.next) {
+        return this.fetchNumberOfCommentOnUserPosts(res.paging.next);
+      }
+      else{
+        dbg('Fetching number of likes on user\'s posts');
+
+        res.feed.data.forEach((data => {
+          if(typeof(data.likes) != 'undefined'){
+            this.data.nbOfLike+= data.likes.data.length;
+          }
+        }));
+        this.data.averageLikeOnPost = (this.data.nbOfLike/res.feed.data.length).toFixed(2);
+
+        dbg(`Found: ${this.data.nbOfLike} likes`);
+        dbg(`Average like per post: ${this.data.averageLikeOnPost}`);
       }
 
       return Bluebird.resolve(true); // TODO
