@@ -33,7 +33,7 @@ module.exports = class LinkedinDataFetcher {
                         dbg('error: ', err);
                         reject(err);
                     } else {
-                        dbg(data);
+                        //dbg(data);
                         this.data.email = data.emailAddress;
                         this.data.connections = data.numConnections;
                         dbg(`Email: ${this.data.email}`);

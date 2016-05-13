@@ -40,6 +40,12 @@ app.get('/linkedin', (req, res) => {
     .onLinkedinAuthResponse(req.query.code, req.query.state);
 });
 
+app.get('/validConnections', (req, res) => {
+    clientManager.getClient(req.query.clientId)
+        .onValidateConnections();
+});
+
+
 server.listen(port, () => {
   dbg(`Express server listening on port ${port}`);
 });

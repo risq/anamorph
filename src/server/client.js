@@ -6,6 +6,7 @@ const dbg = require('debug')('anamorph:client');
 
 const UserData = require('./userData');
 const AuthManager = require('./authManager');
+const DataManager = require('./dataManager');
 
 module.exports = class Client {
   constructor(id) {
@@ -16,6 +17,7 @@ module.exports = class Client {
     this.events = new events.EventEmitter();
     this.userData = new UserData();
     this.authManager = new AuthManager(id);
+    this.dataManager = new DataManager();
   }
 
   register(socket) {
@@ -80,5 +82,10 @@ module.exports = class Client {
 
     this.authManager.getLinkedinDataFetcher(code, state)
       .then(linkedinDataFetcher => this.userData.fetchLinkedinData(linkedinDataFetcher));
+  }
+  onValidateConnections(code, state) {
+    dbg('Validate social connections', this.id);
+
+    this.dataManager.validConnections(this.userData);
   }
 };

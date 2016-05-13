@@ -8,12 +8,17 @@ module.exports = class UserData {
   constructor() {
     this.tokens = {};
     this.data = {};
+    this.instagramData = {};
+    this.twitterData = {};
+    this.linkedinData = {};
   }
 
   fetchFacebookData(accessToken) {
     return new FacebookDataFetcher(accessToken)
-      .fetch();
-      // .then(data => dbg(data.name))
+        .fetch()
+       .then(data => {
+         this.facebookData = data;
+        });
       // .then(data => dbg("user min age: "+data.age_min));
       // .then(data => dbg("number of friends: "+data.numberOfFriends));
       //  .then(data => dbg("number of photos: "+data.numberOfPhotos));

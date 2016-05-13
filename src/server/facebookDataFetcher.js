@@ -45,7 +45,7 @@ module.exports = class FacebookDataFetcher {
       this.data.name = res.name;
       dbg(`Found name: ${this.data.name}`);
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
@@ -56,7 +56,7 @@ module.exports = class FacebookDataFetcher {
       this.data.age_min = res.age_range.min;
       dbg(`Found age: ${this.data.age_min}`);
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
@@ -80,7 +80,7 @@ module.exports = class FacebookDataFetcher {
         dbg(`Active user since ${this.data.activeUserSince}`);
       }
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
@@ -124,16 +124,19 @@ module.exports = class FacebookDataFetcher {
         dbg(this.data.frequency);
       }
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
   fetchNumberOfFriends() {
     dbg('Fetching number of friends');
 
-    return this.get('me/friends').then(res => {
-      this.data.numberOfFriends = res.summary.total_count;
-      dbg(`Found ${this.data.numberOfFriends} friends`);
+    return this.get('me/friends')
+        .then(res => {
+          this.data.numberOfFriends = res.summary.total_count;
+          dbg(`Found ${this.data.numberOfFriends} friends`);
+
+          return Bluebird.resolve(true);
     });
   }
 
@@ -150,7 +153,7 @@ module.exports = class FacebookDataFetcher {
       this.data.numberOfPhotos = res.photos.data.length;
       dbg(`Found ${this.data.numberOfPhotos} photos`);
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
@@ -169,7 +172,7 @@ module.exports = class FacebookDataFetcher {
        this.data.numberOfPagesLiked = res.likes.data.length;
        dbg(`Found ${this.data.numberOfPagesLiked} pages liked`);
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
@@ -186,7 +189,7 @@ module.exports = class FacebookDataFetcher {
         dbg(`Latitude : ${this.data.locationLatitude}`);
         dbg(`Longitude : ${this.data.locationLatitude}`);
 
-        return Bluebird.resolve(true); // TODO
+        return Bluebird.resolve(true);
       });
     });
   }
@@ -198,7 +201,7 @@ module.exports = class FacebookDataFetcher {
       this.data.employer = res.work[0].employer.name; //[0] for most recent
       dbg(`Most recent employer :  ${this.data.employer}`);
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
@@ -209,7 +212,7 @@ module.exports = class FacebookDataFetcher {
       this.data.school = res.education[res.education.length - 1].school.name; //for most recent
       dbg(`Most recent school :  ${this.data.school}`);
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
@@ -228,7 +231,7 @@ module.exports = class FacebookDataFetcher {
         dbg(`Found ${this.data.albums.length} albums`);
       }
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(true);
     });
   }
 
@@ -255,7 +258,7 @@ module.exports = class FacebookDataFetcher {
         dbg(`Average comment per post: ${this.data.averageCommentOnPost}`);
       }
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
@@ -282,7 +285,7 @@ module.exports = class FacebookDataFetcher {
         dbg(`Average like per post: ${this.data.averageLikeOnPost}`);
       }
 
-      return Bluebird.resolve(true); // TODO
+      return Bluebird.resolve(this.data);
     });
   }
 
