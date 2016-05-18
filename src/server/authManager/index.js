@@ -20,9 +20,11 @@ module.exports = class AuthManager {
     return Bluebird.props({
       twitter: this.twitterAuth.getAuthData(),
       linkedin: this.linkedinAuth.getAuthData(),
+      instagram: this.instagramAuth.getAuthData(),
     }).then(data => ({
       twitter: data.twitter,
       linkedin: data.linkedin,
+      instagram: data.instagram,
     }));
   }
 

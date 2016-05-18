@@ -13,8 +13,11 @@ module.exports = new class StateManager {
         status: client.isRegistered() ? 'connected' : 'disconnected',
         remoteStatus: client.remoteIsRegistered() ? 'connected' : 'disconnected',
         auth: {
+          clientId: id,
+          syncId: client.syncId,
           twitterUrl: authData.twitter.authUrl,
           linkedinUrl: authData.linkedin.authUrl,
+          instagramUrl: authData.instagram.authUrl,
         },
       }));
   }
