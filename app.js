@@ -25,6 +25,12 @@ app.get('/client/\\d+', (req, res) => {
   res.sendFile(path.join(__dirname, './public', 'client.html'));
 });
 
+
+app.get('/facebook', (req, res) => {
+    clientManager.getClient(req.query.clientId)
+        .onFacebookAuthResponse(req.query.code);
+});
+
 app.get('/insta', (req, res) => {
   clientManager.getClient(req.query.clientId)
     .onInstagramAuthResponse(req.query.code);

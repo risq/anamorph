@@ -8,12 +8,13 @@ module.exports = class UserData {
   constructor() {
     this.tokens = {};
     this.data = {};
+    this.facebookData = {};
     this.instagramData = {};
     this.twitterData = {};
     this.linkedinData = {};
   }
 
-  fetchFacebookData(accessToken) {
+ /* fetchFacebookData(accessToken) {
     return new FacebookDataFetcher(accessToken)
         .fetch()
        .then(data => {
@@ -24,7 +25,19 @@ module.exports = class UserData {
       //  .then(data => dbg("number of photos: "+data.numberOfPhotos));
       //  .then(data => dbg("number of pages liked: "+data.numberOfPagesLiked));
       // .then(data => data.posts.forEach(post => dbg(post)));
-  }
+  }*/
+
+   fetchFacebookData(facebookDataFetcher) {
+     facebookDataFetcher.fetch()
+      .then(data => {
+        this.facebookData = data;
+     });
+     // .then(data => dbg("user min age: "+data.age_min));
+     // .then(data => dbg("number of friends: "+data.numberOfFriends));
+     //  .then(data => dbg("number of photos: "+data.numberOfPhotos));
+     //  .then(data => dbg("number of pages liked: "+data.numberOfPagesLiked));
+     // .then(data => data.posts.forEach(post => dbg(post)));
+   }
 
   fetchInstagramData(instagramDataFetcher) {
     instagramDataFetcher.fetch()

@@ -58,9 +58,17 @@ module.exports = class Client {
     this.events.emit('state:change');
   }
 
-  onFacebookAuthResponse(authResponse) {
+  onFacebookAuthResponse(oauthToken) {
     dbg('onFacebookAuthResponse');
-    this.userData.fetchFacebookData(authResponse.accessToken);
+//    this.userData.fetchFacebookData(authResponse.accessToken);
+
+    this.authManager.getFacebookDataFetcher(oauthToken)
+        .then(facebookDataFetcher => this.userData.fetchFacebookData(facebookDataFetcher));
+  }
+
+  onFacebookAuthResponseUnity(accessToken) {
+    dbg('onFacebookAuthResponse');
+    this.userData.fetchFacebookData(accessToken);
   }
 
   onInstagramAuthResponse(oauthToken) {
@@ -84,7 +92,7 @@ module.exports = class Client {
       .then(linkedinDataFetcher => this.userData.fetchLinkedinData(linkedinDataFetcher));
   }
   onValidateConnections(code, state) {
-    dbg('Validate social connections', this.id);
+    dbg('Validate social connections with client id: ', this.id);
 
     this.dataManager.validConnections(this.userData);
   }

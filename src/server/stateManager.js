@@ -5,6 +5,7 @@ const dbg = require('debug')('anamorph:stateManager');
 
 module.exports = new class StateManager {
   getState(id) {
+    this.clientId = id;
     const client = clientManager.getClient(id);
 
     return client.authManager.getAuthData()
@@ -13,8 +14,10 @@ module.exports = new class StateManager {
         status: client.isRegistered() ? 'connected' : 'disconnected',
         remoteStatus: client.remoteIsRegistered() ? 'connected' : 'disconnected',
         auth: {
-          clientId: id,
+          clientId: this.clientId,
           syncId: client.syncId,
+          rootUrl: 'http://127.0.0.1:3000', //todo: get the root base url here
+          facebookUrl: authData.facebook.authUrl,
           twitterUrl: authData.twitter.authUrl,
           linkedinUrl: authData.linkedin.authUrl,
           instagramUrl: authData.instagram.authUrl,
