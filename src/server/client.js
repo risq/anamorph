@@ -89,6 +89,11 @@ module.exports = class Client {
   onValidateConnections(code, state) {
     dbg('Validate social connections with client id: ', this.id);
 
-    this.dataManager.validConnections(this.userData);
+    this.dataManager.validConnections(this.userData)
+        .then(userData => {
+            dbg('emit validation on client.js');
+           // this.events.emit('client:validConnection'); //todo: how to do this?
+        });
+
   }
 };
