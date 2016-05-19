@@ -3,14 +3,13 @@
 
 const Bluebird = require('bluebird');
 const fbgraph = require('fbgraph');
+const getFb = Bluebird.promisify(fbgraph.get);
 const dbg = require('debug')('anamorph:facebookDataFetcher');
 
 module.exports = class FacebookDataFetcher {
   constructor(accessToken) {
     this.accessToken = accessToken;
 
-    fbgraph.setAccessToken(accessToken);
-    this.getFb = Bluebird.promisify(fbgraph.get);
     this.data = {
       name: '',
       posts: [],
@@ -294,6 +293,6 @@ module.exports = class FacebookDataFetcher {
   get(url, parameters) {
     parameters = parameters || {};
     Object.assign(parameters, { access_token: this.accessToken });
-    return this.getFb(url, parameters);
+    return getFb(url, parameters);
   }
 };
