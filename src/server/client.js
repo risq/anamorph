@@ -66,11 +66,6 @@ module.exports = class Client {
         .then(facebookDataFetcher => this.userData.fetchFacebookData(facebookDataFetcher));
   }
 
-  onFacebookAuthResponseUnity(accessToken) {
-    dbg('onFacebookAuthResponse');
-    this.userData.fetchFacebookData(accessToken);
-  }
-
   onInstagramAuthResponse(oauthToken) {
     dbg('onInstagramAuthResponse', this.id, oauthToken);
 
