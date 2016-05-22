@@ -28,7 +28,7 @@ module.exports = class TwitterAuth {
     this.api = new TwitterAPI({
       consumerKey: 'ZJPdAmxSjyCGU8dJYYbuleyfY',
       consumerSecret: 'NFhrW1LbpEPZ6dhexbLO8Z1JX4FBcQuohRwsDnMhQQy3DLHx27',
-      callback: `http://www.localhost:3000/twitter?clientId=${this.clientId}`,
+      callback: `http://localhost:3000/twitter?clientId=${this.clientId}`,
     });
 
     return this.getRequestToken()

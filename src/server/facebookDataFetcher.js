@@ -169,9 +169,13 @@ module.exports = class FacebookDataFetcher {
       }
 
       //res only returns { id: 'xxxxxxxxxxxxxxxxx' } ?Q
+      if (res.likes) {
+        this.data.numberOfPagesLiked = res.likes.data.length;
+      } else {
+        this.data.numberOfPagesLiked = 0;
+      }
 
-       this.data.numberOfPagesLiked = res.likes.data.length;
-       dbg(`Found ${this.data.numberOfPagesLiked} pages liked`);
+      dbg(`Found ${this.data.numberOfPagesLiked} pages liked`);
 
       return Bluebird.resolve(this.data);
     });
@@ -199,7 +203,9 @@ module.exports = class FacebookDataFetcher {
     dbg('Fetching work');
 
     return this.get('me?fields=work').then(res => {
-      this.data.employer = res.work[0].employer.name; //[0] for most recent
+
+      this.data.employer = res.work ? res.work[0].employer.name : null;
+
       dbg(`Most recent employer :  ${this.data.employer}`);
 
       return Bluebird.resolve(this.data);
@@ -210,7 +216,9 @@ module.exports = class FacebookDataFetcher {
     dbg('Fetching education');
 
     return this.get('me?fields=education').then(res => {
-      this.data.school = res.education[res.education.length - 1].school.name; //for most recent
+
+      this.data.school = res.education ? res.education[res.education.length - 1].school.name : null;
+      
       dbg(`Most recent school :  ${this.data.school}`);
 
       return Bluebird.resolve(this.data);

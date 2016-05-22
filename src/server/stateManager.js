@@ -21,7 +21,7 @@ module.exports = new class StateManager {
           twitterUrl: authData.twitter.authUrl,
           linkedinUrl: authData.linkedin.authUrl,
           instagramUrl: authData.instagram.authUrl,
-        },
+        }
       }));
   }
 

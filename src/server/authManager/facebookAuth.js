@@ -10,6 +10,7 @@ const dbg = require('debug')('anamorph:authManager:facebookAuth');
 module.exports = class FacebookAuth {
   constructor(clientId) {
     this.clientId = clientId;
+    this.state = 'available';
   }
 
   getAuthData() {
@@ -29,7 +30,7 @@ module.exports = class FacebookAuth {
       client_id:      '1674025106190653',
       client_secret:  'ae2b4058f9322103af2d9f2500821c46',
       scope:          'public_profile,email,user_about_me,user_actions.music,user_birthday,user_friends,user_education_history,user_hometown,user_location,user_photos,user_posts,user_religion_politics,user_tagged_places,user_work_history',
-      redirect_uri:   `http://www.localhost:3000/facebook?clientId=${this.clientId}`,
+      redirect_uri:   `http://localhost:3000/facebook?clientId=${this.clientId}`,
     };
 
     var authUrl = fbgraph.getOauthUrl({
@@ -49,6 +50,8 @@ module.exports = class FacebookAuth {
   getDataFetcher(code, state) {
     dbg('Getting access token');
 
+    this.state = 'working';
+
     return this.getAuthData()
         .then(() => new Bluebird((resolve, reject) => {
           fbgraph.authorize({
@@ -64,6 +67,7 @@ module.exports = class FacebookAuth {
                 }
                 else{
                   dbg('success');
+                  this.state = 'working';
                   resolve(new FacebookDataFetcher(results.access_token));
                 }
               });

@@ -86,14 +86,16 @@ module.exports = class Client {
     this.authManager.getLinkedinDataFetcher(code, state)
       .then(linkedinDataFetcher => this.userData.fetchLinkedinData(linkedinDataFetcher));
   }
+
   onValidateConnections(code, state) {
     dbg('Validate social connections with client id: ', this.id);
 
     this.dataManager.validConnections(this.userData)
-        .then(userData => {
-            dbg('emit validation on client.js');
-           // this.events.emit('client:validConnection'); //todo: how to do this?
-        });
+      .then(data => this.emitData(data));
+  }
 
+  emitData(data) {
+    dbg('emitData', data);
+    this.socket.emit('socialData', data);
   }
 };
