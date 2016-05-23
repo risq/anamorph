@@ -10,7 +10,7 @@ module.exports = class InstagramDataFetcher {
     this.tokens = tokens;
 
     this.data = {
-      numberOfUserPublications: '',
+      numberOfUserPhotos: '',
       numberOfUserFollowers: [],
       numberOfUserFollows: [],
       averageOfGetLikes: [],
@@ -28,7 +28,7 @@ module.exports = class InstagramDataFetcher {
     this.gram = new Nodegram({ accessToken: this.tokens.accessToken });
 
     this.gram.getAuthUrl();
-    return this.fetchNumberOfUserPublications()
+    return this.fetchNumberOfUserPhotos()
       .then(() => this.fetchNumberOfUserFollowers())
       .then(() => this.fetchNumberOfUserFollows())
       .then(() => this.fetchAverageOfGetLikes())
@@ -39,18 +39,18 @@ module.exports = class InstagramDataFetcher {
       .catch(err => dbg(`Error: ${err.message}`));
   }
 
-  fetchNumberOfUserPublications() {
+  fetchNumberOfUserPhotos() {
     dbg('Retrieving number of publications');
 
     return this.gram.get('/users/self/', {})
       .then(res => {
           if(res.counts.media){
-            this.data.numberOfUserPublications = res.counts.media;
+            this.data.numberOfUserPhotos = res.counts.media;
           }
           else{
-            this.data.numberOfUserPublications = 0;
+            this.data.numberOfUserPhotos = 0;
           }
-          dbg(`Number of user publications: ${this.data.numberOfUserPublications}`);
+          dbg(`Number of user publications: ${this.data.numberOfUserPhotos}`);
       })
       .catch(err => dbg(`Error: ${err.message}`));
   }

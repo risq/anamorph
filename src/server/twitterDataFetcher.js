@@ -14,11 +14,14 @@ module.exports = class TwitterDataFetcher {
 
       this.data = {
           totalTweetsAndRetweets: 0,
+          totalTweets: 0,
+          totalRetweets: 0,
           averageRetweetPerUserPost: 0,
           averageLikePerUserPost: 0,
           totalRetweetForUserPosts: 0,
           totalLikesForUserPosts: 0,
           usedHashtags: [],
+          nbOfPhotos: 0,
           userLikes: 0,
           userMentions: 0,
       };
@@ -82,14 +85,30 @@ module.exports = class TwitterDataFetcher {
                 dbg(`Found ${this.data.totalTweetsAndRetweets} tweets + retweets`);
 
                 data.forEach((data => {
+
+                    if(data.retweeted == true){
+                        this.data.totalRetweets+= 1;
+                    }
+                    else{
+                        this.data.totalTweets+=1;
+                    }
+
                     this.data.totalRetweetForUserPosts+= data.retweet_count;
                     this.data.totalLikesForUserPosts+= data.favorite_count;
 
                     data.entities.hashtags.forEach((hashtag) => {
                         this.data.usedHashtags.push(hashtag.text);
                     });
+
+                    if(data.entities.media){
+                        this.data.nbOfPhotos+= data.entities.media.length;
+                    }
                 }));
+
+                dbg(`Total tweets: ${this.data.totalTweets}`);
+                dbg(`Total retweets: ${this.data.totalRetweets}`);
                 dbg(`Used hashtags: ${this.data.usedHashtags}`);
+                dbg(`Number of photos: ${this.data.nbOfPhotos}`);
 
                 this.data.averageRetweetPerUserPost = (this.data.totalRetweetForUserPosts/this.data.totalTweetsAndRetweets).toFixed(2);
                 this.data.averageLikePerUserPost = (this.data.totalLikesForUserPosts/this.data.totalTweetsAndRetweets).toFixed(2);

@@ -12,11 +12,27 @@ module.exports = class FacebookDataFetcher {
 
     this.data = {
       name: '',
+      age_min: 0,
       posts: [],
+      nbOfPosts: 0,
+      activeUserSince: 0,
+      postsFrequency: [],
+      nbOfFriends: 0,
+      nbOfPhotos: 0,
+      nbOfPagesLiked: 0,
+      shares: [],
+      nbOfShares: 0,
+      locationName: null,
+      locationLatitude: null,
+      locationLongitude: null,
+      employer: null,
+      school: null,
       albums: [],
+      nbOfAlbums: 0,
       nbOfComments: 0,
+      averageCommentOnPost: 0,
       nbOfLike: 0,
-      frequency: [],
+      averageLikeOnPost: 0,
     };
     this.tempDatePosts = [];
     this.datePosts = [];
@@ -29,6 +45,7 @@ module.exports = class FacebookDataFetcher {
       .then(() => this.fetchNumberOfFriends())
       .then(() => this.fetchNumberOfPhotos())
       .then(() => this.fetchNumberOfPagesLiked())
+      .then(() => this.fetchNumberOfShares())
       .then(() => this.fetchLocation())
       .then(() => this.fetchWork())
       .then(() => this.fetchEducation())
@@ -76,8 +93,10 @@ module.exports = class FacebookDataFetcher {
         var date = new Date(this.data.posts[this.data.posts.length-2].created_time);
         this.data.activeUserSince = date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear();
 
+        this.data.nbOfPosts = this.data.posts.length;
+
         dbg('Fetching user feed');
-        dbg(`Found ${this.data.posts.length} posts`);
+        dbg(`Found ${this.data.nbOfPosts} posts`);
         dbg(`Active user since ${this.data.activeUserSince}`);
       }
 
@@ -118,11 +137,11 @@ module.exports = class FacebookDataFetcher {
         var day = Math.floor(diff / oneDay);
 
         //Todo -> improved this recuperation - iteration?
-        this.data.frequency['A-2016']= (this.datePosts['A-2016'] /day).toFixed(3);
-        this.data.frequency['A-2015']= (this.datePosts['A-2015'] /365).toFixed(3);
+        this.data.postsFrequency['A-2016']= ((this.datePosts['A-2016'] /day)*30).toFixed(3); //*30 = per month
+        this.data.postsFrequency['A-2015']= ((this.datePosts['A-2015'] /365)*30).toFixed(3);
 
         dbg('Frequency');
-        dbg(this.data.frequency);
+        dbg(this.data.postsFrequency);
       }
 
       return Bluebird.resolve(this.data);
@@ -134,8 +153,8 @@ module.exports = class FacebookDataFetcher {
 
     return this.get('me/friends')
         .then(res => {
-          this.data.numberOfFriends = res.summary.total_count;
-          dbg(`Found ${this.data.numberOfFriends} friends`);
+          this.data.nbOfFriends = res.summary.total_count;
+          dbg(`Found ${this.data.nbOfFriends} friends`);
 
           return Bluebird.resolve(true);
     });
@@ -145,19 +164,17 @@ module.exports = class FacebookDataFetcher {
     dbg('Fetching number of photos where the user is identified');
 
     return this.get(url || '/me?fields=photos', {
-      limit: 0,
+      limit: 10000,
     }).then(res => {
       if (res.paging && res.paging.next) {
         return this.fetchNumberOfPhotos(res.paging.next);
       }
 
       if(res.photos){
-        this.data.numberOfPhotos = res.photos.data.length;
+        this.data.nbOfPhotos = res.photos.data.length;
       }
-      else{
-        this.data.numberOfPhotos = 0;
-      }
-      dbg(`Found ${this.data.numberOfPhotos} photos`);
+
+      dbg(`Found ${this.data.nbOfPhotos} photos`);
 
       return Bluebird.resolve(this.data);
     });
@@ -167,7 +184,7 @@ module.exports = class FacebookDataFetcher {
     dbg('Fetching number of pages liked by user');
 
     return this.get(url || '/me/?fields=likes', {
-      limit: 0,
+      limit: 10000,
     }).then(res => {
       if (res.paging && res.paging.next) {
         return this.fetchNumberOfPagesLiked(res.paging.next);
@@ -175,12 +192,35 @@ module.exports = class FacebookDataFetcher {
 
       //res only returns { id: 'xxxxxxxxxxxxxxxxx' } ?Q
       if (res.likes) {
-        this.data.numberOfPagesLiked = res.likes.data.length;
-      } else {
-        this.data.numberOfPagesLiked = 0;
+        this.data.nbOfPagesLiked = res.likes.data.length;
       }
 
-      dbg(`Found ${this.data.numberOfPagesLiked} pages liked`);
+      dbg(`Found ${this.data.nbOfPagesLiked} pages liked`);
+
+      return Bluebird.resolve(this.data);
+    });
+  }
+
+  fetchNumberOfShares(url) {
+    dbg('Fetching number of shares by user');
+
+    return this.get(url || '/me/feed/?fields=status_type', {
+      limit: 10000,
+    }).then(res => {
+
+      this.data.shares.push(...res.data);
+
+      if (res.paging && res.paging.next) {
+        return this.fetchNumberOfShares(res.paging.next);
+      }
+
+      this.data.shares.forEach((data => {
+        if(typeof(data.status_type) != 'undefined' && data.status_type == 'shared_story'){
+          this.data.nbOfShares+= 1;
+        }
+      }));
+
+      dbg(`Found ${this.data.nbOfShares} shares`);
 
       return Bluebird.resolve(this.data);
     });
@@ -252,7 +292,8 @@ module.exports = class FacebookDataFetcher {
       }
       else{
         dbg('Fetching number of albums');
-        dbg(`Found ${this.data.albums.length} albums`);
+        this.data.nbOfAlbums = this.data.albums.length;
+        dbg(`Found ${this.data.nbOfAlbums} albums`);
       }
 
       return Bluebird.resolve(true);
