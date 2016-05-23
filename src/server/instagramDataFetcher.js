@@ -44,7 +44,12 @@ module.exports = class InstagramDataFetcher {
 
     return this.gram.get('/users/self/', {})
       .then(res => {
-        this.data.numberOfUserPublications = res.counts.media;
+          if(res.counts.media){
+            this.data.numberOfUserPublications = res.counts.media;
+          }
+          else{
+            this.data.numberOfUserPublications = 0;
+          }
           dbg(`Number of user publications: ${this.data.numberOfUserPublications}`);
       })
       .catch(err => dbg(`Error: ${err.message}`));
@@ -115,11 +120,17 @@ module.exports = class InstagramDataFetcher {
       .then(res => {
           numberOfPublications += res.length;
           res.forEach((res => {
-            numberOfTags += res.tags.length;
 
-            res.tags.forEach((result => {
-              wordList.push(result);
-            }));
+            if(res.tags){
+              numberOfTags += res.tags.length;
+
+              res.tags.forEach((result => {
+                wordList.push(result);
+              }));
+            }
+            else{
+              numberOfTags = 0;
+            }
           }));
 
           this.data.averageOfTagsForPostPublication = Math.round(numberOfTags / numberOfPublications);

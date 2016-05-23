@@ -72,7 +72,12 @@ module.exports = class TwitterDataFetcher {
               reject(err);
             } else {
 
-                this.data.totalTweetsAndRetweets = data.length;
+                if(data){
+                    this.data.totalTweetsAndRetweets = data.length;
+                }
+                else{
+                    this.data.totalTweetsAndRetweets = 0;
+                }
 
                 dbg(`Found ${this.data.totalTweetsAndRetweets} tweets + retweets`);
 

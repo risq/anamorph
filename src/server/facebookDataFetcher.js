@@ -151,7 +151,12 @@ module.exports = class FacebookDataFetcher {
         return this.fetchNumberOfPhotos(res.paging.next);
       }
 
-      this.data.numberOfPhotos = res.photos.data.length;
+      if(res.photos){
+        this.data.numberOfPhotos = res.photos.data.length;
+      }
+      else{
+        this.data.numberOfPhotos = 0;
+      }
       dbg(`Found ${this.data.numberOfPhotos} photos`);
 
       return Bluebird.resolve(this.data);
@@ -185,17 +190,27 @@ module.exports = class FacebookDataFetcher {
     dbg('Fetching location');
 
     return this.get('me?fields=location').then(res => {
-      this.data.locationName = res.location.name;
-      dbg(`Location :  ${this.data.locationName}`);
 
-      this.get(`${res.location.id}?fields=location`).then(res => {
-        this.data.locationLatitude = res.location.latitude;
-        this.data.locationLongitude = res.location.longitude;
-        dbg(`Latitude : ${this.data.locationLatitude}`);
-        dbg(`Longitude : ${this.data.locationLatitude}`);
+      if(res.location){
+        this.data.locationName = res.location.name;
+        dbg(`Location :  ${this.data.locationName}`);
+
+        this.get(`${res.location.id}?fields=location`).then(res => {
+          this.data.locationLatitude = res.location.latitude;
+          this.data.locationLongitude = res.location.longitude;
+          dbg(`Latitude : ${this.data.locationLatitude}`);
+          dbg(`Longitude : ${this.data.locationLatitude}`);
+
+          return Bluebird.resolve(true);
+        });
+      }
+      else{
+        this.data.locationName = null;
+        this.data.locationLatitude = null;
+        this.data.locationLongitude = null;
 
         return Bluebird.resolve(true);
-      });
+      }
     });
   }
 
