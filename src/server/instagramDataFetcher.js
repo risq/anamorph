@@ -20,7 +20,7 @@ module.exports = class InstagramDataFetcher {
       averageOfGetComments: [],
       averageOfTagsForPostPublication: [],
       frequency: [],
-      mostUsedWords: [],
+      mostUsedHashtags: [],
     };
     this.datePosts = [];
   }
@@ -159,10 +159,10 @@ module.exports = class InstagramDataFetcher {
           //Get the most used hashtags
           var wordAssociation = this.getWordFrequency(wordList);
           for(var i=0; i<3; i++){
-            this.data.mostUsedWords.push(wordAssociation[i]);
+            this.data.mostUsedHashtags.push(wordAssociation[i]);
           }
           dbg('Most used hashtags:');
-          dbg(this.data.mostUsedWords);
+          dbg(this.data.mostUsedHashtags);
 
         })
       .catch(err => dbg(`Error: ${err.message}`));

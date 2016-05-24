@@ -170,6 +170,97 @@ module.exports = class DataManager {
         }
     }
 
+    treatMoodCircle(){
+
+        return {
+            globalData: {
+
+            },
+            publicData: {
+            },
+            privateData: {
+            },
+            professionalData: {
+            },
+            raw: {
+                facebook: {
+                },
+                twitter: {
+                },
+                linkedin: {
+                },
+                instagram: {
+                },
+            }
+        }
+    }
+
+    //todo: to finish
+    treatPassiveIdentityCircle(){
+
+        return {
+            globalData: {
+
+            },
+            publicData: {
+                totalRetweetForUserPosts: userData.twitterData.totalRetweetForUserPosts,
+                userMentions: userData.twitterData.userMentions,
+            },
+            privateData: {
+                nbOfComments: userData.facebookData.nbOfComments,
+                averageCommentOnPost: userData.facebookData.averageCommentOnPost,
+                nbOfOtherUsersPostOnFeed: userData.facebookData.nbOfOtherUsersPostOnFeed,
+            },
+            professionalData: {
+            },
+            raw: {
+                facebook: {
+                    nbOfComments: userData.facebookData.nbOfComments,
+                    averageCommentOnPost: userData.facebookData.averageCommentOnPost,
+                    nbOfOtherUsersPostOnFeed: userData.facebookData.nbOfOtherUsersPostOnFeed,
+                },
+                twitter: {
+                    totalRetweetForUserPosts: userData.twitterData.totalRetweetForUserPosts,
+                    userMentions: userData.twitterData.userMentions,
+                },
+                linkedin: {
+                },
+                instagram: {
+                },
+            }
+        }
+    }
+
+    //todo: to finish
+    treatHobbiesCircle(){
+        this.publicMostUsedHashtags = userData.instagramData.mostUsedHashtags.concat(userData.twitterData.mostUsedHashtags);
+
+        return {
+            globalData: {
+
+            },
+            publicData: {
+                mostUsedHashtags: this.publicMostUsedHashtags,
+            },
+            privateData: {
+            },
+            professionalData: {
+            },
+            raw: {
+                facebook: {
+                },
+                twitter: {
+                    mostUsedHashtags: userData.twitterData.mostUsedHashtags,
+                },
+                linkedin: {
+                },
+                instagram: {
+                    mostUsedHashtags: userData.instagramData.mostUsedHashtags,
+                },
+            }
+        }
+    }
+
     getData() {
       return {
         activity: this.treatActivityCircle(),

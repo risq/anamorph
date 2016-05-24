@@ -22,6 +22,7 @@ module.exports = class TwitterDataFetcher {
             averageRetweetPerUserPost: 0,
             averageLikePerUserPost: 0,
             mostPopularTweet: '',
+            mostUsedHashtags: [],
             totalRetweetForUserPosts: 0,
             totalLikesForUserPosts: 0,
             usedHashtags: [],
@@ -71,6 +72,7 @@ module.exports = class TwitterDataFetcher {
     //Get the user's tweets (max: 200)
     fetchUserTweets() {
         dbg('Fetching user tweets');
+        var wordList = [];
 
         return new Bluebird((resolve, reject) => {
             //Best practice to set include_rts: 1 -> to get retweets
@@ -105,7 +107,7 @@ module.exports = class TwitterDataFetcher {
                             this.data.totalLikesForUserPosts += data.favorite_count;
 
                             data.entities.hashtags.forEach((hashtag) => {
-                                this.data.usedHashtags.push(hashtag.text);
+                                wordList.push(hashtag.text);
                             });
 
                             if (data.entities.media) {
@@ -127,7 +129,6 @@ module.exports = class TwitterDataFetcher {
 
                         dbg(`Total tweets: ${this.data.totalTweets}`);
                         dbg(`Total retweets: ${this.data.totalRetweets}`);
-                        dbg(`Used hashtags: ${this.data.usedHashtags}`);
                         dbg(`Number of photos: ${this.data.nbOfPhotos}`);
 
                         this.data.averageRetweetPerUserPost = (this.data.totalRetweetForUserPosts / this.data.totalTweetsAndRetweets).toFixed(2);
@@ -141,11 +142,48 @@ module.exports = class TwitterDataFetcher {
 
                         dbg(`Most popular tweet: ${this.data.mostPopularTweet}`);
 
+                        //Get the most used hashtags
+                        var wordAssociation = this.getWordFrequency(wordList);
+                        for(var i=0; i<3; i++){
+                            this.data.mostUsedHashtags.push(wordAssociation[i]);
+                        }
+                        dbg('Most used hashtags:');
+                        dbg(this.data.mostUsedHashtags);
+
                         resolve(this.data);
                     }
                 }
             );
         });
+    }
+
+    //Get word frequency for used hashtags and sort them in array (bigger to smaller)
+    getWordFrequency(wordList){
+        var a = [], b = [], prev;
+
+        wordList.sort();
+        for ( var i = 0; i < wordList.length; i++ ) {
+            if ( wordList[i] !== prev ) {
+                a.push(wordList[i]);
+                b.push(1);
+            } else {
+                b[b.length-1]++;
+            }
+            prev = wordList[i];
+        }
+
+        //Associate the words with their occurrence
+        var associated = a.reduce(function (previous, key, index) {
+            previous[key] = b[index];
+            return previous
+        }, {});
+
+        //Sort and reverse the associated array
+        var tupleArray = [];
+        for (var key in associated) tupleArray.push([key, associated[key]]);
+        tupleArray.sort(function (a, b) { return a[1] - b[1] }).reverse();
+
+        return tupleArray;
     }
 
     //Get the user mentions (max: 800)

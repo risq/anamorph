@@ -12,10 +12,12 @@ module.exports = class FacebookDataFetcher {
 
     this.data = {
       name: '',
+      userId: 0,
       age_min: 0,
       posts: [],
       nbOfPosts: 0,
       activeUserSince: 0,
+      nbOfOtherUsersPostOnFeed: 0,
       postsFrequency: [],
       nbOfFriends: 0,
       nbOfPhotos: 0,
@@ -29,6 +31,7 @@ module.exports = class FacebookDataFetcher {
       school: null,
       albums: [],
       nbOfAlbums: 0,
+      lastMoviesSeen: [],
       nbOfComments: 0,
       averageCommentOnPost: 0,
       nbOfLike: 0,
@@ -61,11 +64,13 @@ module.exports = class FacebookDataFetcher {
   }
 
   fetchName() {
-    dbg('Fetching user name');
+    dbg('Fetching user name and id');
 
     return this.get('/me').then(res => {
       this.data.name = res.name;
+      this.data.userId = res.id.toString();
       dbg(`Found name: ${this.data.name}`);
+      dbg(`Found id: ${this.data.userId}`);
 
       return Bluebird.resolve(this.data);
     });
@@ -84,7 +89,7 @@ module.exports = class FacebookDataFetcher {
 
   fetchFeed(url) {
 
-    return this.get(url || '/me/feed', {
+    return this.get(url || '/me/feed?fields=from,message,story,created_time', {
       limit: 100,
     }).then(res => {
       this.data.posts.push(...res.data);
@@ -102,9 +107,16 @@ module.exports = class FacebookDataFetcher {
 
         this.data.nbOfPosts = this.data.posts.length;
 
+        this.data.posts.forEach((data => {
+          if(data.from.id != this.data.userId){
+            this.data.nbOfOtherUsersPostOnFeed+= 1;
+          }
+        }));
+
         dbg('Fetching user feed');
         dbg(`Found ${this.data.nbOfPosts} posts`);
         dbg(`Active user since ${this.data.activeUserSince} years`);
+        dbg(`Nb of other users post on feed: ${this.data.nbOfOtherUsersPostOnFeed}`);
       }
 
       return Bluebird.resolve(this.data);
@@ -306,6 +318,21 @@ module.exports = class FacebookDataFetcher {
       return Bluebird.resolve(true);
     });
   }
+
+/*  fetchLastMoviesSeen() { video.watches doesn't work, why?
+
+    return this.get('/me/video.watches').then(res => {
+      dbg('Fetching last movies seen');
+
+      for(var i=0;i<3;i++){
+        this.data.lastMoviesSeen.push(res.data[i].data.movie.title);
+      }
+
+      dbg(`Found ${this.data.nbOfAlbums} albums`);
+
+      return Bluebird.resolve(true);
+    });
+  }*/
 
   fetchNumberOfCommentOnUserPosts(url) {
 
