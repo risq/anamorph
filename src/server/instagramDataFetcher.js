@@ -10,6 +10,7 @@ module.exports = class InstagramDataFetcher {
     this.tokens = tokens;
 
     this.data = {
+      nbOfPosts: '',
       numberOfUserPhotos: '',
       numberOfUserFollowers: [],
       numberOfUserFollows: [],
@@ -46,9 +47,11 @@ module.exports = class InstagramDataFetcher {
       .then(res => {
           if(res.counts.media){
             this.data.numberOfUserPhotos = res.counts.media;
+            this.data.nbOfPosts = this.data.numberOfUserPhotos;
           }
           else{
             this.data.numberOfUserPhotos = 0;
+            this.data.nbOfPosts = this.data.numberOfUserPhotos;
           }
           dbg(`Number of user publications: ${this.data.numberOfUserPhotos}`);
       })

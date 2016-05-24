@@ -91,13 +91,16 @@ module.exports = class FacebookDataFetcher {
       else{
 
         var date = new Date(this.data.posts[this.data.posts.length-2].created_time);
-        this.data.activeUserSince = date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear();
+        //this.data.activeUserSince = date.getDate()+'-'+(date.getMonth()+1)+'-'+date.getFullYear();
+
+        var now = new Date();
+        this.data.activeUserSince = now.getFullYear() - date.getFullYear();
 
         this.data.nbOfPosts = this.data.posts.length;
 
         dbg('Fetching user feed');
         dbg(`Found ${this.data.nbOfPosts} posts`);
-        dbg(`Active user since ${this.data.activeUserSince}`);
+        dbg(`Active user since ${this.data.activeUserSince} years`);
       }
 
       return Bluebird.resolve(this.data);

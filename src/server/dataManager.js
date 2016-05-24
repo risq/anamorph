@@ -37,10 +37,37 @@ module.exports = class DataManager {
     }
 
     activityTreatment(){
+        this.globalNbOfPhotos = userData.facebookData.nbOfPhotos + userData.instagramData.numberOfUserPublications + userData.twitterData.nbOfPhotos;
+        this.globalNbOfShares = userData.facebookData.nbOfShares + userData.twitterData.totalRetweets;
+        this.globalNbOfPosts = userData.facebookData.nbOfPosts + userData.twitterData.totalTweets;
+        this.globalPostFrequency = userData.facebookData.frequency + userData.instagramData.frequency + userData.twitterData.frequency;
 
-        this.globalNbOfPhotos = userData.facebookData.nbOfPhotos + userData.instagramData.numberOfUserPublications;
-        this.globalNbOfShares = userData.facebookData.nbOfShares;
-        this.globalNbOfPosts = userData.facebookData.nbOfPosts;
+        this.publicNbOfPhotos = userData.instagramData.numberOfUserPublications + userData.twitterData.nbOfPhotos;
+        this.publicPostFrequency = userData.instagramData.frequency + userData.twitterData.frequency;
+        
+        if(userData.facebookData.nbOfPosts > userData.instagramData.nbOfPosts
+            && userData.facebookData.nbOfPosts > userData.twitterData.nbOfPosts){
+            this.dominantProfile = 'privé';
+        }
+        else if(userData.instagramData.nbOfPosts > userData.facebookData.nbOfPosts
+            && userData.instagramData.nbOfPosts > userData.twitterData.nbOfPosts){
+            this.dominantProfile = 'publique';
+        }
+        else if(userData.twitterData.nbOfPosts > userData.facebookData.nbOfPosts
+            && userData.twitterData.nbOfPosts > userData.instagramData.nbOfPosts){
+            this.dominantProfile = 'publique';
+        }
+
+        //*30 = per month
+        if(this.globalPostFrequency*30 < 20){
+            this.typeProfile = "Publication peu féquente";
+        }
+        else if(this.globalPostFrequency*30 >= 20 && this.globalPostFrequency*30 < 40){
+            this.typeProfile = "Publication féquente";
+        }
+        else if(this.globalPostFrequency*30 >= 40){
+            this.typeProfile = "Publication très féquente";
+        }
 
 
         this.activity = {
@@ -48,15 +75,15 @@ module.exports = class DataManager {
                 nbOfPhotos: this.globalNbOfPhotos,
                 nbOfShares: this.globalNbOfShares,
                 nbOfPosts: this.globalNbOfPosts,
-                seniority: 0,
-                dominantProfile: 0,
-                typeProfile: 0,
+                seniority: userData.facebookData.activeUserSince,
+                dominantProfile: this.dominantProfile,
+                typeProfile: this.typeProfile,
             },
             publicData: {
-                postFrequency: 0,
-                nbOfShare: 0,
-                nbOfPosts: 0,
-                nbOfPhotos: 0,
+                postFrequency: this.publicPostFrequency,
+                nbOfShare: userData.twitterData.totalRetweets,
+                nbOfPosts: userData.twitterData.totalTweets,
+                nbOfPhotos: this.publicNbOfPhotos,
             },
             privateData: {
                 postFrequency: userData.facebookData.postsFrequency,
