@@ -16,27 +16,14 @@ module.exports = class DataManager {
         return new Bluebird((resolve, reject) => {
           userData.events.on('allDataFetched', () => {
             dbg('allDataFetched event fired');
-            resolve(this.dataTreatment());
+            resolve(this.getData());
           });
 
           userData.terminate();
         });
     }
 
-    dataTreatment() {
-        dbg('Facebook data');
-        //dbg(this.userData.facebookData);
-        dbg('Instagram data');
-        //dbg(this.userData.instagramData);
-        dbg('Twitter data');
-        //dbg(this.userData.twitterData);
-        dbg('LinkedIn data');
-        //dbg(this.userData.linkedinData);
-
-        return this.getData();
-    }
-
-    activityTreatment(){
+    treatActivityCircle(){
         this.globalNbOfPhotos = userData.facebookData.nbOfPhotos + userData.instagramData.numberOfUserPublications + userData.twitterData.nbOfPhotos;
         this.globalNbOfShares = userData.facebookData.nbOfShares + userData.twitterData.totalRetweets;
         this.globalNbOfPosts = userData.facebookData.nbOfPosts + userData.twitterData.totalTweets;
@@ -69,8 +56,7 @@ module.exports = class DataManager {
             this.typeProfile = "Publication très féquente";
         }
 
-
-        this.activity = {
+        return {
             globalData: {
                 nbOfPhotos: this.globalNbOfPhotos,
                 nbOfShares: this.globalNbOfShares,
@@ -120,7 +106,7 @@ module.exports = class DataManager {
 
     getData() {
       return {
-        activity: {},
+        activity: this.treatActivityCircle(),
         influence: {},
       }
     }
