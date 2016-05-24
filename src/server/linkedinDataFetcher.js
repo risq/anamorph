@@ -12,6 +12,7 @@ module.exports = class LinkedinDataFetcher {
         this.api = api.init(this.user.access_token);
 
         this.data = {
+            email: '',
             connections: '',
         };
     }

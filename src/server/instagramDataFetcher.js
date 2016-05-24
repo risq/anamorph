@@ -14,6 +14,8 @@ module.exports = class InstagramDataFetcher {
       numberOfUserPhotos: '',
       numberOfUserFollowers: [],
       numberOfUserFollows: [],
+      mostPopularPhoto: '',
+      nbOfLikes: 0,
       averageOfGetLikes: [],
       averageOfGetComments: [],
       averageOfTagsForPostPublication: [],
@@ -87,11 +89,25 @@ module.exports = class InstagramDataFetcher {
 
     return this.gram.get('/users/self/media/recent', {})
       .then(res => {
-        numberOfPublications += res.length;
-        res.forEach(res => numberOfLikes += res.likes.count);
+          numberOfPublications += res.length;
+          res.forEach(res => {
+            numberOfLikes += res.likes.count;
 
-        this.data.averageOfGetLikes = Math.round(numberOfLikes / numberOfPublications);
+            //GET MOST POPULAR PHOTO
+            if(res.likes.counts > this.mostLikedPhoto && res.images.standard_resolution.url){
+              this.data.mostPopularPhoto = res.images.standard_resolution.url;
+              this.mostLikedPhoto = res.likes.count;
+            }
+            else if(this.data.mostPopularPhoto == '' && res.images.standard_resolution.url){
+              this.data.mostPopularPhoto = res.images.standard_resolution.url;
+              this.mostLikedPhoto = res.likes.count;
+            }
+          });
+
+          this.data.nbOfLikes = numberOfLikes;
+          this.data.averageOfGetLikes = Math.round(numberOfLikes / numberOfPublications);
           dbg(`Average of likes: ${this.data.averageOfGetLikes}`);
+          dbg(`Most popular photo: ${this.data.mostPopularPhoto}`);
       })
       .catch(err => dbg(`Error: ${err.message}`));
   }

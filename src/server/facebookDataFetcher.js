@@ -32,6 +32,10 @@ module.exports = class FacebookDataFetcher {
       nbOfComments: 0,
       averageCommentOnPost: 0,
       nbOfLike: 0,
+      lessPopularPost: '',
+      mostPopularPost: '',
+      lessPopularPhoto: '',
+      mostPopularPhoto: '',
       averageLikeOnPost: 0,
     };
     this.tempDatePosts = [];
@@ -332,7 +336,7 @@ module.exports = class FacebookDataFetcher {
 
   fetchNumberOfLikeOnUserPosts(url) {
 
-    return this.get(url || '/me?fields=feed{likes}', {
+    return this.get(url || '/me?fields=feed{likes,message,picture}', {
       limit: 100,
     }).then(res => {
 
@@ -345,12 +349,54 @@ module.exports = class FacebookDataFetcher {
         res.feed.data.forEach((data => {
           if(typeof(data.likes) != 'undefined'){
             this.data.nbOfLike+= data.likes.data.length;
+
+
+            //GET MOST POPULAR POST AND PHOTO
+            if(data.likes.data.length > this.mostLikedPost && data.message){
+              this.data.mostPopularPost = data.message;
+              this.mostLikedPost = data.likes.data.length;
+
+              if(data.picture){
+                this.data.mostPopularPhoto = data.picture;
+              }
+            }
+            else if(this.data.mostPopularPost == '' && data.message){
+              this.data.mostPopularPost = data.message;
+              this.mostLikedPost = data.likes.data.length;
+
+              if(data.picture){
+                this.data.mostPopularPhoto = data.picture;
+              }
+            }
+
+            //GET LESS POPULAR POST AND PHOTO
+            if(data.likes.data.length < this.lessLikedPost && data.message){
+              this.data.lessPopularPost = data.message;
+              this.lessLikedPost = data.likes.data.length;
+
+              if(data.picture){
+                this.data.lessPopularPhoto = data.picture;
+              }
+            }
+            else if(this.data.lessPopularPost == '' && data.message){
+              this.data.lessPopularPost = data.message;
+              this.lessLikedPost = data.likes.data.length;
+
+              if(data.picture){
+                this.data.lessPopularPhoto = data.picture;
+              }
+            }
+
           }
         }));
         this.data.averageLikeOnPost = (this.data.nbOfLike/res.feed.data.length).toFixed(2);
 
         dbg(`Found: ${this.data.nbOfLike} likes`);
         dbg(`Average like per post: ${this.data.averageLikeOnPost}`);
+        dbg(`Less popular post: ${this.data.lessPopularPost}`);
+        dbg(`Most popular post: ${this.data.mostPopularPost}`);
+        dbg(`Less popular photo: ${this.data.lessPopularPhoto}`);
+        dbg(`Most popular photo: ${this.data.mostPopularPhoto}`);
       }
 
       return Bluebird.resolve(this.data);

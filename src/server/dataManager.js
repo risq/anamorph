@@ -87,11 +87,13 @@ module.exports = class DataManager {
                     nbOfPhotos: userData.facebookData.nbOfPhotos,
                     nbOfShare: userData.facebookData.nbOfShares,
                     nbOfPosts: userData.facebookData.nbOfPosts,
+                    postFrequency: userData.facebookData.postsFrequency,
                 },
                 twitter: {
                     nbOfPhotos: userData.twitterData.nbOfPhotos,
                     nbOfShare: userData.twitterData.totalRetweets,
                     nbOfPosts: userData.twitterData.totalTweets,
+                    postFrequency: userData.twitterData.frequency,
                 },
                 linkedin: {
                     nbOfShare: 0,
@@ -99,6 +101,70 @@ module.exports = class DataManager {
                 },
                 instagram: {
                     nbOfPhotos: userData.instagramData.numberOfUserPublications,
+                    postFrequency: userData.instagramData.frequency,
+                },
+            }
+        }
+    }
+
+    treatInfluenceCircle(){
+
+        this.privateAverageFeedbackOnPost = userData.facebookData.averageCommentOnPost + userData.facebookData.averageLikeOnPost;
+
+        this.publicNbOfFollowers = userData.instagramData.numberOfUserFollowers + userData.twitterData.numberOfFollowers;
+        this.publicNbOfLikes = userData.instagramData.nbOfLikes +  userData.twitterData.totalLikesForUserPosts;
+        this.publicAverageFeedbackOnPost = userData.instagramData.averageOfGetLikes + userData.instagramData.averageOfGetComments +
+                                            userData.twitterData.averageRetweetPerUserPost + userData.twitterData.averageLikePerUserPost;
+
+        return {
+            globalData: {
+
+            },
+            publicData: {
+                nbOfFollowers: this.publicNbOfFollowers,
+                nbOfRetweets: userData.twitterData.totalRetweets,
+                nbOfLikes: this.publicNbOfLikes,
+                averageFeedbackOnPost: this.publicAverageFeedbackOnPost,
+                mostPopularPhoto: userData.instagramData.mostPopularPhoto,
+                mostPopularTweet: userData.twitterData.mostPopularTweet,
+            },
+            privateData: {
+                nbOfLikes: userData.facebookData.nbOfLike,
+                nbOfFriends: userData.facebookData.nbOfFriends,
+                averageFeedbackOnPost: this.privateAverageFeedbackOnPost,
+                lessPopularPost: userData.facebookData.lessPopularPost,
+                mostPopularPost: userData.facebookData.mostPopularPost,
+                lessPopularPhoto: userData.facebookData.lessPopularPhoto,
+                mostPopularPhoto: userData.facebookData.mostPopularPhoto,
+            },
+            professionalData: {
+            },
+            raw: {
+                facebook: {
+                    nbOfLikes: userData.facebookData.nbOfLike,
+                    nbOfFriends: userData.facebookData.nbOfFriends,
+                    averageFeedbackOnPost: this.privateAverageFeedbackOnPost,
+                    lessPopularPost: userData.facebookData.lessPopularPost,
+                    mostPopularPost: userData.facebookData.mostPopularPost,
+                    lessPopularPhoto: userData.facebookData.lessPopularPhoto,
+                    mostPopularPhoto: userData.facebookData.mostPopularPhoto,
+                },
+                twitter: {
+                    nbOfFollowers: userData.twitterData.numberOfFollowers,
+                    nbOfLikes: userData.twitterData.totalLikesForUserPosts,
+                    averageFeedbackOnPost: userData.twitterData.averageRetweetPerUserPost + userData.twitterData.averageLikePerUserPost,
+                    mostPopularTweet: userData.twitterData.mostPopularTweet,
+                },
+                linkedin: {
+                    nbOfReference: 0,
+                    nbOfConnections: userData.linkedinData.connections,
+                    nbOfViewPerMonth: 0,
+                },
+                instagram: {
+                    nbOfFollowers: userData.instagramData.numberOfUserFollowers,
+                    nbOfLikes: userData.instagramData.nbOfLikes,
+                    averageFeedbackOnPost: userData.instagramData.averageOfGetLikes + userData.instagramData.averageOfGetComments,
+                    mostPopularPhoto: userData.instagramData.mostPopularPhoto,
                 },
             }
         }
@@ -107,7 +173,7 @@ module.exports = class DataManager {
     getData() {
       return {
         activity: this.treatActivityCircle(),
-        influence: {},
+        influence: this.treatInfluenceCircle(),
       }
     }
 };

@@ -13,12 +13,15 @@ module.exports = class TwitterDataFetcher {
         this.user = user;
 
         this.data = {
+            numberOfFollowers: 0,
+            numberOfFriends: 0,
             totalTweetsAndRetweets: 0,
             nbOfPosts: 0,
             totalTweets: 0,
             totalRetweets: 0,
             averageRetweetPerUserPost: 0,
             averageLikePerUserPost: 0,
+            mostPopularTweet: '',
             totalRetweetForUserPosts: 0,
             totalLikesForUserPosts: 0,
             usedHashtags: [],
@@ -108,6 +111,16 @@ module.exports = class TwitterDataFetcher {
                             if (data.entities.media) {
                                 this.data.nbOfPhotos += data.entities.media.length;
                             }
+
+                            //GET MOST POPULAR TWEET
+                            if(data.favorite_count > this.mostLikedTweet && data.text){
+                                this.data.mostPopularTweet = data.text;
+                                this.mostLikedTweet = data.favorite_count;
+                            }
+                            else if(this.data.mostPopularTweet == '' && data.text){
+                                this.data.mostPopularTweet = data.text;
+                                this.mostLikedTweet = data.favorite_count;
+                            }
                         }));
 
                         this.data.nbOfPosts = this.data.totalTweets;
@@ -125,6 +138,8 @@ module.exports = class TwitterDataFetcher {
 
                         dbg(`Average of retweets per post: ${this.data.averageRetweetPerUserPost}`);
                         dbg(`Average of likes per post: ${this.data.averageLikePerUserPost}`);
+
+                        dbg(`Most popular tweet: ${this.data.mostPopularTweet}`);
 
                         resolve(this.data);
                     }
