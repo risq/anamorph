@@ -16,6 +16,7 @@ module.exports = class InstagramDataFetcher {
       numberOfUserFollows: [],
       mostPopularPhoto: '',
       nbOfLikes: 0,
+      nbOfComments: 0,
       averageOfGetLikes: [],
       averageOfGetComments: [],
       averageOfTagsForPostPublication: [],
@@ -123,6 +124,7 @@ module.exports = class InstagramDataFetcher {
         numberOfPublications += res.length;
         res.forEach(res => numberOfComments += res.comments.count);
 
+          this.data.nbOfComments = numberOfComments;
         this.data.averageOfGetComments = Math.round(numberOfComments / numberOfPublications);
           dbg(`Average of comments: ${this.data.averageOfGetComments}`);
       })

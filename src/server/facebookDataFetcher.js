@@ -21,6 +21,7 @@ module.exports = class FacebookDataFetcher {
       postsFrequency: [],
       nbOfFriends: 0,
       nbOfPhotos: 0,
+      nbOfPhotosWhereUserIsIdentified: 0,
       nbOfPagesLiked: 0,
       pagesCategoryLiked: [],
       shares: [],
@@ -50,6 +51,7 @@ module.exports = class FacebookDataFetcher {
     this.datePosts = [];
     this.pagesCategoryList = [];
     this.pagesCategoryTemp = [];
+    this.nbOfPhotosTemp = [];
   }
 
   fetch() {
@@ -58,6 +60,7 @@ module.exports = class FacebookDataFetcher {
       .then(() => this.fetchFeed())
       .then(() => this.fetchNumberOfFriends())
       .then(() => this.fetchNumberOfPhotos())
+      .then(() => this.fetchNumberOfPhotosWhereUserIsIdentified())
       .then(() => this.fetchNumberOfPagesLiked())
       .then(() => this.fetchNumberOfShares())
       .then(() => this.fetchLocation())
@@ -190,20 +193,43 @@ module.exports = class FacebookDataFetcher {
   }
 
   fetchNumberOfPhotos(url) {
+    dbg('Fetching number of photos user posts');
+
+    return this.get(url || '/me?fields=albums{photos}', {
+      limit: 10000,
+    }).then(res => {
+
+      this.nbOfPhotosTemp.push(...res.albums.data);
+
+      if (res.paging && res.paging.next) {
+        return this.fetchNumberOfPhotos(res.paging.next);
+      }
+
+      this.nbOfPhotosTemp.forEach((result => {
+          this.data.nbOfPhotos+= result.photos.data.length;
+      }));
+
+      dbg(`Found ${this.data.nbOfPhotos} photos user posts`);
+
+      return Bluebird.resolve(this.data);
+    });
+  }
+
+  fetchNumberOfPhotosWhereUserIsIdentified(url) {
     dbg('Fetching number of photos where the user is identified');
 
     return this.get(url || '/me?fields=photos', {
       limit: 10000,
     }).then(res => {
       if (res.paging && res.paging.next) {
-        return this.fetchNumberOfPhotos(res.paging.next);
+        return this.fetchNumberOfPhotosWhereUserIsIdentified(res.paging.next);
       }
 
       if(res.photos){
-        this.data.nbOfPhotos = res.photos.data.length;
+        this.data.nbOfPhotosWhereUserIsIdentified = res.photos.data.length;
       }
 
-      dbg(`Found ${this.data.nbOfPhotos} photos`);
+      dbg(`Found ${this.data.nbOfPhotosWhereUserIsIdentified} photos where user is identified`);
 
       return Bluebird.resolve(this.data);
     });
