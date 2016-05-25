@@ -119,7 +119,7 @@ module.exports = class DataManager {
 
         this.publicInfluence = this.publicNbOfFollowers + this.publicNbOfLikes + userData.instagramData.nbOfComments + userData.twitterData.totalRetweets;
         this.privateInfluence = userData.facebookData.nbOfFriends + userData.facebookData.nbOfComments + userData.facebookData.nbOfLike;
-        this.globalInfluence = this.publicInfluence + this.privateInfluence;
+        this.globalInfluence = (this.publicInfluence + this.privateInfluence)/2;
 
         return {
             globalData: {
@@ -207,18 +207,26 @@ module.exports = class DataManager {
 
         this.publicScore = userData.twitterData.userMentions + userData.twitterData.totalRetweetForUserPosts;
         this.privateScore = userData.facebookData.nbOfComments + userData.facebookData.nbOfPhotosWhereUserIsIdentified;
-        this.globalScore = this.publicScore + this.privateScore;
+        this.sumScore = this.publicScore + this.privateScore;
+
+        this.globalScore = this.sumScore/2;
+
+        this.publicPercentScore = (this.publicScore*100)/this.globalScore;
+        this.privatePercentScore = (this.privateScore*100)/this.globalScore;
+
 
         return {
             globalData: {
                 score: this.globalScore,
             },
             publicData: {
+                percentScore: this.publicPercentScore,
                 score: getNormValue(this.publicScore,0,1),
                 totalRetweetForUserPosts: userData.twitterData.totalRetweetForUserPosts,
                 userMentions: userData.twitterData.userMentions,
             },
             privateData: {
+                percentScore: this.privatePercentScore,
                 score: getNormValue(this.privateScore,0,1),
                 nbOfComments: userData.facebookData.nbOfComments,
                 averageCommentOnPost: userData.facebookData.averageCommentOnPost,
@@ -248,10 +256,12 @@ module.exports = class DataManager {
 
     treatHobbiesCircle(){
         this.publicMostUsedHashtags = userData.instagramData.mostUsedHashtags.concat(userData.twitterData.mostUsedHashtags);
+        this.hobbiesVolume = userData.facebookData.nbOfPagesLiked + userData.facebookData.nbOfMoviesLiked
+                            + userData.facebookData.nbOfBooksLiked + userData.facebookData.nbOfArtistsLiked;
 
         return {
             globalData: {
-
+                hobbiesVolume: getNormValue(this.hobbiesVolum,0,1),
             },
             publicData: {
                 mostUsedHashtags: this.publicMostUsedHashtags,

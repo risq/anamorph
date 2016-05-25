@@ -18,6 +18,8 @@ module.exports = class FacebookDataFetcher {
       nbOfPosts: 0,
       activeUserSince: 0,
       nbOfOtherUsersPostOnFeed: 0,
+      pejorativeWords: [],
+      meliorativeWords: [],
       postsFrequency: [],
       nbOfFriends: 0,
       nbOfPhotos: 0,
@@ -52,6 +54,9 @@ module.exports = class FacebookDataFetcher {
     this.pagesCategoryList = [];
     this.pagesCategoryTemp = [];
     this.nbOfPhotosTemp = [];
+
+    this.pejorativeWordsList = ['horrible', 'nul', 'ringard', 'bof', 'con', 'débile', 'merde'];
+    this.meliorativeWordsList = ['cool', 'super', 'chanmé', 'génial', 'magnifique', 'beau', 'content', 'gentil'];
   }
 
   fetch() {
@@ -101,7 +106,7 @@ module.exports = class FacebookDataFetcher {
   }
 
   fetchFeed(url) {
-
+    let sentences = [];
     return this.get(url || '/me/feed?fields=from,message,story,created_time', {
       limit: 100,
     }).then(res => {
@@ -124,17 +129,61 @@ module.exports = class FacebookDataFetcher {
           if(data.from.id != this.data.userId){
             this.data.nbOfOtherUsersPostOnFeed+= 1;
           }
+           sentences.push(data.message);
         }));
+
+
+        //Get pejorative and meliorative words in sentence
+        this.joinSentences = sentences.join(' ');
+        this.data.pejorativeWords = this.getWordsFrequencyInContent(this.pejorativeWordsList, this.joinSentences);
+        this.data.meliorativeWords = this.getWordsFrequencyInContent(this.meliorativeWordsList, this.joinSentences);
 
         dbg('Fetching user feed');
         dbg(`Found ${this.data.nbOfPosts} posts`);
         dbg(`Active user since ${this.data.activeUserSince} years`);
         dbg(`Nb of other users post on feed: ${this.data.nbOfOtherUsersPostOnFeed}`);
+
+        dbg(`Pejorative words used`);
+        this.data.pejorativeWords.forEach((data => {
+          dbg(data);
+        }));
+        dbg(`Meliorative words used`);
+        this.data.meliorativeWords.forEach((data => {
+          dbg(data);
+        }));
+
       }
 
       return Bluebird.resolve(this.data);
     });
   }
+
+  getWordsFrequencyInContent(wordsToFind, content){
+    //const wordsToFind = ['mot1', 'mot2', 'mot3'];
+    wordsToFind = wordsToFind.map(word => `\\b(${word})\\b`);
+    const re = new RegExp(wordsToFind.join('|'), 'gi');
+    const str = content;
+
+    if(str.match(re)){
+      const res = str.match(re).reduce((result, word) => {
+        if (!result[word]) {
+          result[word] = 0;
+        }
+        result[word]++;
+        return result;
+      }, {});
+
+      const sortedRes = Object.keys(res).map(word => {
+        return {
+          word,
+          occ: res[word]
+        };
+      }).sort((a, b) => a.occ < b.occ);
+
+      return sortedRes;
+    }
+  }
+
 
   fetchPostsFrequency(url) {
 
