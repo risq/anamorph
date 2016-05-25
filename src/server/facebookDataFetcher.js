@@ -22,6 +22,7 @@ module.exports = class FacebookDataFetcher {
       nbOfFriends: 0,
       nbOfPhotos: 0,
       nbOfPagesLiked: 0,
+      pagesCategoryLiked: [],
       shares: [],
       nbOfShares: 0,
       locationName: null,
@@ -31,7 +32,11 @@ module.exports = class FacebookDataFetcher {
       school: null,
       albums: [],
       nbOfAlbums: 0,
+      nbOfMoviesLiked: 0,
       lastMoviesSeen: [],
+      nbOfBooksLiked: 0,
+      nbOfArtistsLiked: 0,
+      favoriteArtists: [],
       nbOfComments: 0,
       averageCommentOnPost: 0,
       nbOfLike: 0,
@@ -43,6 +48,8 @@ module.exports = class FacebookDataFetcher {
     };
     this.tempDatePosts = [];
     this.datePosts = [];
+    this.pagesCategoryList = [];
+    this.pagesCategoryTemp = [];
   }
 
   fetch() {
@@ -57,6 +64,9 @@ module.exports = class FacebookDataFetcher {
       .then(() => this.fetchWork())
       .then(() => this.fetchEducation())
       .then(() => this.fetchNumberOfAlbums())
+      .then(() => this.fetchLastMoviesSeen())
+      .then(() => this.fetchBooks())
+      .then(() => this.fetchFavoriteArtists())
       .then(() => this.fetchNumberOfCommentOnUserPosts())
       .then(() => this.fetchNumberOfLikeOnUserPosts())
       .then(() => this.fetchPostsFrequency())
@@ -202,9 +212,12 @@ module.exports = class FacebookDataFetcher {
   fetchNumberOfPagesLiked(url) {
     dbg('Fetching number of pages liked by user');
 
-    return this.get(url || '/me/?fields=likes', {
+    return this.get(url || '/me/?fields=likes{name,created_time,category}', {
       limit: 10000,
     }).then(res => {
+
+      this.pagesCategoryTemp.push(...res.likes.data);
+
       if (res.paging && res.paging.next) {
         return this.fetchNumberOfPagesLiked(res.paging.next);
       }
@@ -214,10 +227,51 @@ module.exports = class FacebookDataFetcher {
         this.data.nbOfPagesLiked = res.likes.data.length;
       }
 
+      this.pagesCategoryTemp.forEach((result => {
+        this.pagesCategoryList.push(result.category);
+      }));
+
+      //Get the most used hashtags
+      var wordAssociation = this.getWordFrequency(this.pagesCategoryList);
+      for(var i=0; i<wordAssociation.length; i++){
+        this.data.pagesCategoryLiked.push(wordAssociation[i]);
+      }
+      dbg('Pages Category liked:');
+      dbg(this.data.pagesCategoryLiked);
+
       dbg(`Found ${this.data.nbOfPagesLiked} pages liked`);
 
       return Bluebird.resolve(this.data);
     });
+  }
+
+  //Get word frequency for used hashtags and sort them in array (bigger to smaller)
+  getWordFrequency(wordList){
+    var a = [], b = [], prev;
+
+    wordList.sort();
+    for ( var i = 0; i < wordList.length; i++ ) {
+      if ( wordList[i] !== prev ) {
+        a.push(wordList[i]);
+        b.push(1);
+      } else {
+        b[b.length-1]++;
+      }
+      prev = wordList[i];
+    }
+
+    //Associate the words with their occurrence
+    var associated = a.reduce(function (previous, key, index) {
+      previous[key] = b[index];
+      return previous
+    }, {});
+
+    //Sort and reverse the associated array
+    var tupleArray = [];
+    for (var key in associated) tupleArray.push([key, associated[key]]);
+    tupleArray.sort(function (a, b) { return a[1] - b[1] }).reverse();
+
+    return tupleArray;
   }
 
   fetchNumberOfShares(url) {
@@ -319,20 +373,58 @@ module.exports = class FacebookDataFetcher {
     });
   }
 
-/*  fetchLastMoviesSeen() { video.watches doesn't work, why?
+  fetchLastMoviesSeen() { //video.watches doesn't work, why?
 
     return this.get('/me/video.watches').then(res => {
       dbg('Fetching last movies seen');
 
       for(var i=0;i<3;i++){
-        this.data.lastMoviesSeen.push(res.data[i].data.movie.title);
+        if(res.data[i]){
+          this.data.lastMoviesSeen.push(res.data[i].data.movie.title);
+        }
       }
 
-      dbg(`Found ${this.data.nbOfAlbums} albums`);
+      this.data.nbOfMoviesLiked = res.data.length;
+
+      dbg(`Number of movies liked: ${this.data.nbOfMoviesLiked}`);
+      dbg(`Last movies seen: ${this.data.lastMoviesSeen}`);
 
       return Bluebird.resolve(true);
     });
-  }*/
+  }
+
+  fetchBooks() {
+
+    return this.get('/me/books').then(res => {
+      dbg('Fetching books');
+
+      this.data.nbOfBooksLiked = res.data.length;
+
+      dbg(`Number of books liked: ${this.data.nbOfBooksLiked}`);
+
+      return Bluebird.resolve(true);
+    });
+  }
+
+  fetchFavoriteArtists() {
+
+    return this.get('/me/music').then(res => {
+      dbg('Fetching favorite artists');
+
+      for(var i=0;i<3;i++){
+        if(res.data[i]){
+          this.data.favoriteArtists.push(res.data[i].name);
+        }
+      }
+
+      this.data.nbOfArtistsLiked = res.data.length;
+
+      dbg(`Number of artists liked: ${this.data.nbOfArtistsLiked}`);
+      dbg(`Favorite artists: ${this.data.favoriteArtists}`);
+
+      return Bluebird.resolve(true);
+    });
+  }
 
   fetchNumberOfCommentOnUserPosts(url) {
 

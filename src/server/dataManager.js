@@ -243,11 +243,25 @@ module.exports = class DataManager {
                 mostUsedHashtags: this.publicMostUsedHashtags,
             },
             privateData: {
+                favoriteArtists: userData.facebookData.favoriteArtists,
+                lastMoviesSeen: userData.facebookData.lastMoviesSeen,
+                pagesCategoryLiked: userData.facebookData.pagesCategoryLiked,
+                nbOfPagesLiked: userData.facebookData.nbOfPagesLiked,
+                nbOfBooksLiked: userData.facebookData.nbOfBooksLiked,
+                nbOfMoviesLiked: userData.facebookData.nbOfMoviesLiked,
+                nbOfArtistsLiked: userData.facebookData.nbOfArtistsLiked,
             },
             professionalData: {
             },
             raw: {
                 facebook: {
+                    favoriteArtists: userData.facebookData.favoriteArtists,
+                    lastMoviesSeen: userData.facebookData.lastMoviesSeen,
+                    pagesCategoryLiked: userData.facebookData.pagesCategoryLiked,
+                    nbOfPagesLiked: userData.facebookData.nbOfPagesLiked,
+                    nbOfBooksLiked: userData.facebookData.nbOfBooksLiked,
+                    nbOfMoviesLiked: userData.facebookData.nbOfMoviesLiked,
+                    nbOfArtistsLiked: userData.facebookData.nbOfArtistsLiked,
                 },
                 twitter: {
                     mostUsedHashtags: userData.twitterData.mostUsedHashtags,
