@@ -262,15 +262,12 @@ module.exports = class DataManager {
         this.privateScore = (userData.facebook.nbOfComments || 0) + (userData.facebook.nbOfPhotosWhereUserIsIdentified || 0);
         this.sumScore = this.publicScore + this.privateScore;
 
-        this.globalScore = this.sumScore;
-
-        this.publicPercentScore = (this.publicScore*100)/this.globalScore;
-        this.privatePercentScore = (this.privateScore*100)/this.globalScore;
-
+        this.publicPercentScore = (this.publicScore)/this.sumScore;
+        this.privatePercentScore = (this.privateScore)/this.sumScore;
 
         return {
             globalData: {
-                score: this.globalScore,
+                score: this.sumScore,
             },
             publicData: {
                 percentScore: this.publicPercentScore,
