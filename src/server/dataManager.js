@@ -76,7 +76,7 @@ module.exports = class DataManager {
                 postFrequency: this.publicPostFrequency,
                 nbOfShare: userData.twitter.totalRetweets || 0,
                 nbOfPosts: clamp(getNormValue((userData.twitter.totalTweets || 0),0, 500), 0, 1),
-                nbOfPhotos: clamp(getNormValue(this.publicNbOfPhotos,0,1),
+                nbOfPhotos: clamp(getNormValue(this.publicNbOfPhotos,0,1)),
             },
             privateData: {
                 postFrequency: userData.facebook.postsFrequency || 0,
@@ -205,23 +205,31 @@ module.exports = class DataManager {
         this.publicMeliorativeWords = joinWordsOccs((userData.instagram.meliorativeWords || []), (userData.twitter.meliorativeWords || []));
         this.publicSmiley = joinWordsOccs((userData.instagram.smiley || []), (userData.twitter.smiley || []));
 
+
+        this.publicExpressivity = this.publicPejorativeWords + this.publicMeliorativeWords + this.publicSmiley;
+        this.privateExpressivity = userData.facebook.pejorativeWords || [] + userData.facebook.pejorativeWords || [] + userData.facebook.smiley || [];
+        this.globalExpressivity = this.publicExpressivity + this.privateExpressivity;
+
+
         /*this.publicPejorativeWords =  userData.instagram.pejorativeWords.concat(userData.twitter.pejorativeWords);
         this.publicMeliorativeWords = userData.instagram.meliorativeWords.concat(userData.twitter.meliorativeWords);
         this.publicSmiley = userData.instagram.smiley.concat(userData.twitter.smiley);*/
 
         return {
             globalData: {
-
+                expressivity: clamp(getNormValue((this.globalExpressivity || 0),0, 500), 0, 1),
             },
             publicData: {
                 pejorativeWords: this.publicPejorativeWords,
                 meliorativeWords: this.publicMeliorativeWords,
                 smiley: this.publicSmiley,
+                expressivity: clamp(getNormValue((this.publicExpressivity || 0),0, 500), 0, 1),
             },
             privateData: {
                 pejorativeWords: userData.facebook.pejorativeWords || [],
                 meliorativeWords: userData.facebook.pejorativeWords || [],
                 smiley: userData.facebook.smiley || [],
+                expressivity: clamp(getNormValue((this.privateExpressivity || 0),0, 500), 0, 1),
             },
             professionalData: {
             },
