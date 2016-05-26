@@ -65,9 +65,9 @@ module.exports = class DataManager {
 
         return {
             globalData: {
-                nbOfPhotos: getNormValue(this.globalNbOfPhotos, 0, 1),
+                nbOfPhotos: clamp(getNormValue(this.globalNbOfPhotos, 0, 500), 0, 1),
                 nbOfShares: this.globalNbOfShares,
-                nbOfPosts: getNormValue(this.globalNbOfPosts,0,1),
+                nbOfPosts: clamp(getNormValue(this.globalNbOfPosts,0, 500), 0, 1),
                 seniority: userData.facebook.activeUserSince || 0,
                 dominantProfile: this.dominantProfile,
                 typeProfile: this.typeProfile,
@@ -75,14 +75,14 @@ module.exports = class DataManager {
             publicData: {
                 postFrequency: this.publicPostFrequency,
                 nbOfShare: userData.twitter.totalRetweets || 0,
-                nbOfPosts: getNormValue((userData.twitter.totalTweets || 0),0,1),
-                nbOfPhotos: getNormValue(this.publicNbOfPhotos,0,1),
+                nbOfPosts: clamp(getNormValue((userData.twitter.totalTweets || 0),0, 500), 0, 1),
+                nbOfPhotos: clamp(getNormValue(this.publicNbOfPhotos,0,1),
             },
             privateData: {
                 postFrequency: userData.facebook.postsFrequency || 0,
-                nbOfPhotos: getNormValue((userData.facebook.nbOfPhotos || 0),0,1),
+                nbOfPhotos: clamp(getNormValue((userData.facebook.nbOfPhotos || 0),0, 500), 0, 1),
                 nbOfShare: userData.facebook.nbOfShares || 0,
-                nbOfPosts: getNormValue((userData.facebook.nbOfPosts  || 0),0,1),
+                nbOfPosts: clamp(getNormValue((userData.facebook.nbOfPosts  || 0),0, 500), 0, 1),
             },
             professionalData: {
                 postFrequency: 0,
@@ -144,20 +144,20 @@ module.exports = class DataManager {
 
         return {
             globalData: {
-                influence: getNormValue(this.globalInfluence,0,1),
+                influence: clamp(getNormValue(this.globalInfluence,0,500), 0, 1),
             },
             publicData: {
-                influence: getNormValue(this.publicInfluence,0,1),
+                influence: clamp(getNormValue(this.publicInfluence,0, 500), 0, 1),
                 nbOfFollowers: this.publicNbOfFollowers,
                 nbOfRetweets: userData.twitter.totalRetweets || 0,
-                nbOfLikes: getNormValue(this.publicNbOfLikes,0,1),
+                nbOfLikes: clamp(getNormValue(this.publicNbOfLikes,0, 500), 0, 1),
                 averageFeedbackOnPost: this.publicAverageFeedbackOnPost,
                 mostPopularPhoto: userData.instagram.mostPopularPhoto || '',
                 mostPopularTweet: userData.twitter.mostPopularTweet || '',
             },
             privateData: {
-                influence: getNormValue(this.privateInfluence,0,1),
-                nbOfLikes: getNormValue((userData.facebook.nbOfLike || 0),0,1),
+                influence: clamp(getNormValue(this.privateInfluence,0, 500), 0, 1),
+                nbOfLikes: clamp(getNormValue((userData.facebook.nbOfLike || 0),0, 500), 0, 1),
                 nbOfFriends: userData.facebook.nbOfFriends || 0,
                 averageFeedbackOnPost: this.privateAverageFeedbackOnPost,
                 lessPopularPost: userData.facebook.lessPopularPost || '',
@@ -198,6 +198,7 @@ module.exports = class DataManager {
         }
     }
 
+    //todo: to finish
     treatMoodCircle(userData){
 
         this.publicPejorativeWords =  joinWordsOccs((userData.instagram.pejorativeWords || []), (userData.twitter.pejorativeWords || []));
@@ -265,13 +266,13 @@ module.exports = class DataManager {
             },
             publicData: {
                 percentScore: this.publicPercentScore,
-                score: getNormValue(this.publicScore,0,1),
+                score: clamp(getNormValue(this.publicScore,0, 500), 0, 1),
                 totalRetweetForUserPosts: userData.twitter.totalRetweetForUserPosts || 0 ,
                 userMentions: userData.twitter.userMentions || 0,
             },
             privateData: {
                 percentScore: this.privatePercentScore,
-                score: getNormValue(this.privateScore,0,1),
+                score: clamp(getNormValue(this.privateScore,0, 500), 0, 1),
                 nbOfComments: userData.facebook.nbOfComments || 0,
                 averageCommentOnPost: userData.facebook.averageCommentOnPost || 0,
                 nbOfOtherUsersPostOnFeed: userData.facebook.nbOfOtherUsersPostOnFeed || 0,
@@ -309,7 +310,7 @@ module.exports = class DataManager {
 
         return {
             globalData: {
-                hobbiesVolume: getNormValue(this.hobbiesVolume,0,1),
+                hobbiesVolume: clamp(getNormValue(this.hobbiesVolume,0, 500), 0, 1),
             },
             publicData: {
                 mostUsedHashtags: this.publicMostUsedHashtags,
@@ -349,7 +350,10 @@ module.exports = class DataManager {
 
     getNormValue(val, min, max){
         return (val - min)/(max - min);
-    }
+    };
+    clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
+    };
 
     //Get total of values
     function getTotal(data, {facebook, twitter, instagram, linkedin}) {
