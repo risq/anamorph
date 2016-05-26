@@ -20,10 +20,16 @@ module.exports = class InstagramDataFetcher {
       averageOfGetLikes: [],
       averageOfGetComments: [],
       averageOfTagsForPostPublication: [],
+      pejorativeWords: [],
+      meliorativeWords: [],
+      smiley: [],
       frequency: [],
       mostUsedHashtags: [],
     };
     this.datePosts = [];
+
+    this.pejorativeWordsList = ['horrible', 'nul', 'ringard', 'bof', 'con', 'débile', 'merde'];
+    this.meliorativeWordsList = ['cool', 'super', 'chanmé', 'génial', 'magnifique', 'beau', 'content', 'gentil'];
   }
 
   fetch() {
@@ -135,7 +141,8 @@ module.exports = class InstagramDataFetcher {
     dbg('Retrieving average of tags used per publication');
     let numberOfPublications = 0;
     let numberOfTags = 0;
-    var wordList = [];
+    let wordList = [];
+    let sentences = [];
 
     return this.gram.get('/users/self/media/recent', {})
       .then(res => {
@@ -152,6 +159,8 @@ module.exports = class InstagramDataFetcher {
             else{
               numberOfTags = 0;
             }
+
+            sentences.push(res.caption.text);
           }));
 
           this.data.averageOfTagsForPostPublication = Math.round(numberOfTags / numberOfPublications);
@@ -165,6 +174,29 @@ module.exports = class InstagramDataFetcher {
           }
           dbg('Most used hashtags:');
           dbg(this.data.mostUsedHashtags);
+
+
+          //Get pejorative and meliorative words in sentence
+          this.joinSentences = sentences.join(' ');
+          this.data.pejorativeWords = this.getWordsFrequencyInContent(this.pejorativeWordsList, this.joinSentences);
+          this.data.meliorativeWords = this.getWordsFrequencyInContent(this.meliorativeWordsList, this.joinSentences);
+          this.data.smiley = this.getSmileyFrequencyInContent(this.joinSentences);
+
+          dbg(`Pejorative words used`);
+          if(this.data.pejorativeWords){
+            this.data.pejorativeWords.forEach((data => {
+              dbg(data);
+            }));
+          }
+          dbg(`Meliorative words used`);
+          if(this.data.meliorativeWords){
+            this.data.meliorativeWords.forEach((data => {
+              dbg(data);
+            }));
+          }
+
+          dbg(`Smiley used`);
+          dbg(this.data.smiley);
 
         })
       .catch(err => dbg(`Error: ${err.message}`));
@@ -197,6 +229,58 @@ module.exports = class InstagramDataFetcher {
     tupleArray.sort(function (a, b) { return a[1] - b[1] }).reverse();
 
     return tupleArray;
+  }
+
+  getWordsFrequencyInContent(wordsToFind, content){
+    //const wordsToFind = ['mot1', 'mot2', 'mot3'];
+    wordsToFind = wordsToFind.map(word => `\\b(${word})\\b`);
+    const re = new RegExp(wordsToFind.join('|'), 'gi');
+    const str = content;
+
+    if(str.match(re)){
+      const res = str.match(re).reduce((result, word) => {
+        if (!result[word]) {
+          result[word] = 0;
+        }
+        result[word]++;
+        return result;
+      }, {});
+
+      const sortedRes = Object.keys(res).map(word => {
+        return {
+          word,
+          occ: res[word]
+        };
+      }).sort((a, b) => a.occ < b.occ);
+
+      return sortedRes;
+    }
+  }
+
+  getSmileyFrequencyInContent(content){
+    let smileyToFind = ['=D', ':D', ":\\)", ':\\(', '^^', '\\s:\\/'];
+    smileyToFind = smileyToFind.map(smiley => `(${smiley})`);
+    const re = new RegExp(smileyToFind.join('|'), 'gi');
+    const str = content;
+
+    if(str.match(re)){
+      const res = str.match(re).reduce((result, smiley) => {
+        if (!result[smiley]) {
+          result[smiley] = 0;
+        }
+        result[smiley]++;
+        return result;
+      }, {});
+
+      const sortedRes = Object.keys(res).map(smiley => {
+        return {
+          smiley,
+          occ: res[smiley]
+        };
+      }).sort((a, b) => a.occ < b.occ);
+
+      return sortedRes;
+    }
   }
 
   fetchPostsFrequency() {

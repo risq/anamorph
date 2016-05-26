@@ -20,6 +20,7 @@ module.exports = class FacebookDataFetcher {
       nbOfOtherUsersPostOnFeed: 0,
       pejorativeWords: [],
       meliorativeWords: [],
+      smiley: [],
       postsFrequency: [],
       nbOfFriends: 0,
       nbOfPhotos: 0,
@@ -132,11 +133,12 @@ module.exports = class FacebookDataFetcher {
            sentences.push(data.message);
         }));
 
-
         //Get pejorative and meliorative words in sentence
         this.joinSentences = sentences.join(' ');
         this.data.pejorativeWords = this.getWordsFrequencyInContent(this.pejorativeWordsList, this.joinSentences);
         this.data.meliorativeWords = this.getWordsFrequencyInContent(this.meliorativeWordsList, this.joinSentences);
+        this.data.smiley = this.getSmileyFrequencyInContent(this.joinSentences);
+
 
         dbg('Fetching user feed');
         dbg(`Found ${this.data.nbOfPosts} posts`);
@@ -144,13 +146,20 @@ module.exports = class FacebookDataFetcher {
         dbg(`Nb of other users post on feed: ${this.data.nbOfOtherUsersPostOnFeed}`);
 
         dbg(`Pejorative words used`);
-        this.data.pejorativeWords.forEach((data => {
-          dbg(data);
-        }));
+        if(this.data.pejorativeWords){
+          this.data.pejorativeWords.forEach((data => {
+            dbg(data);
+          }));
+        }
         dbg(`Meliorative words used`);
-        this.data.meliorativeWords.forEach((data => {
-          dbg(data);
-        }));
+        if(this.data.meliorativeWords){
+          this.data.meliorativeWords.forEach((data => {
+            dbg(data);
+          }));
+        }
+
+        dbg(`Smiley used`);
+        dbg(this.data.smiley);
 
       }
 
@@ -177,6 +186,32 @@ module.exports = class FacebookDataFetcher {
         return {
           word,
           occ: res[word]
+        };
+      }).sort((a, b) => a.occ < b.occ);
+
+      return sortedRes;
+    }
+  }
+
+  getSmileyFrequencyInContent(content){
+    let smileyToFind = ['=D', ':D', ":\\)", ':\\(', '^^', '\\s:\\/'];
+    smileyToFind = smileyToFind.map(smiley => `(${smiley})`);
+    const re = new RegExp(smileyToFind.join('|'), 'gi');
+    const str = content;
+
+    if(str.match(re)){
+      const res = str.match(re).reduce((result, smiley) => {
+        if (!result[smiley]) {
+          result[smiley] = 0;
+        }
+        result[smiley]++;
+        return result;
+      }, {});
+
+      const sortedRes = Object.keys(res).map(smiley => {
+        return {
+          smiley,
+          occ: res[smiley]
         };
       }).sort((a, b) => a.occ < b.occ);
 

@@ -26,6 +26,9 @@ module.exports = class TwitterDataFetcher {
             totalRetweetForUserPosts: 0,
             totalLikesForUserPosts: 0,
             usedHashtags: [],
+            pejorativeWords: [],
+            meliorativeWords: [],
+            smiley: [],
             nbOfPhotos: 0,
             userLikes: 0,
             userMentions: 0,
@@ -33,6 +36,9 @@ module.exports = class TwitterDataFetcher {
         };
 
         this.datePosts = [];
+
+        this.pejorativeWordsList = ['horrible', 'nul', 'ringard', 'bof', 'con', 'débile', 'merde'];
+        this.meliorativeWordsList = ['cool', 'super', 'chanmé', 'génial', 'magnifique', 'beau', 'content', 'gentil'];
     }
 
     fetch() {
@@ -72,7 +78,8 @@ module.exports = class TwitterDataFetcher {
     //Get the user's tweets (max: 200)
     fetchUserTweets() {
         dbg('Fetching user tweets');
-        var wordList = [];
+        let wordList = [];
+        let sentences = [];
 
         return new Bluebird((resolve, reject) => {
             //Best practice to set include_rts: 1 -> to get retweets
@@ -123,6 +130,8 @@ module.exports = class TwitterDataFetcher {
                                 this.data.mostPopularTweet = data.text;
                                 this.mostLikedTweet = data.favorite_count;
                             }
+
+                            sentences.push(data.text);
                         }));
 
                         this.data.nbOfPosts = this.data.totalTweets;
@@ -149,6 +158,29 @@ module.exports = class TwitterDataFetcher {
                         }
                         dbg('Most used hashtags:');
                         dbg(this.data.mostUsedHashtags);
+
+
+                        //Get pejorative and meliorative words in sentence
+                        this.joinSentences = sentences.join(' ');
+                        this.data.pejorativeWords = this.getWordsFrequencyInContent(this.pejorativeWordsList, this.joinSentences);
+                        this.data.meliorativeWords = this.getWordsFrequencyInContent(this.meliorativeWordsList, this.joinSentences);
+                        this.data.smiley = this.getSmileyFrequencyInContent(this.joinSentences);
+
+                        dbg(`Pejorative words used`);
+                        if(this.data.pejorativeWords){
+                            this.data.pejorativeWords.forEach((data => {
+                                dbg(data);
+                            }));
+                        }
+                        dbg(`Meliorative words used`);
+                        if(this.data.meliorativeWords){
+                            this.data.meliorativeWords.forEach((data => {
+                                dbg(data);
+                            }));
+                        }
+
+                        dbg(`Smiley used`);
+                        dbg(this.data.smiley);
 
                         resolve(this.data);
                     }
@@ -184,6 +216,58 @@ module.exports = class TwitterDataFetcher {
         tupleArray.sort(function (a, b) { return a[1] - b[1] }).reverse();
 
         return tupleArray;
+    }
+
+    getWordsFrequencyInContent(wordsToFind, content){
+        //const wordsToFind = ['mot1', 'mot2', 'mot3'];
+        wordsToFind = wordsToFind.map(word => `\\b(${word})\\b`);
+        const re = new RegExp(wordsToFind.join('|'), 'gi');
+        const str = content;
+
+        if(str.match(re)){
+            const res = str.match(re).reduce((result, word) => {
+                if (!result[word]) {
+                    result[word] = 0;
+                }
+                result[word]++;
+                return result;
+            }, {});
+
+            const sortedRes = Object.keys(res).map(word => {
+                return {
+                    word,
+                    occ: res[word]
+                };
+            }).sort((a, b) => a.occ < b.occ);
+
+            return sortedRes;
+        }
+    }
+
+    getSmileyFrequencyInContent(content){
+        let smileyToFind = ['=D', ':D', ":\\)", ':\\(', '^^', '\\s:\\/'];
+        smileyToFind = smileyToFind.map(smiley => `(${smiley})`);
+        const re = new RegExp(smileyToFind.join('|'), 'gi');
+        const str = content;
+
+        if(str.match(re)){
+            const res = str.match(re).reduce((result, smiley) => {
+                if (!result[smiley]) {
+                    result[smiley] = 0;
+                }
+                result[smiley]++;
+                return result;
+            }, {});
+
+            const sortedRes = Object.keys(res).map(smiley => {
+                return {
+                    smiley,
+                    occ: res[smiley]
+                };
+            }).sort((a, b) => a.occ < b.occ);
+
+            return sortedRes;
+        }
     }
 
     //Get the user mentions (max: 800)

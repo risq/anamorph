@@ -16,32 +16,32 @@ module.exports = class DataManager {
         return new Bluebird((resolve, reject) => {
           userData.events.on('allDataFetched', () => {
             dbg('allDataFetched event fired');
-            resolve(this.getData());
+            resolve(this.getData(userData.data));
           });
 
           userData.terminate();
         });
     }
 
-    treatActivityCircle(){
-        this.globalNbOfPhotos = userData.facebookData.nbOfPhotos + userData.instagramData.numberOfUserPhotos + userData.twitterData.nbOfPhotos;
-        this.globalNbOfShares = userData.facebookData.nbOfShares + userData.twitterData.totalRetweets;
-        this.globalNbOfPosts = userData.facebookData.nbOfPosts + userData.twitterData.totalTweets;
-        this.globalPostFrequency = userData.facebookData.frequency + userData.instagramData.frequency + userData.twitterData.frequency;
+    treatActivityCircle(userData){
+        this.globalNbOfPhotos = userData.facebook.nbOfPhotos + userData.instagram.numberOfUserPhotos + userData.twitter.nbOfPhotos;
+        this.globalNbOfShares = userData.facebook.nbOfShares + userData.twitter.totalRetweets;
+        this.globalNbOfPosts = userData.facebook.nbOfPosts + userData.twitter.totalTweets;
+        this.globalPostFrequency = userData.facebook.frequency + userData.instagram.frequency + userData.twitter.frequency;
 
-        this.publicNbOfPhotos = userData.instagramData.numberOfUserPublications + userData.twitterData.nbOfPhotos;
-        this.publicPostFrequency = userData.instagramData.frequency + userData.twitterData.frequency;
+        this.publicNbOfPhotos = userData.instagram.numberOfUserPublications + userData.twitter.nbOfPhotos;
+        this.publicPostFrequency = userData.instagram.frequency + userData.twitter.frequency;
         
-        if(userData.facebookData.nbOfPosts > userData.instagramData.nbOfPosts
-            && userData.facebookData.nbOfPosts > userData.twitterData.nbOfPosts){
+        if(userData.facebook.nbOfPosts > userData.instagram.nbOfPosts
+            && userData.facebook.nbOfPosts > userData.twitter.nbOfPosts){
             this.dominantProfile = 'privé';
         }
-        else if(userData.instagramData.nbOfPosts > userData.facebookData.nbOfPosts
-            && userData.instagramData.nbOfPosts > userData.twitterData.nbOfPosts){
+        else if(userData.instagram.nbOfPosts > userData.facebook.nbOfPosts
+            && userData.instagram.nbOfPosts > userData.twitter.nbOfPosts){
             this.dominantProfile = 'publique';
         }
-        else if(userData.twitterData.nbOfPosts > userData.facebookData.nbOfPosts
-            && userData.twitterData.nbOfPosts > userData.instagramData.nbOfPosts){
+        else if(userData.twitter.nbOfPosts > userData.facebook.nbOfPosts
+            && userData.twitter.nbOfPosts > userData.instagram.nbOfPosts){
             this.dominantProfile = 'publique';
         }
 
@@ -61,21 +61,21 @@ module.exports = class DataManager {
                 nbOfPhotos: getNormValue(this.globalNbOfPhotos, 0, 1),
                 nbOfShares: this.globalNbOfShares,
                 nbOfPosts: getNormValue(this.globalNbOfPosts,0,1),
-                seniority: userData.facebookData.activeUserSince,
+                seniority: userData.facebook.activeUserSince,
                 dominantProfile: this.dominantProfile,
                 typeProfile: this.typeProfile,
             },
             publicData: {
                 postFrequency: this.publicPostFrequency,
-                nbOfShare: userData.twitterData.totalRetweets,
-                nbOfPosts: getNormValue(userData.twitterData.totalTweets,0,1),
+                nbOfShare: userData.twitter.totalRetweets,
+                nbOfPosts: getNormValue(userData.twitter.totalTweets,0,1),
                 nbOfPhotos: getNormValue(this.publicNbOfPhotos,0,1),
             },
             privateData: {
-                postFrequency: userData.facebookData.postsFrequency,
-                nbOfPhotos: getNormValue(userData.facebookData.nbOfPhotos,0,1),
-                nbOfShare: userData.facebookData.nbOfShares,
-                nbOfPosts: getNormValue(userData.facebookData.nbOfPosts,0,1),
+                postFrequency: userData.facebook.postsFrequency,
+                nbOfPhotos: getNormValue(userData.facebook.nbOfPhotos,0,1),
+                nbOfShare: userData.facebook.nbOfShares,
+                nbOfPosts: getNormValue(userData.facebook.nbOfPosts,0,1),
             },
             professionalData: {
                 postFrequency: 0,
@@ -84,41 +84,41 @@ module.exports = class DataManager {
             },
             raw: {
                 facebook: {
-                    nbOfPhotos: userData.facebookData.nbOfPhotos,
-                    nbOfShare: userData.facebookData.nbOfShares,
-                    nbOfPosts: userData.facebookData.nbOfPosts,
-                    postFrequency: userData.facebookData.postsFrequency,
+                    nbOfPhotos: userData.facebook.nbOfPhotos,
+                    nbOfShare: userData.facebook.nbOfShares,
+                    nbOfPosts: userData.facebook.nbOfPosts,
+                    postFrequency: userData.facebook.postsFrequency,
                 },
                 twitter: {
-                    nbOfPhotos: userData.twitterData.nbOfPhotos,
-                    nbOfShare: userData.twitterData.totalRetweets,
-                    nbOfPosts: userData.twitterData.totalTweets,
-                    postFrequency: userData.twitterData.frequency,
+                    nbOfPhotos: userData.twitter.nbOfPhotos,
+                    nbOfShare: userData.twitter.totalRetweets,
+                    nbOfPosts: userData.twitter.totalTweets,
+                    postFrequency: userData.twitter.frequency,
                 },
                 linkedin: {
                     nbOfShare: 0,
                     nbOfPosts: 0,
                 },
                 instagram: {
-                    nbOfPhotos: userData.instagramData.numberOfUserPublications,
-                    postFrequency: userData.instagramData.frequency,
+                    nbOfPhotos: userData.instagram.numberOfUserPublications,
+                    postFrequency: userData.instagram.frequency,
                 },
             }
         }
     }
 
-    treatInfluenceCircle(){
+    treatInfluenceCircle(userData){
 
-        this.privateAverageFeedbackOnPost = userData.facebookData.averageCommentOnPost + userData.facebookData.averageLikeOnPost;
+        this.privateAverageFeedbackOnPost = userData.facebook.averageCommentOnPost + userData.facebook.averageLikeOnPost;
 
-        this.publicNbOfFollowers = userData.instagramData.numberOfUserFollowers + userData.twitterData.numberOfFollowers;
-        this.publicNbOfLikes = userData.instagramData.nbOfLikes +  userData.twitterData.totalLikesForUserPosts;
-        this.publicAverageFeedbackOnPost = userData.instagramData.averageOfGetLikes + userData.instagramData.averageOfGetComments +
-                                            userData.twitterData.averageRetweetPerUserPost + userData.twitterData.averageLikePerUserPost;
+        this.publicNbOfFollowers = userData.instagram.numberOfUserFollowers + userData.twitter.numberOfFollowers;
+        this.publicNbOfLikes = userData.instagram.nbOfLikes +  userData.twitter.totalLikesForUserPosts;
+        this.publicAverageFeedbackOnPost = userData.instagram.averageOfGetLikes + userData.instagram.averageOfGetComments +
+                                            userData.twitter.averageRetweetPerUserPost + userData.twitter.averageLikePerUserPost;
 
 
-        this.publicInfluence = this.publicNbOfFollowers + this.publicNbOfLikes + userData.instagramData.nbOfComments + userData.twitterData.totalRetweets;
-        this.privateInfluence = userData.facebookData.nbOfFriends + userData.facebookData.nbOfComments + userData.facebookData.nbOfLike;
+        this.publicInfluence = this.publicNbOfFollowers + this.publicNbOfLikes + userData.instagram.nbOfComments + userData.twitter.totalRetweets;
+        this.privateInfluence = userData.facebook.nbOfFriends + userData.facebook.nbOfComments + userData.facebook.nbOfLike;
         this.globalInfluence = (this.publicInfluence + this.privateInfluence)/2;
 
         return {
@@ -128,75 +128,94 @@ module.exports = class DataManager {
             publicData: {
                 influence: getNormValue(this.publicInfluence,0,1),
                 nbOfFollowers: this.publicNbOfFollowers,
-                nbOfRetweets: userData.twitterData.totalRetweets,
+                nbOfRetweets: userData.twitter.totalRetweets,
                 nbOfLikes: getNormValue(this.publicNbOfLikes,0,1),
                 averageFeedbackOnPost: this.publicAverageFeedbackOnPost,
-                mostPopularPhoto: userData.instagramData.mostPopularPhoto,
-                mostPopularTweet: userData.twitterData.mostPopularTweet,
+                mostPopularPhoto: userData.instagram.mostPopularPhoto,
+                mostPopularTweet: userData.twitter.mostPopularTweet,
             },
             privateData: {
                 influence: getNormValue(this.privateInfluence,0,1),
-                nbOfLikes: getNormValue(userData.facebookData.nbOfLike,0,1),
-                nbOfFriends: userData.facebookData.nbOfFriends,
+                nbOfLikes: getNormValue(userData.facebook.nbOfLike,0,1),
+                nbOfFriends: userData.facebook.nbOfFriends,
                 averageFeedbackOnPost: this.privateAverageFeedbackOnPost,
-                lessPopularPost: userData.facebookData.lessPopularPost,
-                mostPopularPost: userData.facebookData.mostPopularPost,
-                lessPopularPhoto: userData.facebookData.lessPopularPhoto,
-                mostPopularPhoto: userData.facebookData.mostPopularPhoto,
+                lessPopularPost: userData.facebook.lessPopularPost,
+                mostPopularPost: userData.facebook.mostPopularPost,
+                lessPopularPhoto: userData.facebook.lessPopularPhoto,
+                mostPopularPhoto: userData.facebook.mostPopularPhoto,
             },
             professionalData: {
             },
             raw: {
                 facebook: {
-                    nbOfLikes: userData.facebookData.nbOfLike,
-                    nbOfFriends: userData.facebookData.nbOfFriends,
+                    nbOfLikes: userData.facebook.nbOfLike,
+                    nbOfFriends: userData.facebook.nbOfFriends,
                     averageFeedbackOnPost: this.privateAverageFeedbackOnPost,
-                    lessPopularPost: userData.facebookData.lessPopularPost,
-                    mostPopularPost: userData.facebookData.mostPopularPost,
-                    lessPopularPhoto: userData.facebookData.lessPopularPhoto,
-                    mostPopularPhoto: userData.facebookData.mostPopularPhoto,
+                    lessPopularPost: userData.facebook.lessPopularPost,
+                    mostPopularPost: userData.facebook.mostPopularPost,
+                    lessPopularPhoto: userData.facebook.lessPopularPhoto,
+                    mostPopularPhoto: userData.facebook.mostPopularPhoto,
                 },
                 twitter: {
-                    nbOfFollowers: userData.twitterData.numberOfFollowers,
-                    nbOfLikes: userData.twitterData.totalLikesForUserPosts,
-                    averageFeedbackOnPost: userData.twitterData.averageRetweetPerUserPost + userData.twitterData.averageLikePerUserPost,
-                    mostPopularTweet: userData.twitterData.mostPopularTweet,
+                    nbOfFollowers: userData.twitter.numberOfFollowers,
+                    nbOfLikes: userData.twitter.totalLikesForUserPosts,
+                    averageFeedbackOnPost: userData.twitter.averageRetweetPerUserPost + userData.twitter.averageLikePerUserPost,
+                    mostPopularTweet: userData.twitter.mostPopularTweet,
                 },
                 linkedin: {
                     nbOfReference: 0,
-                    nbOfConnections: userData.linkedinData.connections,
+                    nbOfConnections: userData.linkedin.connections,
                     nbOfViewPerMonth: 0,
                 },
                 instagram: {
-                    nbOfFollowers: userData.instagramData.numberOfUserFollowers,
-                    nbOfLikes: userData.instagramData.nbOfLikes,
-                    averageFeedbackOnPost: userData.instagramData.averageOfGetLikes + userData.instagramData.averageOfGetComments,
-                    mostPopularPhoto: userData.instagramData.mostPopularPhoto,
+                    nbOfFollowers: userData.instagram.numberOfUserFollowers,
+                    nbOfLikes: userData.instagram.nbOfLikes,
+                    averageFeedbackOnPost: userData.instagram.averageOfGetLikes + userData.instagram.averageOfGetComments,
+                    mostPopularPhoto: userData.instagram.mostPopularPhoto,
                 },
             }
         }
     }
 
-    treatMoodCircle(){
+    treatMoodCircle(userData){
+        this.publicPejorativeWords =  userData.instagram.pejorativeWords.concat(userData.twitter.pejorativeWords);
+        this.publicMeliorativeWords = userData.instagram.meliorativeWords.concat(userData.twitter.meliorativeWords);
+
+        this.publicSmiley = userData.instagram.smiley.concat(userData.twitter.smiley);
 
         return {
             globalData: {
 
             },
             publicData: {
+                pejorativeWords: this.publicPejorativeWords,
+                meliorativeWords: this.publicMeliorativeWords,
+                smiley: this.publicSmiley,
             },
             privateData: {
+                pejorativeWords: userData.facebook.pejorativeWords,
+                meliorativeWords: userData.facebook.pejorativeWords,
+                smiley: userData.facebook.smiley,
             },
             professionalData: {
             },
             raw: {
                 facebook: {
+                    pejorativeWords: userData.facebook.pejorativeWords,
+                    meliorativeWords: userData.facebook.pejorativeWords,
+                    smiley: userData.facebook.smiley,
                 },
                 twitter: {
+                    pejorativeWords: userData.twitter.pejorativeWords,
+                    meliorativeWords: userData.twitter.pejorativeWords,
+                    smiley: userData.twitter.smiley,
                 },
                 linkedin: {
                 },
                 instagram: {
+                    pejorativeWords: userData.instagram.pejorativeWords,
+                    meliorativeWords: userData.instagram.pejorativeWords,
+                    smiley: userData.instagram.smiley,
                 },
             }
         }
@@ -205,8 +224,8 @@ module.exports = class DataManager {
     //todo: to finish
     treatPassiveIdentityCircle(){
 
-        this.publicScore = userData.twitterData.userMentions + userData.twitterData.totalRetweetForUserPosts;
-        this.privateScore = userData.facebookData.nbOfComments + userData.facebookData.nbOfPhotosWhereUserIsIdentified;
+        this.publicScore = userData.twitter.userMentions + userData.twitter.totalRetweetForUserPosts;
+        this.privateScore = userData.facebook.nbOfComments + userData.facebook.nbOfPhotosWhereUserIsIdentified;
         this.sumScore = this.publicScore + this.privateScore;
 
         this.globalScore = this.sumScore/2;
@@ -222,29 +241,29 @@ module.exports = class DataManager {
             publicData: {
                 percentScore: this.publicPercentScore,
                 score: getNormValue(this.publicScore,0,1),
-                totalRetweetForUserPosts: userData.twitterData.totalRetweetForUserPosts,
-                userMentions: userData.twitterData.userMentions,
+                totalRetweetForUserPosts: userData.twitter.totalRetweetForUserPosts,
+                userMentions: userData.twitter.userMentions,
             },
             privateData: {
                 percentScore: this.privatePercentScore,
                 score: getNormValue(this.privateScore,0,1),
-                nbOfComments: userData.facebookData.nbOfComments,
-                averageCommentOnPost: userData.facebookData.averageCommentOnPost,
-                nbOfOtherUsersPostOnFeed: userData.facebookData.nbOfOtherUsersPostOnFeed,
-                nbOfPhotosWhereUserIsIdentified: userData.facebookData.nbOfPhotosWhereUserIsIdentified,
+                nbOfComments: userData.facebook.nbOfComments,
+                averageCommentOnPost: userData.facebook.averageCommentOnPost,
+                nbOfOtherUsersPostOnFeed: userData.facebook.nbOfOtherUsersPostOnFeed,
+                nbOfPhotosWhereUserIsIdentified: userData.facebook.nbOfPhotosWhereUserIsIdentified,
             },
             professionalData: {
             },
             raw: {
                 facebook: {
-                    nbOfComments: userData.facebookData.nbOfComments,
-                    averageCommentOnPost: userData.facebookData.averageCommentOnPost,
-                    nbOfOtherUsersPostOnFeed: userData.facebookData.nbOfOtherUsersPostOnFeed,
-                    nbOfPhotosWhereUserIsIdentified: userData.facebookData.nbOfPhotosWhereUserIsIdentified,
+                    nbOfComments: userData.facebook.nbOfComments,
+                    averageCommentOnPost: userData.facebook.averageCommentOnPost,
+                    nbOfOtherUsersPostOnFeed: userData.facebook.nbOfOtherUsersPostOnFeed,
+                    nbOfPhotosWhereUserIsIdentified: userData.facebook.nbOfPhotosWhereUserIsIdentified,
                 },
                 twitter: {
-                    totalRetweetForUserPosts: userData.twitterData.totalRetweetForUserPosts,
-                    userMentions: userData.twitterData.userMentions,
+                    totalRetweetForUserPosts: userData.twitter.totalRetweetForUserPosts,
+                    userMentions: userData.twitter.userMentions,
                 },
                 linkedin: {
                 },
@@ -254,10 +273,10 @@ module.exports = class DataManager {
         }
     }
 
-    treatHobbiesCircle(){
-        this.publicMostUsedHashtags = userData.instagramData.mostUsedHashtags.concat(userData.twitterData.mostUsedHashtags);
-        this.hobbiesVolume = userData.facebookData.nbOfPagesLiked + userData.facebookData.nbOfMoviesLiked
-                            + userData.facebookData.nbOfBooksLiked + userData.facebookData.nbOfArtistsLiked;
+    treatHobbiesCircle(userData){
+        this.publicMostUsedHashtags = userData.instagram.mostUsedHashtags.concat(userData.twitter.mostUsedHashtags);
+        this.hobbiesVolume = userData.facebook.nbOfPagesLiked + userData.facebook.nbOfMoviesLiked
+                            + userData.facebook.nbOfBooksLiked + userData.facebook.nbOfArtistsLiked;
 
         return {
             globalData: {
@@ -267,33 +286,33 @@ module.exports = class DataManager {
                 mostUsedHashtags: this.publicMostUsedHashtags,
             },
             privateData: {
-                favoriteArtists: userData.facebookData.favoriteArtists,
-                lastMoviesSeen: userData.facebookData.lastMoviesSeen,
-                pagesCategoryLiked: userData.facebookData.pagesCategoryLiked,
-                nbOfPagesLiked: userData.facebookData.nbOfPagesLiked,
-                nbOfBooksLiked: userData.facebookData.nbOfBooksLiked,
-                nbOfMoviesLiked: userData.facebookData.nbOfMoviesLiked,
-                nbOfArtistsLiked: userData.facebookData.nbOfArtistsLiked,
+                favoriteArtists: userData.facebook.favoriteArtists,
+                lastMoviesSeen: userData.facebook.lastMoviesSeen,
+                pagesCategoryLiked: userData.facebook.pagesCategoryLiked,
+                nbOfPagesLiked: userData.facebook.nbOfPagesLiked,
+                nbOfBooksLiked: userData.facebook.nbOfBooksLiked,
+                nbOfMoviesLiked: userData.facebook.nbOfMoviesLiked,
+                nbOfArtistsLiked: userData.facebook.nbOfArtistsLiked,
             },
             professionalData: {
             },
             raw: {
                 facebook: {
-                    favoriteArtists: userData.facebookData.favoriteArtists,
-                    lastMoviesSeen: userData.facebookData.lastMoviesSeen,
-                    pagesCategoryLiked: userData.facebookData.pagesCategoryLiked,
-                    nbOfPagesLiked: userData.facebookData.nbOfPagesLiked,
-                    nbOfBooksLiked: userData.facebookData.nbOfBooksLiked,
-                    nbOfMoviesLiked: userData.facebookData.nbOfMoviesLiked,
-                    nbOfArtistsLiked: userData.facebookData.nbOfArtistsLiked,
+                    favoriteArtists: userData.facebook.favoriteArtists,
+                    lastMoviesSeen: userData.facebook.lastMoviesSeen,
+                    pagesCategoryLiked: userData.facebook.pagesCategoryLiked,
+                    nbOfPagesLiked: userData.facebook.nbOfPagesLiked,
+                    nbOfBooksLiked: userData.facebook.nbOfBooksLiked,
+                    nbOfMoviesLiked: userData.facebook.nbOfMoviesLiked,
+                    nbOfArtistsLiked: userData.facebook.nbOfArtistsLiked,
                 },
                 twitter: {
-                    mostUsedHashtags: userData.twitterData.mostUsedHashtags,
+                    mostUsedHashtags: userData.twitter.mostUsedHashtags,
                 },
                 linkedin: {
                 },
                 instagram: {
-                    mostUsedHashtags: userData.instagramData.mostUsedHashtags,
+                    mostUsedHashtags: userData.instagram.mostUsedHashtags,
                 },
             }
         }
@@ -303,10 +322,11 @@ module.exports = class DataManager {
         return (val - min)/(max - min);
     }
 
-    getData() {
+    getData(userData) {
+        this.treatMoodCircle(userData);
       return {
-        activity: this.treatActivityCircle(),
-        influence: this.treatInfluenceCircle(),
+        activity: this.treatActivityCircle(userData),
+        influence: this.treatInfluenceCircle(userData),
       }
     }
 };
