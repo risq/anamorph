@@ -28,7 +28,7 @@ module.exports = class InstagramDataFetcher {
     };
     this.datePosts = [];
 
-    this.pejorativeWordsList = ['horrible', 'nul', 'ringard', 'bof', 'con', 'débile', 'merde'];
+    this.pejorativeWordsList = ['horrible', 'nul', 'ringard', 'bof', 'con', 'débile', 'merde', 'water'];
     this.meliorativeWordsList = ['cool', 'super', 'chanmé', 'génial', 'magnifique', 'beau', 'content', 'gentil'];
   }
 
