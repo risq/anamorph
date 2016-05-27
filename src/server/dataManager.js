@@ -16,7 +16,7 @@ module.exports = class DataManager {
         return new Bluebird((resolve, reject) => {
           userData.events.on('allDataFetched', () => {
             dbg('allDataFetched event fired');
-            resolve(dbg(this.getData(userData.data)));
+            resolve(dbg(JSON.stringify(this.getData(userData.data)), '\t'));
           });
 
           userData.terminate();
@@ -110,7 +110,7 @@ module.exports = class DataManager {
                     nbOfPhotos: userData.facebook.nbOfPhotos || 0,
                     nbOfShare: userData.facebook.nbOfShares || 0,
                     nbOfPosts: userData.facebook.nbOfPosts || 0,
-                    postFrequency: userData.facebook.postsFrequency || 0,
+                    postFrequency: userData.facebook.frequency || 0,
                 },
                 twitter: {
                     nbOfPhotos: userData.twitter.nbOfPhotos || 0,
@@ -161,7 +161,8 @@ module.exports = class DataManager {
                 influence: this.clamp(this.getNormValue(this.publicInfluence,0, 500), 0, 1),
                 nbOfFollowers: this.publicNbOfFollowers,
                 nbOfRetweets: userData.twitter.totalRetweets || 0,
-                nbOfLikes: this.clamp(this.getNormValue(this.publicNbOfLikes,0, 500), 0, 1),
+                nbOfLikes: this.publicNbOfLikes,
+                likesScore: this.clamp(this.getNormValue(this.publicNbOfLikes,0, 500), 0, 1),
                 averageFeedbackOnPost: this.publicAverageFeedbackOnPost,
                 mostPopularPhoto: userData.instagram.mostPopularPhoto || '',
                 mostPopularTweet: userData.twitter.mostPopularTweet || '',
@@ -169,7 +170,8 @@ module.exports = class DataManager {
             },
             privateData: {
                 influence: this.clamp(this.getNormValue(this.privateInfluence,0, 500), 0, 1),
-                nbOfLikes: this.clamp(this.getNormValue((userData.facebook.nbOfLike || 0),0, 500), 0, 1),
+                nbOfLikes: userData.facebook.nbOfLike,
+                likesScore: this.clamp(this.getNormValue((userData.facebook.nbOfLike || 0),0, 500), 0, 1),
                 nbOfFriends: userData.facebook.nbOfFriends || 0,
                 averageFeedbackOnPost: this.privateAverageFeedbackOnPost,
                 lessPopularPost: userData.facebook.lessPopularPost || '',
@@ -264,7 +266,7 @@ module.exports = class DataManager {
             this.publicAttitude = 1 - (this.nbOfPublicMeliorativeWords/this.nbOfPublicPejorativeWords);
         }
         else{
-            this.publicAttitude = (this.nbOfPublicPejorativeWords/this.nbOfPublicMeliorativeWords)/2;
+            this.publicAttitude = (1/2);
         }
 
         //PRIVATE
@@ -401,14 +403,10 @@ module.exports = class DataManager {
     }
 
     treatHobbiesCircle(userData){
-        this.publicMostUsedHashtags = this.joinWordsOccs((userData.instagram.mostUsedHashtags || []), (userData.twitter.mostUsedHashtags || []));
+        this.publicMostUsedHashtags = userData.instagram.mostUsedHashtags.concat(userData.twitter.mostUsedHashtags);
         this.hobbiesVolume = (userData.facebook.nbOfPagesLiked || 0) + (userData.facebook.nbOfMoviesLiked || 0)
             + (userData.facebook.nbOfBooksLiked || 0) + (userData.facebook.nbOfArtistsLiked || 0);
-
-        /*this.publicMostUsedHashtags = userData.instagram.mostUsedHashtags.concat(userData.twitter.mostUsedHashtags);
-        this.hobbiesVolume = userData.facebook.nbOfPagesLiked + userData.facebook.nbOfMoviesLiked
-                            + userData.facebook.nbOfBooksLiked + userData.facebook.nbOfArtistsLiked;*/
-
+        
         return {
             globalData: {
                 hobbiesVolume: this.clamp(this.getNormValue(this.hobbiesVolume,0, 500), 0, 1),

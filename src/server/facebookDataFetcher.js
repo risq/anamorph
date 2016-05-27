@@ -109,7 +109,7 @@ module.exports = class FacebookDataFetcher {
   fetchFeed(url) {
     let sentences = [];
     return this.get(url || '/me/feed?fields=from,message,story,created_time', {
-      limit: 100,
+      limit: 10000,
     }).then(res => {
       this.data.posts.push(...res.data);
 
@@ -223,7 +223,7 @@ module.exports = class FacebookDataFetcher {
   fetchPostsFrequency(url) {
 
     return this.get(url || '/me/feed', {
-      limit: 100,
+      limit: 10000,
     }).then(res => {
 
       this.tempDatePosts.push(...res.data);
@@ -273,7 +273,7 @@ module.exports = class FacebookDataFetcher {
   fetchNumberOfFriends() {
     dbg('Fetching number of friends');
 
-    return this.get('me/friends')
+    return this.get('me/friends', {limit: 10000})
         .then(res => {
           this.data.nbOfFriends = res.summary.total_count;
           dbg(`Found ${this.data.nbOfFriends} friends`);
@@ -418,7 +418,7 @@ module.exports = class FacebookDataFetcher {
   fetchLocation() {
     dbg('Fetching location');
 
-    return this.get('me?fields=location').then(res => {
+    return this.get('me?fields=location', {limit: 10000}).then(res => {
 
       if(res.location){
         this.data.locationName = res.location.name;
@@ -446,7 +446,7 @@ module.exports = class FacebookDataFetcher {
   fetchWork() {
     dbg('Fetching work');
 
-    return this.get('me?fields=work').then(res => {
+    return this.get('me?fields=work', {limit: 10000}).then(res => {
 
       this.data.employer = res.work ? res.work[0].employer.name : null;
 
@@ -459,7 +459,7 @@ module.exports = class FacebookDataFetcher {
   fetchEducation() {
     dbg('Fetching education');
 
-    return this.get('me?fields=education').then(res => {
+    return this.get('me?fields=education', {limit: 10000}).then(res => {
 
       this.data.school = res.education ? res.education[res.education.length - 1].school.name : null;
       
@@ -472,7 +472,7 @@ module.exports = class FacebookDataFetcher {
   fetchNumberOfAlbums(url) {
 
     return this.get(url || '/me?fields=albums', {
-      limit: 100,
+      limit: 10000,
     }).then(res => {
       this.data.albums.push(...res.albums.data);
 
@@ -491,7 +491,7 @@ module.exports = class FacebookDataFetcher {
 
   fetchLastMoviesSeen() { //video.watches doesn't work, why?
 
-    return this.get('/me/video.watches').then(res => {
+    return this.get('/me/video.watches', {limit: 10000}).then(res => {
       dbg('Fetching last movies seen');
 
       for(var i=0;i<3;i++){
@@ -511,7 +511,7 @@ module.exports = class FacebookDataFetcher {
 
   fetchBooks() {
 
-    return this.get('/me/books').then(res => {
+    return this.get('/me/books', {limit: 10000}).then(res => {
       dbg('Fetching books');
 
       this.data.nbOfBooksLiked = res.data.length;
@@ -524,7 +524,7 @@ module.exports = class FacebookDataFetcher {
 
   fetchFavoriteArtists() {
 
-    return this.get('/me/music').then(res => {
+    return this.get('/me/music', {limit: 10000}).then(res => {
       dbg('Fetching favorite artists');
 
       for(var i=0;i<3;i++){
@@ -545,7 +545,7 @@ module.exports = class FacebookDataFetcher {
   fetchNumberOfCommentOnUserPosts(url) {
 
     return this.get(url || '/me?fields=feed{comments}', {
-      limit: 100,
+      limit: 10000,
     }).then(res => {
 
       if (res.paging && res.paging.next) {
@@ -572,7 +572,7 @@ module.exports = class FacebookDataFetcher {
   fetchNumberOfLikeOnUserPosts(url) {
 
     return this.get(url || '/me?fields=feed{likes,message,picture}', {
-      limit: 100,
+      limit: 10000,
     }).then(res => {
 
       if (res.paging && res.paging.next) {
