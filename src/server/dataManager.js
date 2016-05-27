@@ -205,31 +205,107 @@ module.exports = class DataManager {
         this.publicMeliorativeWords = joinWordsOccs((userData.instagram.meliorativeWords || []), (userData.twitter.meliorativeWords || []));
         this.publicSmiley = joinWordsOccs((userData.instagram.smiley || []), (userData.twitter.smiley || []));
 
+        //PUBLIC
+        this.publicPejorativeWords.foreach((data => {
+            this.nbOfPublicPejorativeWords += data.occ;
+        }));
+        this.publicMeliorativeWords.foreach((data => {
+            this.nbOfPublicMeliorativeWords += data.occ;
+        }));
 
-        this.publicExpressivity = this.publicPejorativeWords + this.publicMeliorativeWords + this.publicSmiley;
-        this.privateExpressivity = userData.facebook.pejorativeWords || [] + userData.facebook.pejorativeWords || [] + userData.facebook.smiley || [];
-        this.globalExpressivity = this.publicExpressivity + this.privateExpressivity;
+        //PRIVATE
+        userData.facebook.pejorativeWords.foreach((data => {
+            this.nbOfPrivatePejorativeWords += data.occ;
+        }));
+        userData.facebook.meliorativeWords.foreach((data => {
+            this.nbOfPrivateMeliorativeWords += data.occ;
+        }));
 
 
-        /*this.publicPejorativeWords =  userData.instagram.pejorativeWords.concat(userData.twitter.pejorativeWords);
-        this.publicMeliorativeWords = userData.instagram.meliorativeWords.concat(userData.twitter.meliorativeWords);
-        this.publicSmiley = userData.instagram.smiley.concat(userData.twitter.smiley);*/
+        //EXPRESSIVITY
+        let publicExpressivityTab = joinWordsOccs((this.publicPejorativeWords || []), (this.publicMeliorativeWords || []), (this.publicSmiley || []));
+        let privateExpressivityTab = joinWordsOccs((userData.facebook.pejorativeWords || []), (userData.facebook.meliorativeWords || []), (userData.facebook.smiley || []));
+
+        publicExpressivityTab.foreach((data => {
+            this.publicExpressivity += data.occ;
+        }));
+        privateExpressivityTab.foreach((data => {
+            this.privateExpressivity += data.occ;
+        }));
+
+        this.globalExpressivity = this.publicExpressivity || 0 + this.privateExpressivity || 0;
+
+
+        //ATTITUDE
+        //PUBLIC
+        if(this.nbOfPublicPejorativeWords < this.nbOfPublicMeliorativeWords){
+            this.publicAttitude = (this.nbOfPublicPejorativeWords/this.nbOfPublicMeliorativeWords)/2;
+        }
+        else if(this.nbOfPublicPejorativeWords > this.nbOfPublicMeliorativeWords){
+            this.publicAttitude = 1 - (this.nbOfPublicMeliorativeWords/this.nbOfPublicPejorativeWords);
+        }
+        else{
+            this.publicAttitude = (this.nbOfPublicPejorativeWords/this.nbOfPublicMeliorativeWords)/2;
+        }
+
+        //PRIVATE
+        if(this.nbOfPrivatePejorativeWords < this.nbOfPrivateMeliorativeWords){
+            this.privateAttitude = (this.nbOfPrivatePejorativeWords/this.nbOfPrivateMeliorativeWords)/2;
+        }
+        else if(this.nbOfPrivatePejorativeWords > this.nbOfPrivateMeliorativeWords){
+            this.privateAttitude = 1 - (this.nbOfPrivateMeliorativeWords/this.nbOfPrivatePejorativeWords);
+        }
+        else{
+            this.privateAttitude = (1/2);
+        }
+
+        this.sumAttitude = this.publicAttitude + this.privateAttitude;
+
+        //GLOBAL
+        let globalNbPejorativeWords = this.nbOfPublicPejorativeWords || 0 + this.nbOfPrivatePejorativeWords || 0;
+        let globalNbMeliorativeWords = this.nbOfPublicMeliorativeWords || 0 + this.nbOfPrivateMeliorativeWords || 0;
+
+        if(globalNbPejorativeWords < globalNbMeliorativeWords){
+            this.globalAttitude = (globalNbPejorativeWords/globalNbMeliorativeWords)/2;
+        }
+        else if(globalNbPejorativeWords > globalNbMeliorativeWords){
+            this.globalAttitude = 1 - (globalNbMeliorativeWords/globalNbPejorativeWords);
+        }
+        else{
+            this.globalAttitude = (1/2);
+        }
+
+
+        //DISTRIBUTION
+
+        this.publicExpressivityDistribution = this.publicExpressivity/this.globalExpressivity;
+        this.privateExpressivityDistribution = this.privateExpressivity/this.globalExpressivity;
+
+        this.publicAttitudeDistribution = this.publicAttitude/this.sumAttitude;
+        this.privateAttitudeDistribution = this.privateAttitude/this.sumAttitude;
 
         return {
             globalData: {
                 expressivity: clamp(getNormValue((this.globalExpressivity || 0),0, 500), 0, 1),
+                attitude: this.globalAttitude || (1/2),
             },
             publicData: {
                 pejorativeWords: this.publicPejorativeWords,
                 meliorativeWords: this.publicMeliorativeWords,
                 smiley: this.publicSmiley,
                 expressivity: clamp(getNormValue((this.publicExpressivity || 0),0, 500), 0, 1),
+                attitude: this.publicAttitude || (1/2),
+                expressivityDistribution: this.publicExpressivityDistribution,
+                attitudeDistribution: this.publicAttitudeDistribution,
             },
             privateData: {
                 pejorativeWords: userData.facebook.pejorativeWords || [],
                 meliorativeWords: userData.facebook.pejorativeWords || [],
                 smiley: userData.facebook.smiley || [],
                 expressivity: clamp(getNormValue((this.privateExpressivity || 0),0, 500), 0, 1),
+                attitude: this.privateAttitude || (1/2),
+                expressivityDistribution: this.privateExpressivityDistribution,
+                attitudeDistribution: this.privateAttitudeDistribution,
             },
             professionalData: {
             },
