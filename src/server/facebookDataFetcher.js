@@ -21,7 +21,7 @@ module.exports = class FacebookDataFetcher {
       pejorativeWords: [],
       meliorativeWords: [],
       smiley: [],
-      postsFrequency: [],
+      frequency: [],
       nbOfFriends: 0,
       nbOfPhotos: 0,
       nbOfPhotosWhereUserIsIdentified: 0,
@@ -51,7 +51,7 @@ module.exports = class FacebookDataFetcher {
       averageLikeOnPost: 0,
     };
     this.tempDatePosts = [];
-    this.datePosts = [];
+    this.datePosts = {};
     this.pagesCategoryList = [];
     this.pagesCategoryTemp = [];
     this.nbOfPhotosTemp = [];
@@ -235,7 +235,7 @@ module.exports = class FacebookDataFetcher {
         dbg('Fetching posts frequency');
 
         this.tempDatePosts.forEach((data => {
-          var year = 'A-'+data.created_time.substr(0, 4).toString();
+          var year = 'y'+data.created_time.substr(0, 4).toString();
 
           if(typeof(this.datePosts[year]) != 'undefined'){
             this.datePosts[year]+= 1;
@@ -252,12 +252,18 @@ module.exports = class FacebookDataFetcher {
         var oneDay = 1000 * 60 * 60 * 24;
         var day = Math.floor(diff / oneDay);
 
-        //Todo -> improved this recuperation - iteration?
-        this.data.postsFrequency['A-2016']= ((this.datePosts['A-2016'] /day)*30).toFixed(3); //*30 = per month
-        this.data.postsFrequency['A-2015']= ((this.datePosts['A-2015'] /365)*30).toFixed(3);
+        this.data.frequency = Object.keys(this.datePosts).reduce((sum, value) => {
+          if(value == 'y2016'){
+            sum = sum + ((this.datePosts[value] /day)*30); //Get only the days past in the actual year
+          }
+          else{
+            sum = sum + ((this.datePosts[value] /365)*30);
+          }
+          return sum;
+        }, 0);
 
         dbg('Frequency');
-        dbg(this.data.postsFrequency);
+        dbg(this.data.frequency);
       }
 
       return Bluebird.resolve(this.data);

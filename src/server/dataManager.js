@@ -26,19 +26,15 @@ module.exports = class DataManager {
     treatActivityCircle(userData){
         this.globalNbOfPhotos = getTotal(userData, {facebook: 'nbOfPhotos', twitter: 'nbOfPhotos', instagram: 'numberOfUserPhotos'});
         this.globalNbOfShares = getTotal(userData, {facebook: 'nbOfShares', twitter: 'totalRetweets'});
-        this.globalNbOfPosts = getTotal(userData, {facebook: 'nbOfPosts', twitter: 'totalTweets'});
+        this.globalNbOfPosts = getTotal(userData, {facebook: 'nbOfPosts', twitter: 'nbOfPosts', instagram: 'nbOfPosts'});
         this.globalPostFrequency = getTotal(userData, {facebook: 'frequency', twitter: 'frequency', instagram: 'frequency'});
 
         this.publicNbOfPhotos = getTotal(userData, {twitter: 'nbOfPhotos', instagram: 'numberOfUserPhotos'});
+        this.publicNbOfPosts = getTotal(userData, {twitter: 'nbOfPosts', instagram: 'nbOfPosts'});
         this.publicPostFrequency = getTotal(userData, {twitter: 'frequency', instagram: 'frequency'});
 
-        //this.globalNbOfPhotos = userData.facebook.nbOfPhotos + userData.instagram.numberOfUserPhotos + userData.twitter.nbOfPhotos;
-        //this.globalNbOfShares = userData.facebook.nbOfShares + userData.twitter.totalRetweets;
-        //this.globalNbOfPosts = userData.facebook.nbOfPosts + userData.twitter.totalTweets;
-        //this.globalPostFrequency = userData.facebook.frequency + userData.instagram.frequency + userData.twitter.frequency;
-        //this.publicNbOfPhotos = userData.instagram.numberOfUserPhotos + userData.twitter.nbOfPhotos;
-        //this.publicPostFrequency = userData.instagram.frequency + userData.twitter.frequency;
-        
+
+        //DOMINANT PROFIL
         if((userData.facebook.nbOfPosts || 0) > (userData.instagram.nbOfPosts || 0)
             && (userData.facebook.nbOfPosts || 0) > (userData.twitter.nbOfPosts || 0)){
             this.dominantProfile = 'privé';
@@ -52,6 +48,7 @@ module.exports = class DataManager {
             this.dominantProfile = 'publique';
         }
 
+        //PROFIL TYPE
         //*30 = per month
         if(this.globalPostFrequency*30 < 20){
             this.typeProfile = "Publication peu fréquente";
@@ -63,8 +60,17 @@ module.exports = class DataManager {
             this.typeProfile = "Publication très fréquente";
         }
 
+        //DISTRIBUTION
+        this.publicFrequencyDistribution = this.publicPostFrequency/this.globalPostFrequency;
+        this.privateFrequencyDistribution = (userData.facebook.frequency || 0)/this.globalPostFrequency;
+
+        this.publicVolumeDistribution = this.publicNbOfPosts/this.globalNbOfPosts;
+        this.privateVolumeDistribution = (userData.facebook.nbOfPosts || 0)/this.globalNbOfPosts;
+
+
         return {
             globalData: {
+                postFrequency: this.globalPostFrequency,
                 nbOfPhotos: clamp(getNormValue(this.globalNbOfPhotos, 0, 500), 0, 1),
                 nbOfShares: this.globalNbOfShares,
                 nbOfPosts: clamp(getNormValue(this.globalNbOfPosts,0, 500), 0, 1),
@@ -75,14 +81,18 @@ module.exports = class DataManager {
             publicData: {
                 postFrequency: this.publicPostFrequency,
                 nbOfShare: userData.twitter.totalRetweets || 0,
-                nbOfPosts: clamp(getNormValue((userData.twitter.totalTweets || 0),0, 500), 0, 1),
+                nbOfPosts: clamp(getNormValue((this.publicNbOfPosts || 0),0, 500), 0, 1),
                 nbOfPhotos: clamp(getNormValue(this.publicNbOfPhotos,0,1)),
+                frequencyDistribution: this.publicFrequencyDistribution,
+                volumeDistribution: this.publicVolumeDistribution,
             },
             privateData: {
                 postFrequency: userData.facebook.postsFrequency || 0,
                 nbOfPhotos: clamp(getNormValue((userData.facebook.nbOfPhotos || 0),0, 500), 0, 1),
                 nbOfShare: userData.facebook.nbOfShares || 0,
-                nbOfPosts: clamp(getNormValue((userData.facebook.nbOfPosts  || 0),0, 500), 0, 1),
+                nbOfPosts: clamp(getNormValue((userData.facebook.nbOfPosts || 0),0, 500), 0, 1),
+                frequencyDistribution: this.privateFrequencyDistribution,
+                volumeDistribution: this.privateVolumeDistribution,
             },
             professionalData: {
                 postFrequency: 0,
@@ -131,20 +141,15 @@ module.exports = class DataManager {
         this.globalInfluence = this.publicInfluence + this.privateInfluence;
 
 
-      /*  this.privateAverageFeedbackOnPost = userData.facebook.averageCommentOnPost + userData.facebook.averageLikeOnPost;
+        //DISTRIBUTION
+        this.publicInfluenceDistribution = this.publicInfluence/this.globalInfluence;
+        this.privateInfluenceDistribution = this.privateInfluence/this.globalInfluence;
 
-        this.publicNbOfFollowers = userData.instagram.numberOfUserFollowers + userData.twitter.numberOfFollowers;
-        this.publicNbOfLikes = userData.instagram.nbOfLikes +  userData.twitter.totalLikesForUserPosts;
-        this.publicAverageFeedbackOnPost = userData.instagram.averageOfGetLikes + userData.instagram.averageOfGetComments +
-                                            userData.twitter.averageRetweetPerUserPost + userData.twitter.averageLikePerUserPost;
-
-        this.publicInfluence = this.publicNbOfFollowers + this.publicNbOfLikes + userData.instagram.nbOfComments + userData.twitter.totalRetweets;
-        this.privateInfluence = userData.facebook.nbOfFriends + userData.facebook.nbOfComments + userData.facebook.nbOfLike;
-        this.globalInfluence = (this.publicInfluence + this.privateInfluence)/2;*/
 
         return {
             globalData: {
                 influence: clamp(getNormValue(this.globalInfluence,0,500), 0, 1),
+                nbOfLikes: this.publicNbOfLikes + userData.facebook.nbOfLike,
             },
             publicData: {
                 influence: clamp(getNormValue(this.publicInfluence,0, 500), 0, 1),
@@ -154,6 +159,7 @@ module.exports = class DataManager {
                 averageFeedbackOnPost: this.publicAverageFeedbackOnPost,
                 mostPopularPhoto: userData.instagram.mostPopularPhoto || '',
                 mostPopularTweet: userData.twitter.mostPopularTweet || '',
+                influenceDistribution: this.publicInfluenceDistribution,
             },
             privateData: {
                 influence: clamp(getNormValue(this.privateInfluence,0, 500), 0, 1),
@@ -164,6 +170,7 @@ module.exports = class DataManager {
                 mostPopularPost: userData.facebook.mostPopularPost || '',
                 lessPopularPhoto: userData.facebook.lessPopularPhoto || '',
                 mostPopularPhoto: userData.facebook.mostPopularPhoto || '',
+                influenceDistribution: this.privateInfluenceDistribution,
             },
             professionalData: {
             },
@@ -277,7 +284,6 @@ module.exports = class DataManager {
 
 
         //DISTRIBUTION
-
         this.publicExpressivityDistribution = this.publicExpressivity/this.globalExpressivity;
         this.privateExpressivityDistribution = this.privateExpressivity/this.globalExpressivity;
 
@@ -338,21 +344,23 @@ module.exports = class DataManager {
         this.privateScore = (userData.facebook.nbOfComments || 0) + (userData.facebook.nbOfPhotosWhereUserIsIdentified || 0);
         this.sumScore = this.publicScore + this.privateScore;
 
-        this.publicPercentScore = (this.publicScore)/this.sumScore;
-        this.privatePercentScore = (this.privateScore)/this.sumScore;
+        //DISTRIBUTION
+        this.publicPassiveIdentityDistribution = this.publicScore/this.sumScore;
+        this.privatePassiveIdentityDistribution = this.privateScore/this.sumScore;
+
 
         return {
             globalData: {
                 score: this.sumScore,
             },
             publicData: {
-                percentScore: this.publicPercentScore,
+                percentScore: this.publicPassiveIdentityDistribution,
                 score: clamp(getNormValue(this.publicScore,0, 500), 0, 1),
                 totalRetweetForUserPosts: userData.twitter.totalRetweetForUserPosts || 0 ,
                 userMentions: userData.twitter.userMentions || 0,
             },
             privateData: {
-                percentScore: this.privatePercentScore,
+                percentScore: this.privatePassiveIdentityDistribution,
                 score: clamp(getNormValue(this.privateScore,0, 500), 0, 1),
                 nbOfComments: userData.facebook.nbOfComments || 0,
                 averageCommentOnPost: userData.facebook.averageCommentOnPost || 0,
@@ -429,12 +437,12 @@ module.exports = class DataManager {
         }
     }
 
-    getNormValue(val, min, max){
+    function getNormValue(val, min, max){
         return (val - min)/(max - min);
-    };
-    clamp(value, min, max) {
+    }
+    function clamp(value, min, max) {
         return Math.min(Math.max(value, min), max);
-    };
+    }
 
     //Get total of values
     function getTotal(data, {facebook, twitter, instagram, linkedin}) {
@@ -477,7 +485,6 @@ module.exports = class DataManager {
     }
 
     getData(userData) {
-        this.treatMoodCircle(userData);
       return {
         activity: this.treatActivityCircle(userData),
         influence: this.treatInfluenceCircle(userData),

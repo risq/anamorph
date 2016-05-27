@@ -291,7 +291,7 @@ module.exports = class InstagramDataFetcher {
 
           res.forEach((data => {
             var date = new Date(data.created_time*1000);
-            var year = 'A-'+date.getFullYear();
+            var year = 'y'+date.getFullYear();
 
             if(typeof(this.datePosts[year]) != 'undefined'){
               this.datePosts[year]+= 1;
@@ -308,9 +308,15 @@ module.exports = class InstagramDataFetcher {
           var oneDay = 1000 * 60 * 60 * 24;
           var day = Math.floor(diff / oneDay);
 
-          //Todo -> improved this recuperation - iteration?
-          this.data.frequency['A-2016']= (this.datePosts['A-2016'] /day).toFixed(3);
-          this.data.frequency['A-2015']= (this.datePosts['A-2015'] /365).toFixed(3);
+          this.data.frequency = Object.keys(this.datePosts).reduce((sum, value) => {
+            if(value == 'y2016'){
+              sum = sum + ((this.datePosts[value] /day)*30); //Get only the days past in the actual year
+            }
+            else{
+              sum = sum + ((this.datePosts[value] /365)*30);
+            }
+            return sum;
+          }, 0);
 
           dbg('Frequency');
           dbg(this.data.frequency);
