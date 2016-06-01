@@ -8,18 +8,55 @@
   <p>
     <b>Status:</b> {{state.remoteStatus}}
   </p>
-  <div class="networks">
+
+  <div class="purple-circle"></div>
+  <div class="orange-circle"></div>
+  <div class="blue-rectangle"></div>
+  <div class="green-rectangle"></div>
+
+  <div class="logo-title">
+    <div class="logo"></div>
+    <div class="text">VOTRE IDENTITÉ NUMÉRIQUE, FACE À VOUS</div>
+  </div>
+
+  <div class="network-container">
     <!-- TODO: set url  -->
     <!-- Disabled facebook button -->
     <!--<div class="facebook">
       <fb:login-button scope="public_profile,email,user_about_me,user_actions.music,user_birthday,user_friends,user_education_history,user_hometown,user_location,user_photos,user_posts,user_religion_politics,user_tagged_places,user_work_history" onlogin="checkLoginState();"></fb:login-button>
     </div>-->
-    <a href="https://api.instagram.com/oauth/authorize?client_id=208f9dfdb4b44a228b4c7f95b56bc58e&redirect_uri={{ rootUrl }}/insta?clientId={{ clientId }}&response_type=code&scope=basic+comments+relationships+likes+public_content+follower_list" target="_blank">login insta</a>
-    <a href="{{state.auth.twitterUrl}}" target="_blank">Login Twitter</a>
-    <a href="{{state.auth.linkedinUrl}}" target="_blank">Login Linkedin</a>
-    <a href="{{state.auth.facebookUrl}}" target="_blank">Login Facebook</a>
+
+    <div class="networks">
+      <div class="connect">CONNEXION</div>
+      <div class="top">
+        <a class="network" href="{{state.auth.twitterUrl}}" target="_blank">
+          <div class="twitter-icon icon"></div>
+          <div class="icon-check"></div>
+        </a>
+        <a class="network check" href="{{state.auth.facebookUrl}}" target="_blank">
+          <div class="facebook-icon icon"></div>
+          <div class="icon-check"></div>
+        </a>
+      </div>
+      <div class="bottom">
+        <a class="network" href="https://api.instagram.com/oauth/authorize?client_id=208f9dfdb4b44a228b4c7f95b56bc58e&redirect_uri={{ rootUrl }}/insta?clientId={{ clientId }}&response_type=code&scope=basic+comments+relationships+likes+public_content+follower_list" target="_blank">
+          <div class="instagram-icon icon"></div>
+          <div class="icon-check"></div>
+        </a>
+        <a class="network" href="{{state.auth.linkedinUrl}}" target="_blank">
+          <div class="linkedin-icon icon"></div>
+          <div class="icon-check"></div>
+        </a>
+      </div>
+    </div>
   </div>
 
-  <a class="valid-connections" href="/validConnections?clientId={{ clientId }}">Valid connections</a>
+  <div class="helper">
+    Pour une expérience optimale, il est conseillé de se connecter à un maximum de réseaux possibles.
+  </div>
+
+  <div class="valid-container">
+    <a class="valid-connections" href="/validConnections?clientId={{ clientId }}">CRÉER MA SILHOUETTE</a>
+  </div>
 {% endif %}
 

@@ -34,7 +34,7 @@ module.exports = class DataManager {
         this.publicPostFrequency = this.getTotal(userData, {twitter: 'frequency', instagram: 'frequency'});
 
 
-        //DOMINANT PROFIL
+        //DOMINANT PROFILE
         if((userData.facebook.nbOfPosts || 0) > (userData.instagram.nbOfPosts || 0)
             && (userData.facebook.nbOfPosts || 0) > (userData.twitter.nbOfPosts || 0)){
             this.dominantProfile = 'privé';
@@ -48,7 +48,7 @@ module.exports = class DataManager {
             this.dominantProfile = 'publique';
         }
 
-        //PROFIL TYPE
+        //PROFILE TYPE
         //*30 = per month
         if(this.globalPostFrequency*30 < 20){
             this.typeProfile = "Publication peu fréquente";
@@ -406,7 +406,7 @@ module.exports = class DataManager {
         this.publicMostUsedHashtags = userData.instagram.mostUsedHashtags.concat(userData.twitter.mostUsedHashtags);
         this.hobbiesVolume = (userData.facebook.nbOfPagesLiked || 0) + (userData.facebook.nbOfMoviesLiked || 0)
             + (userData.facebook.nbOfBooksLiked || 0) + (userData.facebook.nbOfArtistsLiked || 0);
-        
+
         return {
             globalData: {
                 hobbiesVolume: this.clamp(this.getNormValue(this.hobbiesVolume,0, 500), 0, 1),
