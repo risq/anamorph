@@ -221,38 +221,53 @@ module.exports = class DataManager {
         this.publicSmiley = this.joinWordsOccs((userData.instagram.smiley || []), (userData.twitter.smiley || []));
 
         //PUBLIC
-        this.nbOfPublicPejorativeWords = Object.keys(this.publicPejorativeWords).reduce((sum, value) => {
-            sum = sum + this.publicPejorativeWords[value];
-            return sum;
-        }, 0);
+        if(this.publicPejorativeWords){
+            this.nbOfPublicPejorativeWords = Object.keys(this.publicPejorativeWords).reduce((sum, value) => {
+                sum = sum + this.publicPejorativeWords[value];
+                return sum;
+            }, 0);
+        }
 
-        this.nbOfPublicMeliorativeWords = Object.keys(this.publicMeliorativeWords).reduce((sum, value) => {
-            sum = sum + this.publicMeliorativeWords[value];
-            return sum;
-        }, 0);
+        if(this.publicMeliorativeWords){
+            this.nbOfPublicMeliorativeWords = Object.keys(this.publicMeliorativeWords).reduce((sum, value) => {
+                sum = sum + this.publicMeliorativeWords[value];
+                return sum;
+            }, 0);
+        }
 
         //PRIVATE
-        this.nbOfPrivatePejorativeWords = Object.keys(userData.facebook.pejorativeWords).reduce((sum, value) => {
-            sum = sum + userData.facebook.pejorativeWords[value];
-            return sum;
-        }, 0);
-        this.nbOfPrivateMeliorativeWords = Object.keys(userData.facebook.meliorativeWords).reduce((sum, value) => {
-            sum = sum + userData.facebook.meliorativeWords[value];
-            return sum;
-        }, 0);
+        if(userData.facebook.pejorativeWords){
+            this.nbOfPrivatePejorativeWords = Object.keys(userData.facebook.pejorativeWords).reduce((sum, value) => {
+                sum = sum + userData.facebook.pejorativeWords[value];
+                return sum;
+            }, 0);
+        }
+
+        if(userData.facebook.meliorativeWords){
+            this.nbOfPrivateMeliorativeWords = Object.keys(userData.facebook.meliorativeWords).reduce((sum, value) => {
+                sum = sum + userData.facebook.meliorativeWords[value];
+                return sum;
+            }, 0);
+        }
 
         //EXPRESSIVITY
         let publicExpressivityTab = Object.assign(this.publicPejorativeWords, this.publicMeliorativeWords, this.publicSmiley);
         let privateExpressivityTab = this.joinWordsOccs((userData.facebook.pejorativeWords || []), (userData.facebook.meliorativeWords || []), (userData.facebook.smiley || []));
 
-        this.publicExpressivity = Object.keys(publicExpressivityTab).reduce((sum, value) => {
-            sum = sum + publicExpressivityTab[value];
-            return sum;
-        }, 0);
-        this.privateExpressivity = Object.keys(privateExpressivityTab).reduce((sum, value) => {
-            sum = sum + privateExpressivityTab[value];
-            return sum;
-        }, 0);
+
+        if(publicExpressivityTab){
+            this.publicExpressivity = Object.keys(publicExpressivityTab).reduce((sum, value) => {
+                sum = sum + publicExpressivityTab[value];
+                return sum;
+            }, 0);
+        }
+
+        if(privateExpressivityTab){
+            this.privateExpressivity = Object.keys(privateExpressivityTab).reduce((sum, value) => {
+                sum = sum + privateExpressivityTab[value];
+                return sum;
+            }, 0);
+        }
 
         this.globalExpressivity = this.publicExpressivity || 0 + this.privateExpressivity || 0;
 

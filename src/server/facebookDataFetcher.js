@@ -496,7 +496,9 @@ module.exports = class FacebookDataFetcher {
 
       for(var i=0;i<3;i++){
         if(res.data[i]){
-          this.data.lastMoviesSeen.push(res.data[i].data.movie.title);
+          if(res.data[i].data.movie){
+            this.data.lastMoviesSeen.push(res.data[i].data.movie.title);
+          }
         }
       }
 
