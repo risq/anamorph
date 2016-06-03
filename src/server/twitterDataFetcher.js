@@ -140,8 +140,8 @@ module.exports = class TwitterDataFetcher {
                         dbg(`Total retweets: ${this.data.totalRetweets}`);
                         dbg(`Number of photos: ${this.data.nbOfPhotos}`);
 
-                        this.data.averageRetweetPerUserPost = (this.data.totalRetweetForUserPosts / this.data.totalTweetsAndRetweets).toFixed(2);
-                        this.data.averageLikePerUserPost = (this.data.totalLikesForUserPosts / this.data.totalTweetsAndRetweets).toFixed(2);
+                        this.data.averageRetweetPerUserPost = (this.data.totalRetweetForUserPosts / this.data.totalTweetsAndRetweets);
+                        this.data.averageLikePerUserPost = (this.data.totalLikesForUserPosts / this.data.totalTweetsAndRetweets);
 
                         dbg(`Total retweets for user posts: ${this.data.totalRetweetForUserPosts}`);
                         dbg(`Total likes or user posts: ${this.data.totalLikesForUserPosts}`);

@@ -561,7 +561,7 @@ module.exports = class FacebookDataFetcher {
             this.data.nbOfComments+= data.comments.data.length;
           }
         }));
-        this.data.averageCommentOnPost = (this.data.nbOfComments/res.feed.data.length).toFixed(2);
+        this.data.averageCommentOnPost = (this.data.nbOfComments/res.feed.data.length);
 
         dbg(`Found: ${this.data.nbOfComments} comments`);
         dbg(`Average comment per post: ${this.data.averageCommentOnPost}`);
@@ -626,7 +626,7 @@ module.exports = class FacebookDataFetcher {
 
           }
         }));
-        this.data.averageLikeOnPost = (this.data.nbOfLike/res.feed.data.length).toFixed(2);
+        this.data.averageLikeOnPost = (this.data.nbOfLike/res.feed.data.length);
 
         dbg(`Found: ${this.data.nbOfLike} likes`);
         dbg(`Average like per post: ${this.data.averageLikeOnPost}`);

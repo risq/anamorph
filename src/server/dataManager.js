@@ -331,7 +331,7 @@ module.exports = class DataManager {
                 expressivity: this.clamp(this.getNormValue((this.publicExpressivity || 0),0, 500), 0, 1),
                 attitude: this.publicAttitude || (1/2),
                 expressivityDistribution: this.publicExpressivityDistribution,
-                attitudeDistribution: this.publicAttitudeDistribution,
+                attitudeDistribution: this.publicAttitudeDistribution || 0,
             },
             privateData: {
                 pejorativeWords: userData.facebook.pejorativeWords || [],
@@ -340,7 +340,7 @@ module.exports = class DataManager {
                 expressivity: this.clamp(this.getNormValue((this.privateExpressivity || 0),0, 500), 0, 1),
                 attitude: this.privateAttitude || (1/2),
                 expressivityDistribution: this.privateExpressivityDistribution,
-                attitudeDistribution: this.privateAttitudeDistribution,
+                attitudeDistribution: this.privateAttitudeDistribution || 0,
             },
             professionalData: {
             },
