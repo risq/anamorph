@@ -38,8 +38,12 @@ export default class RemoteView {
     Facebook.on('login:status', this.onLoginStatus.bind(this));
     Facebook.on('get:name', this.onGetName.bind(this));
 
-    //Call twitterdatafetcher on click
-    //this.$els.twitter.on('click', () => this.io.emit('remote:auth:twitter'));
+    $('.network').on('click', () => {
+      alert('aaaaa');
+      console.log('rrrrrrrrrrrrrrrrrr');
+      $(this).addClass('check');
+
+    });
   }
 
   onRemoteRegisterStatus({err, id}) {
@@ -77,6 +81,10 @@ export default class RemoteView {
       clientId: this.clientId,
       rootUrl: window.location.origin
     }));
+
+    $('.network').on('click', function() {
+      $(this).addClass('check');
+    });
   }
 
   hideFacebookLogin() {
