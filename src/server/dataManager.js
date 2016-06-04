@@ -380,7 +380,7 @@ module.exports = class DataManager {
 
         return {
             globalData: {
-                score: this.sumScore,
+                score: this.clamp(this.getNormValue(this.sumScore,0, 500), 0, 1),
             },
             publicData: {
                 percentScore: this.publicPassiveIdentityDistribution,
