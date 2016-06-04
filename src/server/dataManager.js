@@ -142,9 +142,9 @@ module.exports = class DataManager {
             + this.getTotal(userData, {twitter: 'averageRetweetPerUserPost', instagram: 'averageOfGetComments'});;
 
 
-        this.publicInfluence = this.publicNbOfFollowers + this.publicNbOfLikes + (userData.instagram.nbOfComments || 0) + (userData.twitter.totalRetweets || 0);
-        this.privateInfluence = userData.facebook.nbOfFriends + (userData.facebook.nbOfComments || 0) + (userData.facebook.nbOfLike || 0);
-        this.globalInfluence = this.publicInfluence + this.privateInfluence;
+        this.publicInfluence = this.publicNbOfFollowers || 0 + this.publicNbOfLikes || 0 + (userData.instagram.nbOfComments || 0) + (userData.twitter.totalRetweets || 0);
+        this.privateInfluence = userData.facebook.nbOfFriends || 0 + (userData.facebook.nbOfComments || 0) + (userData.facebook.nbOfLike || 0);
+        this.globalInfluence = this.publicInfluence || 0 + this.privateInfluence || 0;
 
 
         //DISTRIBUTION
@@ -295,7 +295,7 @@ module.exports = class DataManager {
             this.privateAttitude = (1/2);
         }
 
-        this.sumAttitude = this.publicAttitude + this.privateAttitude;
+        this.sumAttitude = this.publicAttitude || 0 + this.privateAttitude || 0;
 
         //GLOBAL
         let globalNbPejorativeWords = this.nbOfPublicPejorativeWords || 0 + this.nbOfPrivatePejorativeWords || 0;

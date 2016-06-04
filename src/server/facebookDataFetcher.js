@@ -338,7 +338,7 @@ module.exports = class FacebookDataFetcher {
         return this.fetchNumberOfPagesLiked(res.paging.next);
       }
 
-      //res only returns { id: 'xxxxxxxxxxxxxxxxx' } ?Q
+      //Number of pages liked
       if (res.likes) {
         this.data.nbOfPagesLiked = res.likes.data.length;
       }
