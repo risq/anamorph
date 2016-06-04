@@ -25,7 +25,7 @@ module.exports = class Client {
       this.socket = socket;
       dbg(`Registered client ${this.id}`);
 
-      this.emitRegisteredClient(this.id);
+      //this.emitRegisteredClient(this.id);
     }
   }
 
@@ -45,7 +45,7 @@ module.exports = class Client {
       this.remoteSocket = socket;
      // this.remoteSocket.on('remote:auth:facebook', this.onFacebookAuthResponse.bind(this));
 
-      this.emitRegisteredRemote(this.id);
+     // this.emitRegisteredRemote(this.id);
     }
   }
 
