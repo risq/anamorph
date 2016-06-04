@@ -37,15 +37,18 @@ module.exports = class DataManager {
         //DOMINANT PROFILE
         if((userData.facebook.nbOfPosts || 0) > (userData.instagram.nbOfPosts || 0)
             && (userData.facebook.nbOfPosts || 0) > (userData.twitter.nbOfPosts || 0)){
-            this.dominantProfile = 'privé';
+            this.dominantProfile = 'private';
         }
         else if((userData.instagram.nbOfPosts || 0) > (userData.facebook.nbOfPosts || 0)
             && (userData.instagram.nbOfPosts || 0) > (userData.twitter.nbOfPosts || 0)){
-            this.dominantProfile = 'publique';
+            this.dominantProfile = 'public';
         }
         else if((userData.twitter.nbOfPosts || 0) > (userData.facebook.nbOfPosts || 0)
             && (userData.twitter.nbOfPosts || 0) > (userData.instagram.nbOfPosts || 0)){
-            this.dominantProfile = 'publique';
+            this.dominantProfile = 'public';
+        }
+        else{
+            this.dominantProfile = 'pro';
         }
 
         //PROFILE TYPE
