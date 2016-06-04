@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="18px" height="16px" viewBox="0 0 18 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 3.8.3 (29802) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-linkedin</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M17.008,15.62 L13.249,15.62 L13.249,10.129 C13.249,8.691 12.661,7.711 11.368,7.711 C10.379,7.711 9.829,8.372 9.573,9.011 C9.477,9.239 9.492,9.558 9.492,9.878 L9.492,15.62 L5.768,15.62 C5.768,15.62 5.816,5.893 5.768,5.009 L9.492,5.009 L9.492,6.674 C9.712,5.945 10.902,4.906 12.802,4.906 C15.157,4.906 17.008,6.432 17.008,9.72 L17.008,15.62 Z M2.002,3.681 L1.978,3.681 C0.778,3.681 0,2.87 0,1.843 C0,0.794 0.802,0 2.025,0 C3.248,0 4,0.792 4.024,1.84 C4.024,2.867 3.248,3.681 2.002,3.681 L2.002,3.681 Z M0.428,15.62 L3.744,15.62 L3.744,5.009 L0.428,5.009 L0.428,15.62 Z" id="icon-linkedin" fill="#595959"></path>
+    </g>
+</svg>

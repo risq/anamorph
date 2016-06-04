@@ -1,13 +1,13 @@
 {% if err %}
   <h3>{{err}}</h3>
 {% else %}
-  <h4>syncId: {{state.syncId}}</h4>
+  <!--<h4>syncId: {{state.syncId}}</h4>
   {% if state.name %}
     <h3>{{state.name}}</h3>
   {% endif %}
   <p>
     <b>Status:</b> {{state.remoteStatus}}
-  </p>
+  </p>-->
 
   <div class="purple-circle"></div>
   <div class="orange-circle"></div>
@@ -16,16 +16,9 @@
 
   <div class="logo-title">
     <div class="logo"></div>
-    <div class="text">VOTRE IDENTITÉ NUMÉRIQUE, FACE À VOUS</div>
   </div>
 
   <div class="network-container">
-    <!-- TODO: set url  -->
-    <!-- Disabled facebook button -->
-    <!--<div class="facebook">
-      <fb:login-button scope="public_profile,email,user_about_me,user_actions.music,user_birthday,user_friends,user_education_history,user_hometown,user_location,user_photos,user_posts,user_religion_politics,user_tagged_places,user_work_history" onlogin="checkLoginState();"></fb:login-button>
-    </div>-->
-
     <div class="networks">
       <div class="connect">CONNEXION</div>
       <div class="top">
