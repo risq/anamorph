@@ -17,6 +17,7 @@ module.exports = class DataManager {
           userData.events.on('allDataFetched', () => {
             dbg('allDataFetched event fired');
             resolve(dbg(JSON.stringify(this.getData(userData.data)), '\t'));
+            //resolve(JSON.stringify(this.getData(userData.data)));
           });
 
           userData.terminate();
@@ -73,9 +74,10 @@ module.exports = class DataManager {
 
         return {
             globalData: {
-                postFrequency: this.globalPostFrequency,
+                postFrequency: this.globalPostFrequency || 0,
+                postFrequencyScore: this.clamp(this.getNormValue(this.globalPostFrequency || 0, 0, 500), 0, 1),
                 nbOfPhotos: this.globalNbOfPhotos,
-                volumePhotos: this.clamp(this.getNormValue(this.globalNbOfPhotos, 0, 500), 0, 1),
+                volumePhotos: this.clamp(this.getNormValue(this.globalNbOfPhotos || 0, 0, 500), 0, 1),
                 nbOfShares: this.globalNbOfShares,
                 nbOfPosts: this.globalNbOfPosts,
                 volumePosts: this.clamp(this.getNormValue(this.globalNbOfPosts,0, 500), 0, 1),
@@ -84,7 +86,8 @@ module.exports = class DataManager {
                 typeProfile: this.typeProfile,
             },
             publicData: {
-                postFrequency: this.publicPostFrequency,
+                postFrequency: this.publicPostFrequency || 0,
+                postFrequencyScore: this.clamp(this.getNormValue(this.publicPostFrequency, 0, 500), 0, 1),
                 nbOfShare: userData.twitter.totalRetweets || 0,
                 nbOfPosts: this.publicNbOfPosts,
                 volumePosts: this.clamp(this.getNormValue((this.publicNbOfPosts || 0),0, 500), 0, 1),
@@ -95,6 +98,7 @@ module.exports = class DataManager {
             },
             privateData: {
                 postFrequency: userData.facebook.frequency || 0,
+                postFrequencyScore: this.clamp(this.getNormValue(userData.facebook.frequency || 0,0, 500), 0, 1),
                 nbOfPhotos: userData.facebook.nbOfPhotos,
                 volumePhotos: this.clamp(this.getNormValue((userData.facebook.nbOfPhotos || 0),0, 500), 0, 1),
                 nbOfShare: userData.facebook.nbOfShares || 0,
@@ -338,7 +342,7 @@ module.exports = class DataManager {
             },
             privateData: {
                 pejorativeWords: userData.facebook.pejorativeWords || [],
-                meliorativeWords: userData.facebook.pejorativeWords || [],
+                meliorativeWords: userData.facebook.meliorativeWords || [],
                 smiley: userData.facebook.smiley || [],
                 expressivity: this.clamp(this.getNormValue((this.privateExpressivity || 0),0, 500), 0, 1),
                 attitude: this.privateAttitude || (1/2),
@@ -350,12 +354,12 @@ module.exports = class DataManager {
             raw: {
                 facebook: {
                     pejorativeWords: userData.facebook.pejorativeWords || [],
-                    meliorativeWords: userData.facebook.pejorativeWords || [],
+                    meliorativeWords: userData.facebook.meliorativeWords || [],
                     smiley: userData.facebook.smiley || [],
                 },
                 twitter: {
                     pejorativeWords: userData.twitter.pejorativeWords || [],
-                    meliorativeWords: userData.twitter.pejorativeWords || [],
+                    meliorativeWords: userData.twitter.meliorativeWords || [],
                     smiley: userData.twitter.smiley || [],
                 },
                 linkedin: {

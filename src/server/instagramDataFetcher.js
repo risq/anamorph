@@ -177,7 +177,7 @@ module.exports = class InstagramDataFetcher {
 
 
           //Get pejorative and meliorative words in sentence
-          this.joinSentences = sentences.join(' ');
+          this.joinSentences = sentences.join(' ').toLowerCase();
           this.data.pejorativeWords = this.getWordsFrequencyInContent(this.pejorativeWordsList, this.joinSentences);
           this.data.meliorativeWords = this.getWordsFrequencyInContent(this.meliorativeWordsList, this.joinSentences);
           this.data.smiley = this.getSmileyFrequencyInContent(this.joinSentences);
