@@ -1,11 +1,11 @@
 {
-   "comment": "Donnée de romain",
+   "comment": "Beaucoup de donnée privée et publique, peu de pro, bcp de publication ",
 
    "activity":{
       "globalData":{
-         "postFrequency":0.58681729229674445,
-         "nbOfPhotos":360,
-         "volumePhotos":0.72,
+         "postFrequency":0.98681729229674445,
+         "nbOfPhotos":575,
+         "volumePhotos":0.82,
          "nbOfShares":171,
          "nbOfPosts":612,
          "volumePosts":1,

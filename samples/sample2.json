@@ -1,154 +1,151 @@
 {
-   "comment": "Donnée de romain",
+   "comment": "Beaucoup de donnée privée et publique, peu de pro, bcp de publication ",
 
    "activity":{
       "globalData":{
-         "postFrequency":0.58681729229674445,
-         "nbOfPhotos":360,
-         "volumePhotos":0.72,
-         "nbOfShares":171,
-         "nbOfPosts":612,
+         "postFrequency":0.98681729229674445,
+         "nbOfPhotos":975,
+         "volumePhotos":1,
+         "nbOfShares":572,
+         "nbOfPosts":1420,
          "volumePosts":1,
-         "seniority":8,
+         "seniority":12,
          "dominantProfile":"priv�",
          "typeProfile":"Publication tr�s fr�quente"
       },
       "publicData":{
-         "postFrequency":0.3463636363636364,
-         "nbOfShare":49,
-         "nbOfPosts":340,
-         "volumePosts":0.68,
-         "nbOfPhotos":286,
-         "volumePhotos":0.572,
-         "frequencyDistribution":0.5902410186448386,
-         "volumeDistribution":0.5555555555555556
+         "postFrequency":1,
+         "nbOfShare":849,
+         "nbOfPosts":640,
+         "volumePosts":0.98,
+         "nbOfPhotos":341,
+         "volumePhotos":0.972,
+         "frequencyDistribution":0.4,
+         "volumeDistribution":0.35
       },
       "privateData":{
-         "postFrequency":0.24045365593310805,
-         "nbOfPhotos":74,
-         "volumePhotos":0.148,
-         "nbOfShare":122,
-         "nbOfPosts":272,
-         "volumePosts":0.544,
-         "frequencyDistribution":0.4097589813551615,
-         "volumeDistribution":0.4444444444444444
+         "postFrequency":0.94045365593310805,
+         "nbOfPhotos":864,
+         "volumePhotos":0.948,
+         "nbOfShare":322,
+         "nbOfPosts":572,
+         "volumePosts":0.844,
+         "frequencyDistribution":0.6,
+         "volumeDistribution":0.65
       },
       "professionalData":{
-         "postFrequency":0,
-         "nbOfShare":0,
-         "nbOfPosts":0
+         "postFrequency":0.1,
+         "nbOfShare":2,
+         "nbOfPosts":3
       },
       "raw":{
          "facebook":{
-            "nbOfPhotos":74,
-            "nbOfShare":122,
-            "nbOfPosts":272,
-            "postFrequency":24.045365593310805
+            "nbOfPhotos":564,
+            "nbOfShare":322,
+            "nbOfPosts":572,
+            "postFrequency":0.9945365593310805
          },
          "twitter":{
-            "nbOfPhotos":97,
-            "nbOfShare":49,
-            "nbOfPosts":151,
-            "postFrequency":30.74025974025974
+            "nbOfPhotos":341,
+            "nbOfShare":849,
+            "nbOfPosts":640,
+            "postFrequency":0.9725974025974
          },
          "linkedin":{
-            "nbOfShare":0,
-            "nbOfPosts":0
+            "nbOfShare":2,
+            "nbOfPosts":3
          },
          "instagram":{
-            "nbOfPhotos":189,
-            "postFrequency":3.8961038961038956
+            "nbOfPhotos":302,
+            "postFrequency":0.8961038961038956
          }
       }
    },
    "influence":{
       "globalData":{
-         "influence":0.80,
-         "nbOfLikes":1354
+         "influence":0.90,
+         "nbOfLikes":423
       },
       "publicData":{
-         "influence":0.7,
+         "influence":0.8,
          "nbOfFollowers":669,
-         "nbOfRetweets":49,
-         "nbOfLikes":905,
+         "nbOfRetweets":239,
+         "nbOfLikes":1205,
          "likesScore":1,
-         "averageFeedbackOnPost":1.73280016610,
-         "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13269510_542881952565143_358970319_n.jpg?ig_cache_key=MTI2MTY5MDg3MTA0Njc4MTYwMQ%3D%3D.2",
-         "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp � — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r",
-         "influenceDistribution":0.6703431372549019
+         "averageFeedbackOnPost":21.3280016610,
+         "mostPopularPhoto":"http://images.google.fr/imgres?imgurl=http%3A%2F%2Fi.huffpost.com%2Fgen%2F1997672%2Fimages%2Fa-SELFIE-640x468.jpg&imgrefurl=http%3A%2F%2Fwww.huffingtonpost.fr%2F2014%2F08%2F28%2Fselfie-photo-gratte-ciel-vertige_n_5727388.html&h=468&w=640&tbnid=F00Gyke_PUtqcM%3A&docid=XfJiTUGFWecm3M&ei=oOFSV6nACqWfgAam64DwBA&tbm=isch&iact=rc&uact=3&dur=186&page=1&start=0&ndsp=77&ved=0ahUKEwipkJnaxo7NAhWlD8AKHaY1AE4QMwgjKAMwAw&bih=1271&biw=2560",
+         "influenceDistribution":0.7
       },
       "privateData":{
          "influence":0.9,
-         "nbOfLikes":449,
-         "likesScore":0.898,
-         "nbOfFriends":310,
-         "averageFeedbackOnPost":"1.9217.96",
-         "lessPopularPost":"Odesza x 20Syl �",
-         "mostPopularPost":"Tour du Lac :) ✌�",
-         "lessPopularPhoto":"https://external.xx.fbcdn.net/safe_image.php?d=AQASIkFZwV0Grthv&w=130&h=130&url=https%3A%2F%2Fi1.sndcdn.com%2Fartworks-000147238661-25my24-t500x500.jpg&cfs=1",
-         "mostPopularPhoto":"https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/13244820_10209734855754412_5036385389282738060_n.jpg?oh=c160af6d810ca498c6bda863c50f310d&oe=57CE586F",
-         "influenceDistribution":0.32965686274509803
+         "nbOfLikes":849,
+         "likesScore":0.998,
+         "nbOfFriends":610,
+         "averageFeedbackOnPost":"13",
+         "lessPopularPost":"no more vodka !",
+         "mostPopularPost":"Just Married <3",
+         "lessPopularPhoto":"https://media-cdn.tripadvisor.com/media/photo-s/0b/46/35/62/assiete-di-formaggi.jpg",
+         "mostPopularPhoto":"http://images.google.fr/imgres?imgurl=http%3A%2F%2Fstatic.ladepeche.fr%2Fcontent%2Fmedia%2Fimage%2Flarge%2F2016%2F04%2F29%2F2030807-presse-papiers-1.jpg&imgrefurl=http%3A%2F%2Fwww.ladepeche.fr%2Farticle%2F2016%2F04%2F29%2F2335149-porsche-brulee-marge-manif-nantes-enflamme-web.html&h=350&w=650&tbnid=jc6UeXIhaC0CuM%3A&docid=Tu4gFpYjTIG1WM&ei=KeRSV_CAG8O2aePSiPgL&tbm=isch&iact=rc&uact=3&dur=161&page=2&start=54&ndsp=74&ved=0ahUKEwiwueWPyY7NAhVDWxoKHWMpAr8QMwisASg5MDk&bih=1271&biw=2560",
+         "influenceDistribution":0.3
       },
       "professionalData":{
-        "influence":0.9
+        "influence":0.1
       },
       "raw":{
          "facebook":{
-            "nbOfLikes":449,
-            "nbOfFriends":310,
-            "averageFeedbackOnPost":"1.9217.96",
-            "lessPopularPost":"Odesza x 20Syl �",
-            "mostPopularPost":"Tour du Lac :) ✌�",
-            "lessPopularPhoto":"https://external.xx.fbcdn.net/safe_image.php?d=AQASIkFZwV0Grthv&w=130&h=130&url=https%3A%2F%2Fi1.sndcdn.com%2Fartworks-000147238661-25my24-t500x500.jpg&cfs=1",
-            "mostPopularPhoto":"https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/13244820_10209734855754412_5036385389282738060_n.jpg?oh=c160af6d810ca498c6bda863c50f310d&oe=57CE586F"
+            "nbOfLikes":849,
+            "nbOfFriends":610,
+            "averageFeedbackOnPost":"13",
+            "lessPopularPost":"no more vodka !",
+            "mostPopularPost":"Just Married <3",
+            "lessPopularPhoto":"https://media-cdn.tripadvisor.com/media/photo-s/0b/46/35/62/assiete-di-formaggi.jpg",
+            "mostPopularPhoto":"http://images.google.fr/imgres?imgurl=http%3A%2F%2Fstatic.ladepeche.fr%2Fcontent%2Fmedia%2Fimage%2Flarge%2F2016%2F04%2F29%2F2030807-presse-papiers-1.jpg&imgrefurl=http%3A%2F%2Fwww.ladepeche.fr%2Farticle%2F2016%2F04%2F29%2F2335149-porsche-brulee-marge-manif-nantes-enflamme-web.html&h=350&w=650&tbnid=jc6UeXIhaC0CuM%3A&docid=Tu4gFpYjTIG1WM&ei=KeRSV_CAG8O2aePSiPgL&tbm=isch&iact=rc&uact=3&dur=161&page=2&start=54&ndsp=74&ved=0ahUKEwiwueWPyY7NAhVDWxoKHWMpAr8QMwisASg5MDk&bih=1271&biw=2560"
          },
          "twitter":{
-            "nbOfFollowers":472,
-            "nbOfLikes":346,
-            "averageFeedbackOnPost":"1.661.73",
-            "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp � — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r"
+            "nbOfFollowers":669,
+            "nbOfLikes":1205,
+            "averageFeedbackOnPost":"21.75",
+            "mostPopularTweet":"Prayforparis"
          },
          "linkedin":{
-            "nbOfReference":0,
-            "nbOfConnections":0,
-            "nbOfViewPerMonth":0
+            "nbOfReference":2,
+            "nbOfConnections":3,
+            "nbOfViewPerMonth":18
          },
          "instagram":{
-            "nbOfFollowers":197,
-            "nbOfLikes":559,
-            "averageFeedbackOnPost":29,
-            "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13269510_542881952565143_358970319_n.jpg?ig_cache_key=MTI2MTY5MDg3MTA0Njc4MTYwMQ%3D%3D.2"
+            "nbOfFollowers":397,
+            "nbOfLikes":759,
+            "averageFeedbackOnPost":1.9843,
+            "mostPopularPhoto":"http://img.radio-canada.ca/2012/08/23/635x357/120823_3g0ix_feu_ottawa_sn635.jpg"
          }
       }
    },
    "mood":{
       "globalData":{
-         "expressivity":0.052,
-         "attitude":0.5
+         "expressivity":0.952,
+         "attitude":0.3
       },
       "publicData":{
          "pejorativeWords":{
-            "beau":5,
-            "cool":5,
-            "Beau":3,
-            "Cool":1,
-            "Super":1,
-            "undefined":11
+            "boring":12,
+            "ugly":8,
+            "annoying":5,
+            "Sad":3,
+            "silly":2,
          },
          "meliorativeWords":{
-            "beau":5,
-            "cool":5,
-            "Beau":3,
-            "Cool":1,
-            "Super":1
+            "nice":5,
+            "good job":2,
+            "great":3,
+            "awesome":1,
          },
          "smiley":{
-            "undefined":11
+            "happy":11
          },
-         "expressivity":0.052,
+         "expressivity":0.252,
          "attitude":0.5,
-         "expressivityDistribution":1,
-         "attitudeDistribution":0
+         "expressivityDistribution":0.3,
+         "attitudeDistribution":0.23
       },
       "privateData":{
          "pejorativeWords":[],
@@ -167,10 +164,10 @@
                "occ":1
             }
          ],
-         "expressivity":0.092,
-         "attitude":0.5,
-         "expressivityDistribution":1.7692307692307692,
-         "attitudeDistribution":1
+         "expressivity":0.392,
+         "attitude":0.4,
+         "expressivityDistribution":0.7,
+         "attitudeDistribution":0.77
       },
       "professionalData":{},
       "raw":{
@@ -180,11 +177,11 @@
             "smiley":[
                {
                   "smiley":":)",
-                  "occ":35
+                  "occ":3
                },
                {
                   "smiley":":D",
-                  "occ":7
+                  "occ":2
                },
                {
                   "smiley":"",
@@ -202,7 +199,7 @@
                },
                {
                   "smiley":"",
-                  "occ":1
+                  "occ":3
                },
                {
                   "smiley":":D",
@@ -228,30 +225,30 @@
          "score":0.7
       },
       "publicData":{
-         "percentScore":0.8787375415282392,
-         "score":1,
+         "percentScore":0.34,
+         "score":0.3,
          "totalRetweetForUserPosts":331,
-         "userMentions":198
+         "userMentions":158
       },
       "privateData":{
-         "percentScore":0.1212624584717608,
-         "score":0.146,
-         "nbOfComments":48,
+         "percentScore":0.66,
+         "score":0.6,
+         "nbOfComments":353,
          "averageCommentOnPost":"1.92",
-         "nbOfOtherUsersPostOnFeed":24,
-         "nbOfPhotosWhereUserIsIdentified":25
+         "nbOfOtherUsersPostOnFeed":84,
+         "nbOfPhotosWhereUserIsIdentified":75
       },
       "professionalData":{},
       "raw":{
          "facebook":{
-            "nbOfComments":48,
+            "nbOfComments":353,
             "averageCommentOnPost":"1.92",
-            "nbOfOtherUsersPostOnFeed":24,
-            "nbOfPhotosWhereUserIsIdentified":25
+            "nbOfOtherUsersPostOnFeed":84,
+            "nbOfPhotosWhereUserIsIdentified":75
          },
          "twitter":{
             "totalRetweetForUserPosts":331,
-            "userMentions":198
+            "userMentions":158
          },
          "linkedin":{},
          "instagram":{}
@@ -259,55 +256,55 @@
    },
    "hobbies":{
       "globalData":{
-         "hobbiesVolume":0.254
+         "hobbiesVolume":0.854
       },
       "publicData":{
          "mostUsedHashtags":[
             [
-               "vscocam",
+               "wingsuit",
+               67
+            ],
+            [
+               "NYC",
                17
             ],
             [
-               "vsco",
-               17
+               "freedom",
+               8
             ],
             [
-               "spring",
-               5
+               "awesome",
+               34
             ],
             [
-               "inspiration",
-               4
-            ],
-            [
-               "threejs",
+               "crazy",
                3
             ],
             [
-               "webgl",
+               "omg",
                2
             ]
          ]
       },
       "privateData":{
          "favoriteArtists":[
-            "Last Train",
-            "JAIN",
-            "Louis The Child"
+            "RageAgainstTheMachine",
+            "Eminem",
+            "Coldplay"
          ],
          "lastMoviesSeen":[],
          "pagesCategoryLiked":[
             [
                "Musician/Band",
-               4
+               12
             ],
             [
                "Company",
-               3
+               4
             ],
             [
                "Small Business",
-               3
+               2
             ],
             [
                "Internet/Software",
@@ -358,7 +355,7 @@
                1
             ]
          ],
-         "nbOfPagesLiked":25,
+         "nbOfPagesLiked":75,
          "nbOfBooksLiked":0,
          "nbOfMoviesLiked":2,
          "nbOfArtistsLiked":100
@@ -367,9 +364,9 @@
       "raw":{
          "facebook":{
             "favoriteArtists":[
-               "Last Train",
-               "JAIN",
-               "Louis The Child"
+               "RageAgainstTheMachine",
+               "Eminem",
+               "Coldplay"
             ],
             "lastMoviesSeen":[
 
@@ -377,15 +374,15 @@
             "pagesCategoryLiked":[
                [
                   "Musician/Band",
-                  4
+                  12
                ],
                [
                   "Company",
-                  3
+                  4
                ],
                [
                   "Small Business",
-                  3
+                  2
                ],
                [
                   "Internet/Software",
@@ -444,15 +441,15 @@
          "twitter":{
             "mostUsedHashtags":[
                [
-                  "inspiration",
-                  4
+                  "Wingsuit",
+                  10
                ],
                [
-                  "threejs",
-                  3
+                  "sport",
+                  6
                ],
                [
-                  "webgl",
+                  "running",
                   2
                ]
             ]
@@ -463,15 +460,15 @@
          "instagram":{
             "mostUsedHashtags":[
                [
-                  "vscocam",
+                  "Wingsuit",
                   17
                ],
                [
-                  "vsco",
+                  "sport",
                   17
                ],
                [
-                  "spring",
+                  "style",
                   5
                ]
             ]
