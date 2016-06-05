@@ -1,6 +1,8 @@
 'use strict';
 const socketio = require('socket.io');
 const dbg = require('debug')('anamorph:socketManager');
+const Bluebird = require('bluebird');
+const fs = Bluebird.promisifyAll(require('fs'));
 
 const clientManager = require('./clientManager');
 const stateManager = require('./stateManager');
@@ -18,8 +20,10 @@ module.exports = new class SocketManager {
 
   onConnection(socket) {
     dbg('Connection');
+    socket.on('disconnect', () => dbg('socket disconnected'));
     socket.on('client:register', data => clientManager.registerClient(data.id, socket));
     socket.on('remote:register', data => clientManager.registerRemote(data.syncId, socket));
+    socket.on('samples:get', () => this.emitSamples(socket));
   }
 
   emitState(client) {
@@ -33,5 +37,14 @@ module.exports = new class SocketManager {
           }
         }
       });
+  }
+
+  emitSamples(socket) {
+    dbg('Emitting samples');
+    fs.readFileAsync('samples/sample1.json', 'utf8').then((contents) => {
+      socket.emit('samples', JSON.parse(contents));
+    }).catch(err => {
+      dbg('Error reading file', err);
+    });
   }
 };
