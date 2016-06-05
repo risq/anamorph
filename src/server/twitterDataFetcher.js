@@ -67,7 +67,10 @@ module.exports = class TwitterDataFetcher {
                         reject(err);
                     } else {
                         this.data.numberOfFollowers = data.followers_count;
+                        this.data.totalTweets = data.statuses_count;
+                        this.data.nbOfPosts = this.data.totalTweets;
                         this.data.numberOfFriends = data.friends_count;
+                        dbg(`Total tweets: ${this.data.totalTweets}`);
                         dbg(`Found ${this.data.numberOfFollowers} followers`);
                         dbg(`Found ${this.data.numberOfFriends} friends`);
                         resolve(this.data);
@@ -127,12 +130,12 @@ module.exports = class TwitterDataFetcher {
 
                         data.forEach((data => {
 
-                            if (data.retweeted == true) {
+                           /* if (data.retweeted == true) {
                                 this.data.totalRetweets += 1;
                             }
                             else {
                                 this.data.totalTweets += 1;
-                            }
+                            }*/
 
                             this.data.totalRetweetForUserPosts += data.retweet_count;
                             this.data.totalLikesForUserPosts += data.favorite_count;
@@ -158,9 +161,9 @@ module.exports = class TwitterDataFetcher {
                             sentences.push(data.text);
                         }));
 
-                        this.data.nbOfPosts = this.data.totalTweets;
+                        //this.data.nbOfPosts = this.data.totalTweets;
 
-                        dbg(`Total tweets: ${this.data.totalTweets}`);
+                        //dbg(`Total tweets: ${this.data.totalTweets}`);
                         dbg(`Total retweets: ${this.data.totalRetweets}`);
                         dbg(`Number of photos: ${this.data.nbOfPhotos}`);
 

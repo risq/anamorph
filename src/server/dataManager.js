@@ -34,7 +34,6 @@ module.exports = class DataManager {
         this.publicNbOfPosts = this.getTotal(userData, {twitter: 'nbOfPosts', instagram: 'nbOfPosts'});
         this.publicPostFrequency = this.getTotal(userData, {twitter: 'frequency', instagram: 'frequency'});
 
-
         //DOMINANT PROFILE
         if((userData.facebook.nbOfPosts || 0) > (userData.instagram.nbOfPosts || 0)
             && (userData.facebook.nbOfPosts || 0) > (userData.twitter.nbOfPosts || 0)){
@@ -70,7 +69,6 @@ module.exports = class DataManager {
 
         this.publicVolumeDistribution = this.publicNbOfPosts/this.globalNbOfPosts;
         this.privateVolumeDistribution = (userData.facebook.nbOfPosts || 0)/this.globalNbOfPosts;
-
 
         return {
             globalData: {
@@ -463,7 +461,38 @@ module.exports = class DataManager {
     }
 
     treatGeneral(userData){
+
+        this.publicDistribution = (this.publicFrequencyDistribution + this.publicVolumeDistribution + this.publicInfluenceDistribution +
+            this.publicExpressivityDistribution + this.publicAttitudeDistribution + this.publicPassiveIdentityDistribution)/6;
+
+        this.privateDistribution = (this.privateFrequencyDistribution + this.privateVolumeDistribution + this.privateInfluenceDistribution +
+            this.privateExpressivityDistribution + this.privateAttitudeDistribution + this.privatePassiveIdentityDistribution)/6;
+
+
+        if(this.publicDistribution > this.privateDistribution){
+            if(this.publicDistribution > 75){
+                this.primaryCircle = this.secondaryCircle = 'public';
+            }
+            else{
+                this.primaryCircle = 'public';
+                this.secondaryCircle = 'private';
+            }
+        }
+        else if(this.privateDistribution > this.publicDistribution){
+            if(this.privateDistribution > 75){
+                this.primaryCircle = this.secondaryCircle = 'private';
+            }
+            else{
+                this.primaryCircle = 'private';
+                this.secondaryCircle = 'public';
+            }
+        }
+
         return {
+            generalData: {
+                primaryCircle: this.primaryCircle,
+                secondaryCircle: this.secondaryCircle,
+            },
             raw: {
                 facebook: {
                     name: userData.facebook.name || '',
@@ -557,7 +586,7 @@ module.exports = class DataManager {
         mood: this.treatMoodCircle(userData),
         passiveIdentity: this.treatPassiveIdentityCircle(userData),
         hobbies: this.treatHobbiesCircle(userData),
-          general: this.treatGeneral(userData),
+        general: this.treatGeneral(userData),
       }
     }
 };
