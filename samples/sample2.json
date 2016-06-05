@@ -1,6 +1,9 @@
 {
    "comment": "Beaucoup de donnée privée et publique, peu de pro, bcp de publication ",
-
+   "global": {
+     "primaryCircle": "pro",
+     "secondaryCircle": "public"
+   },
    "activity":{
       "globalData":{
          "postFrequency":0.98681729229674445,
@@ -131,13 +134,13 @@
             "ugly":8,
             "annoying":5,
             "Sad":3,
-            "silly":2,
+            "silly":2
          },
          "meliorativeWords":{
             "nice":5,
             "good job":2,
             "great":3,
-            "awesome":1,
+            "awesome":1
          },
          "smiley":{
             "happy":11
@@ -368,9 +371,7 @@
                "Eminem",
                "Coldplay"
             ],
-            "lastMoviesSeen":[
-
-            ],
+            "lastMoviesSeen":[],
             "pagesCategoryLiked":[
                [
                   "Musician/Band",
@@ -454,9 +455,7 @@
                ]
             ]
          },
-         "linkedin":{
-
-         },
+         "linkedin":{},
          "instagram":{
             "mostUsedHashtags":[
                [
