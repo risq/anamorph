@@ -10,6 +10,7 @@ module.exports = class InstagramDataFetcher {
     this.tokens = tokens;
 
     this.data = {
+      pseudo: '',
       nbOfPosts: '',
       numberOfUserPhotos: '',
       numberOfUserFollowers: [],
@@ -54,6 +55,9 @@ module.exports = class InstagramDataFetcher {
 
     return this.gram.get('/users/self/', {})
       .then(res => {
+
+          this.data.pseudo = res.username;
+
           if(res.counts.media){
             this.data.numberOfUserPhotos = res.counts.media;
             this.data.nbOfPosts = this.data.numberOfUserPhotos;
@@ -62,6 +66,7 @@ module.exports = class InstagramDataFetcher {
             this.data.numberOfUserPhotos = 0;
             this.data.nbOfPosts = this.data.numberOfUserPhotos;
           }
+          dbg(`Pseudo: ${this.data.pseudo}`);
           dbg(`Number of user publications: ${this.data.numberOfUserPhotos}`);
       })
       .catch(err => dbg(`Error: ${err.message}`));

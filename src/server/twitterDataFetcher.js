@@ -13,6 +13,7 @@ module.exports = class TwitterDataFetcher {
         this.user = user;
 
         this.data = {
+            pseudo: '',
             numberOfFollowers: 0,
             numberOfFriends: 0,
             totalTweetsAndRetweets: 0,
@@ -44,6 +45,7 @@ module.exports = class TwitterDataFetcher {
     fetch() {
         dbg('Fetching twitter data');
         return this.fetchUserInformation()
+            .then(() => this.fetchUserSettings())
             .then(() => this.fetchUserTweets())
             .then(() => this.fetchUserMentions())
             .then(() => this.fetchUserLikedTweets())
@@ -68,6 +70,28 @@ module.exports = class TwitterDataFetcher {
                         this.data.numberOfFriends = data.friends_count;
                         dbg(`Found ${this.data.numberOfFollowers} followers`);
                         dbg(`Found ${this.data.numberOfFriends} friends`);
+                        resolve(this.data);
+                    }
+                }
+            );
+        });
+    }
+
+    //Get the user information
+    fetchUserSettings() {
+        dbg('Fetching user settings');
+
+        return new Bluebird((resolve, reject) => {
+            this.api.account('settings', {user_id: this.user.user_id},
+                this.tokens.accessToken,
+                this.tokens.accessTokenSecret,
+                (err, data) => {
+                    if (err) {
+                        dbg('error: ', err);
+                        reject(err);
+                    } else {
+                        this.data.pseudo = data.screen_name;
+                        dbg(`Pseudo ${this.data.pseudo}`);
                         resolve(this.data);
                     }
                 }

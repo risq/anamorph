@@ -187,8 +187,7 @@ module.exports = class DataManager {
                 mostPopularPhoto: userData.facebook.mostPopularPhoto || '',
                 influenceDistribution: this.privateInfluenceDistribution,
             },
-            professionalData: {
-            },
+            professionalData: {},
             raw: {
                 facebook: {
                     nbOfLikes: userData.facebook.nbOfLike || 0,
@@ -362,8 +361,7 @@ module.exports = class DataManager {
                     meliorativeWords: userData.twitter.meliorativeWords || [],
                     smiley: userData.twitter.smiley || [],
                 },
-                linkedin: {
-                },
+                linkedin: {},
                 instagram: {
                     pejorativeWords: userData.instagram.pejorativeWords || [],
                     meliorativeWords: userData.instagram.pejorativeWords || [],
@@ -403,8 +401,7 @@ module.exports = class DataManager {
                 nbOfOtherUsersPostOnFeed: userData.facebook.nbOfOtherUsersPostOnFeed || 0,
                 nbOfPhotosWhereUserIsIdentified: userData.facebook.nbOfPhotosWhereUserIsIdentified || 0,
             },
-            professionalData: {
-            },
+            professionalData: {},
             raw: {
                 facebook: {
                     nbOfComments: userData.facebook.nbOfComments || 0,
@@ -416,10 +413,8 @@ module.exports = class DataManager {
                     totalRetweetForUserPosts: userData.twitter.totalRetweetForUserPosts || 0,
                     userMentions: userData.twitter.userMentions || 0,
                 },
-                linkedin: {
-                },
-                instagram: {
-                },
+                linkedin: {},
+                instagram: {},
             }
         }
     }
@@ -445,8 +440,7 @@ module.exports = class DataManager {
                 nbOfMoviesLiked: userData.facebook.nbOfMoviesLiked || 0,
                 nbOfArtistsLiked: userData.facebook.nbOfArtistsLiked || 0,
             },
-            professionalData: {
-            },
+            professionalData: {},
             raw: {
                 facebook: {
                     favoriteArtists: userData.facebook.favoriteArtists || '',
@@ -460,10 +454,27 @@ module.exports = class DataManager {
                 twitter: {
                     mostUsedHashtags: userData.twitter.mostUsedHashtags || '',
                 },
-                linkedin: {
-                },
+                linkedin: {},
                 instagram: {
                     mostUsedHashtags: userData.instagram.mostUsedHashtags || '',
+                },
+            }
+        }
+    }
+
+    treatGeneral(userData){
+        return {
+            raw: {
+                facebook: {
+                    name: userData.facebook.name || '',
+                    ageMin: userData.facebook.age_min || '',
+                },
+                twitter: {
+                    pseudo: userData.twitter.pseudo || '',
+                },
+                linkedin: {},
+                instagram: {
+                    pseudo: userData.instagram.pseudo || '',
                 },
             }
         }
@@ -546,6 +557,7 @@ module.exports = class DataManager {
         mood: this.treatMoodCircle(userData),
         passiveIdentity: this.treatPassiveIdentityCircle(userData),
         hobbies: this.treatHobbiesCircle(userData),
+          general: this.treatGeneral(userData),
       }
     }
 };
