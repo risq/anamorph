@@ -3,14 +3,14 @@
    "activity":{
       "globalData":{
          "postFrequency": 493.4085,
-         "postFrequencyScore": 0.98681729229674445,
+         "postFrequencyScore": 1,
          "nbOfPhotos":975,
          "volumePhotos":1,
          "nbOfShares":572,
          "nbOfPosts":1420,
          "volumePosts":1,
          "seniority":12,
-         "dominantProfile":"priv�",
+         "dominantProfile":"private",
          "typeProfile":"Publication tr�s fr�quente"
       },
       "publicData":{
@@ -494,7 +494,7 @@
    },
    "general":{
       "globalData":{
-         "primaryCircle":"private",
+         "primaryCircle":"public",
          "secondaryCircle":"public"
       },
       "raw":{
