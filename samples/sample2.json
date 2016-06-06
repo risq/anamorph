@@ -149,7 +149,7 @@
          "expressivity":0.252,
          "attitude":0.5,
          "expressivityDistribution":0.3,
-         "attitudeDistribution":0.23
+         "attitudeDistribution":0.2
       },
       "privateData":{
          "pejorativeWords":[],
@@ -171,9 +171,19 @@
          "expressivity":0.392,
          "attitude":0.4,
          "expressivityDistribution":0.7,
-         "attitudeDistribution":0.77
+         "attitudeDistribution":0.7
       },
-      "professionalData":{},
+      "professionalData":{
+         "pejorativeWords":[],
+         "meliorativeWords":[],
+         "smiley":{
+            "happy":0
+         },
+         "expressivity":0.12,
+         "attitude":0.2,
+         "expressivityDistribution":0,
+         "attitudeDistribution":0.1
+      },
       "raw":{
          "facebook":{
             "pejorativeWords":[],
@@ -229,20 +239,27 @@
          "score":0.7
       },
       "publicData":{
-         "percentScore":0.34,
+         "percentDistribution":0.34,
          "score":0.3,
          "totalRetweetForUserPosts":331,
          "userMentions":158
       },
       "privateData":{
-         "percentScore":0.66,
+         "percentDistribution":0.66,
          "score":0.6,
          "nbOfComments":353,
          "averageCommentOnPost":1.92,
          "nbOfOtherUsersPostOnFeed":84,
          "nbOfPhotosWhereUserIsIdentified":75
       },
-      "professionalData":{},
+      "professionalData":{
+         "percentDistribution":0,
+         "score":0.1,
+         "nbOfComments":2,
+         "averageCommentOnPost":0.92,
+         "nbOfOtherUsersPostOnFeed":12,
+         "nbOfPhotosWhereUserIsIdentified":10
+      },
       "raw":{
          "facebook":{
             "nbOfComments":353,
