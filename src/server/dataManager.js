@@ -105,7 +105,17 @@ module.exports = class DataManager {
                 frequencyDistribution: this.privateFrequencyDistribution,
                 volumeDistribution: this.privateVolumeDistribution,
             },
-            professionalData: {},
+            professionalData: {
+                postFrequency: 0,
+                postFrequencyScore: 0,
+                nbOfPhotos: 0,
+                volumePhotos: 0,
+                nbOfShare: 0,
+                nbOfPosts: 0,
+                volumePosts: 0,
+                frequencyDistribution: 0,
+                volumeDistribution: 0,
+            },
             raw: {
                 facebook: {
                     nbOfPhotos: userData.facebook.nbOfPhotos || 0,
@@ -181,7 +191,18 @@ module.exports = class DataManager {
                 mostPopularPhoto: userData.facebook.mostPopularPhoto || '',
                 influenceDistribution: this.privateInfluenceDistribution,
             },
-            professionalData: {},
+            professionalData: {
+                influence: 0,
+                nbOfLikes: 0,
+                likesScore: 0,
+                nbOfFriends: 0,
+                averageFeedbackOnPost: 0,
+                lessPopularPost: '',
+                mostPopularPost: '',
+                lessPopularPhoto: '',
+                mostPopularPhoto: '',
+                influenceDistribution: 0,
+            },
             raw: {
                 facebook: {
                     nbOfLikes: userData.facebook.nbOfLike || 0,
@@ -340,7 +361,15 @@ module.exports = class DataManager {
                 expressivityDistribution: this.privateExpressivityDistribution,
                 attitudeDistribution: this.privateAttitudeDistribution || 0,
             },
-            professionalData: {},
+            professionalData: {
+                pejorativeWords: [],
+                meliorativeWords:[],
+                smiley: [],
+                expressivity: 0,
+                attitude: (1/2),
+                expressivityDistribution: 0,
+                attitudeDistribution: 0,
+            },
             raw: {
                 facebook: {
                     pejorativeWords: userData.facebook.pejorativeWords || [],
@@ -392,7 +421,14 @@ module.exports = class DataManager {
                 nbOfOtherUsersPostOnFeed: userData.facebook.nbOfOtherUsersPostOnFeed || 0,
                 nbOfPhotosWhereUserIsIdentified: userData.facebook.nbOfPhotosWhereUserIsIdentified || 0,
             },
-            professionalData: {},
+            professionalData: {
+                percentDistribution: 0,
+                score: 0,
+                nbOfComments: 0,
+                averageCommentOnPost: 0,
+                nbOfOtherUsersPostOnFeed: 0,
+                nbOfPhotosWhereUserIsIdentified: 0,
+            },
             raw: {
                 facebook: {
                     nbOfComments: userData.facebook.nbOfComments || 0,
@@ -431,7 +467,15 @@ module.exports = class DataManager {
                 nbOfMoviesLiked: userData.facebook.nbOfMoviesLiked || 0,
                 nbOfArtistsLiked: userData.facebook.nbOfArtistsLiked || 0,
             },
-            professionalData: {},
+            professionalData: {
+                favoriteArtists: '',
+                lastMoviesSeen: '',
+                pagesCategoryLiked: '',
+                nbOfPagesLiked: 0,
+                nbOfBooksLiked: 0,
+                nbOfMoviesLiked: 0,
+                nbOfArtistsLiked: 0,
+            },
             raw: {
                 facebook: {
                     favoriteArtists: userData.facebook.favoriteArtists || '',
