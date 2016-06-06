@@ -1,14 +1,9 @@
 {
    "comment": "Beaucoup de donnée privée et publique, peu de pro, bcp de publication ",
-   "general": {
-      "globalData": {
-         "primaryCircle": "private",
-         "secondaryCircle": "private"
-      }
-   },
    "activity":{
       "globalData":{
-         "postFrequency":0.98681729229674445,
+         "postFrequency": 493.4085,
+         "postFrequencyScore": 0.98681729229674445,
          "nbOfPhotos":975,
          "volumePhotos":1,
          "nbOfShares":572,
@@ -19,7 +14,8 @@
          "typeProfile":"Publication tr�s fr�quente"
       },
       "publicData":{
-         "postFrequency":1,
+         "postFrequency": 658,
+         "postFrequencyScore": 1,
          "nbOfShare":849,
          "nbOfPosts":640,
          "volumePosts":0.98,
@@ -29,7 +25,8 @@
          "volumeDistribution":0.35
       },
       "privateData":{
-         "postFrequency":0.94045365593310805,
+         "postFrequency": 470.2265,
+         "postFrequencyScore": 0.94045365593310805,
          "nbOfPhotos":864,
          "volumePhotos":0.948,
          "nbOfShare":322,
@@ -39,7 +36,8 @@
          "volumeDistribution":0.65
       },
       "professionalData":{
-         "postFrequency":0.1,
+         "postFrequency": 50,
+         "postFrequencyScore": 0.1,
          "nbOfShare":2,
          "nbOfPosts":3
       },
@@ -69,7 +67,8 @@
    "influence":{
       "globalData":{
          "influence":0.90,
-         "nbOfLikes":423
+         "nbOfLikes":423,
+         "averageFeedbackOnPost": 34.3280016610
       },
       "publicData":{
          "influence":0.8,
@@ -86,7 +85,7 @@
          "nbOfLikes":849,
          "likesScore":0.998,
          "nbOfFriends":610,
-         "averageFeedbackOnPost":"13",
+         "averageFeedbackOnPost": 13,
          "lessPopularPost":"no more vodka !",
          "mostPopularPost":"Just Married <3",
          "lessPopularPhoto":"https://media-cdn.tripadvisor.com/media/photo-s/0b/46/35/62/assiete-di-formaggi.jpg",
@@ -100,7 +99,7 @@
          "facebook":{
             "nbOfLikes":849,
             "nbOfFriends":610,
-            "averageFeedbackOnPost":"13",
+            "averageFeedbackOnPost":13,
             "lessPopularPost":"no more vodka !",
             "mostPopularPost":"Just Married <3",
             "lessPopularPhoto":"https://media-cdn.tripadvisor.com/media/photo-s/0b/46/35/62/assiete-di-formaggi.jpg",
@@ -109,7 +108,7 @@
          "twitter":{
             "nbOfFollowers":669,
             "nbOfLikes":1205,
-            "averageFeedbackOnPost":"21.75",
+            "averageFeedbackOnPost":21.75,
             "mostPopularTweet":"Prayforparis"
          },
          "linkedin":{
@@ -239,7 +238,7 @@
          "percentScore":0.66,
          "score":0.6,
          "nbOfComments":353,
-         "averageCommentOnPost":"1.92",
+         "averageCommentOnPost":1.92,
          "nbOfOtherUsersPostOnFeed":84,
          "nbOfPhotosWhereUserIsIdentified":75
       },
@@ -247,7 +246,7 @@
       "raw":{
          "facebook":{
             "nbOfComments":353,
-            "averageCommentOnPost":"1.92",
+            "averageCommentOnPost":1.92,
             "nbOfOtherUsersPostOnFeed":84,
             "nbOfPhotosWhereUserIsIdentified":75
          },
@@ -259,12 +258,12 @@
          "instagram":{}
       }
    },
-   "hobbies":{
-      "globalData":{
-         "hobbiesVolume":0.854
+   "hobbies": {
+      "globalData": {
+         "hobbiesVolume": 0.854
       },
-      "publicData":{
-         "mostUsedHashtags":[
+      "publicData": {
+         "mostUsedHashtags": [
             [
                "wingsuit",
                67
@@ -291,14 +290,14 @@
             ]
          ]
       },
-      "privateData":{
-         "favoriteArtists":[
+      "privateData": {
+         "favoriteArtists": [
             "RageAgainstTheMachine",
             "Eminem",
             "Coldplay"
          ],
-         "lastMoviesSeen":[],
-         "pagesCategoryLiked":[
+         "lastMoviesSeen": [],
+         "pagesCategoryLiked": [
             [
                "Musician/Band",
                12
@@ -360,21 +359,21 @@
                1
             ]
          ],
-         "nbOfPagesLiked":75,
-         "nbOfBooksLiked":0,
-         "nbOfMoviesLiked":2,
-         "nbOfArtistsLiked":100
+         "nbOfPagesLiked": 75,
+         "nbOfBooksLiked": 0,
+         "nbOfMoviesLiked": 2,
+         "nbOfArtistsLiked": 100
       },
-      "professionalData":{},
-      "raw":{
-         "facebook":{
-            "favoriteArtists":[
+      "professionalData": {},
+      "raw": {
+         "facebook": {
+            "favoriteArtists": [
                "RageAgainstTheMachine",
                "Eminem",
                "Coldplay"
             ],
-            "lastMoviesSeen":[],
-            "pagesCategoryLiked":[
+            "lastMoviesSeen": [],
+            "pagesCategoryLiked": [
                [
                   "Musician/Band",
                   12
@@ -436,13 +435,13 @@
                   1
                ]
             ],
-            "nbOfPagesLiked":25,
-            "nbOfBooksLiked":0,
-            "nbOfMoviesLiked":2,
-            "nbOfArtistsLiked":100
+            "nbOfPagesLiked": 25,
+            "nbOfBooksLiked": 0,
+            "nbOfMoviesLiked": 2,
+            "nbOfArtistsLiked": 100
          },
-         "twitter":{
-            "mostUsedHashtags":[
+         "twitter": {
+            "mostUsedHashtags": [
                [
                   "Wingsuit",
                   10
@@ -457,9 +456,9 @@
                ]
             ]
          },
-         "linkedin":{},
-         "instagram":{
-            "mostUsedHashtags":[
+         "linkedin": {},
+         "instagram": {
+            "mostUsedHashtags": [
                [
                   "Wingsuit",
                   17
@@ -473,6 +472,27 @@
                   5
                ]
             ]
+         }
+      }
+   },
+   "general":{
+      "globalData":{
+         "primaryCircle":"private",
+         "secondaryCircle":"public"
+      },
+      "raw":{
+         "facebook":{
+            "name":"Aurélie Navigne",
+            "ageMin": 35
+         },
+         "twitter":{
+            "pseudo":"Aurel"
+         },
+         "linkedin":{
+
+         },
+         "instagram":{
+            "pseudo":"aurelflowers"
          }
       }
    }

@@ -1,13 +1,8 @@
 {
-   "general": {
-      "globalData": {
-         "primaryCircle": "private",
-         "secondaryCircle": "private"
-      }
-   },
    "activity":{
       "globalData":{
-         "postFrequency":0.1,
+         "postFrequency": 50,
+         "postFrequencyScore": 0.1,
          "nbOfPhotos":10,
          "volumePhotos":0.12,
          "nbOfShares":11,
@@ -18,7 +13,8 @@
          "typeProfile":"rares publications"
       },
       "publicData":{
-         "postFrequency":0.1463636363636364,
+         "postFrequency": 73.1815,
+         "postFrequencyScore": 0.1463636363636364,
          "nbOfShare":2,
          "nbOfPosts":1,
          "volumePosts":0.1,
@@ -28,7 +24,8 @@
          "volumeDistribution":0.1
       },
       "privateData":{
-         "postFrequency":0.1,
+         "postFrequency": 50,
+         "postFrequencyScore": 0.1,
          "nbOfPhotos":3,
          "volumePhotos":0.1,
          "nbOfShare":2,
@@ -38,7 +35,8 @@
          "volumeDistribution":0.1
       },
       "professionalData":{
-         "postFrequency":0.5,
+         "postFrequency": 250,
+         "postFrequencyScore": 0.5,
          "nbOfShare":0,
          "nbOfPosts":0,
          "frequencyDistribution":0.8,
@@ -70,7 +68,8 @@
    "influence":{
       "globalData":{
          "influence":0.90,
-         "nbOfLikes":1354
+         "nbOfLikes":1354,
+         "averageFeedbackOnPost": 34.4010183
       },
       "publicData":{
          "influence":0.1,
@@ -88,7 +87,7 @@
          "nbOfLikes":10,
          "likesScore":0.1,
          "nbOfFriends":14,
-         "averageFeedbackOnPost":"0.117.96",
+         "averageFeedbackOnPost":0.117,
          "lessPopularPost":"Telephone perdu, me contacter par mail, merci",
          "mostPopularPost":"Merci beaucoup pour ce super week end !",
          "lessPopularPhoto":"http://photographie-facile.fr/wp-content/uploads/2012/06/flou-de-bouge.jpg",
@@ -103,7 +102,7 @@
          "facebook":{
             "nbOfLikes":10,
             "nbOfFriends":13,
-            "averageFeedbackOnPost":"0.117.96",
+            "averageFeedbackOnPost": 0.117,
             "lessPopularPost":"Telephone perdu, me contacter par mail, merci",
             "mostPopularPost":"Merci beaucoup pour ce super week end !",
             "lessPopularPhoto":"http://photographie-facile.fr/wp-content/uploads/2012/06/flou-de-bouge.jpg",
@@ -112,7 +111,7 @@
          "twitter":{
             "nbOfFollowers":2,
             "nbOfLikes":1,
-            "averageFeedbackOnPost":"0.073016610",
+            "averageFeedbackOnPost":0.073016610,
             "mostPopularTweet":"Bienvenue à Amandine qui rejoins notre équipe dès demain !"
          },
          "linkedin":{
@@ -241,7 +240,7 @@
          "percentScore":0.2,
          "score":0.146,
          "nbOfComments":3,
-         "averageCommentOnPost":"1",
+         "averageCommentOnPost":1,
          "nbOfOtherUsersPostOnFeed":2,
          "nbOfPhotosWhereUserIsIdentified":6
       },
@@ -249,12 +248,12 @@
          "percentScore":0.7,
          "score":0.946,
          "nbOfComments":130,
-         "averageCommentOnPost":"5"
+         "averageCommentOnPost":5
       },
       "raw":{
          "facebook":{
             "nbOfComments":3,
-            "averageCommentOnPost":"1",
+            "averageCommentOnPost":1,
             "nbOfOtherUsersPostOnFeed":2,
             "nbOfPhotosWhereUserIsIdentified":6
          },
@@ -458,6 +457,27 @@
                   1
                ]
             ]
+         }
+      }
+   },
+   "general":{
+      "globalData":{
+         "primaryCircle":"pro",
+         "secondaryCircle":"public"
+      },
+      "raw":{
+         "facebook":{
+            "name":"Sandra Passel",
+            "ageMin": 42
+         },
+         "twitter":{
+            "pseudo":"Sandra Passel"
+         },
+         "linkedin":{
+
+         },
+         "instagram":{
+            "pseudo":"sandrapassel"
          }
       }
    }

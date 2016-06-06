@@ -105,11 +105,7 @@ module.exports = class DataManager {
                 frequencyDistribution: this.privateFrequencyDistribution,
                 volumeDistribution: this.privateVolumeDistribution,
             },
-            professionalData: {
-                postFrequency: 0,
-                nbOfShare: 0,
-                nbOfPosts: 0,
-            },
+            professionalData: {},
             raw: {
                 facebook: {
                     nbOfPhotos: userData.facebook.nbOfPhotos || 0,
@@ -123,10 +119,7 @@ module.exports = class DataManager {
                     nbOfPosts: userData.twitter.totalTweets || 0,
                     postFrequency: userData.twitter.frequency || 0,
                 },
-                linkedin: {
-                    nbOfShare: 0,
-                    nbOfPosts: 0,
-                },
+                linkedin: {},
                 instagram: {
                     nbOfPhotos: userData.instagram.numberOfUserPhotos || 0,
                     postFrequency: userData.instagram.frequency || 0,
@@ -206,9 +199,7 @@ module.exports = class DataManager {
                     mostPopularTweet: (userData.twitter.mostPopularTweet || ''),
                 },
                 linkedin: {
-                    nbOfReference: 0,
                     nbOfConnections: userData.linkedin.connections || 0,
-                    nbOfViewPerMonth: 0,
                 },
                 instagram: {
                     nbOfFollowers: userData.instagram.numberOfUserFollowers || 0,
@@ -349,8 +340,7 @@ module.exports = class DataManager {
                 expressivityDistribution: this.privateExpressivityDistribution,
                 attitudeDistribution: this.privateAttitudeDistribution || 0,
             },
-            professionalData: {
-            },
+            professionalData: {},
             raw: {
                 facebook: {
                     pejorativeWords: userData.facebook.pejorativeWords || [],

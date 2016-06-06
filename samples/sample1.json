@@ -1,25 +1,21 @@
 {
    "comment": "Donnée de romain",
-   "general": {
-      "globalData": {
-         "primaryCircle": "private",
-         "secondaryCircle": "private"
-      }
-   },
    "activity":{
       "globalData":{
-         "postFrequency":0.58681729229674445,
+         "postFrequency": 293.4,
+         "postFrequencyScore": 0.58681729229674445,
          "nbOfPhotos":360,
          "volumePhotos":0.72,
          "nbOfShares":171,
          "nbOfPosts":612,
          "volumePosts":1,
          "seniority":8,
-         "dominantProfile":"priv�",
+         "dominantProfile":"private",
          "typeProfile":"Publication tr�s fr�quente"
       },
       "publicData":{
-         "postFrequency":0.3463636363636364,
+         "postFrequency": 173.1815,
+         "postFrequencyScore": 0.3463636363636364,
          "nbOfShare":49,
          "nbOfPosts":340,
          "volumePosts":0.68,
@@ -29,7 +25,8 @@
          "volumeDistribution":0.5555555555555556
       },
       "privateData":{
-         "postFrequency":0.24045365593310805,
+         "postFrequency": 120.2265,
+         "postFrequencyScore": 0.24045365593310805,
          "nbOfPhotos":74,
          "volumePhotos":0.148,
          "nbOfShare":122,
@@ -69,7 +66,8 @@
    "influence":{
       "globalData":{
          "influence":0.80,
-         "nbOfLikes":1354
+         "nbOfLikes":1354,
+         "averageFeedbackOnPost":52.235
       },
       "publicData":{
          "influence":0.7,
@@ -77,7 +75,7 @@
          "nbOfRetweets":49,
          "nbOfLikes":905,
          "likesScore":1,
-         "averageFeedbackOnPost":1.73280016610,
+         "averageFeedbackOnPost":32.355,
          "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13269510_542881952565143_358970319_n.jpg?ig_cache_key=MTI2MTY5MDg3MTA0Njc4MTYwMQ%3D%3D.2",
          "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp � — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r",
          "influenceDistribution":0.6703431372549019
@@ -87,7 +85,7 @@
          "nbOfLikes":449,
          "likesScore":0.898,
          "nbOfFriends":310,
-         "averageFeedbackOnPost":"1.9217.96",
+         "averageFeedbackOnPost":19.88,
          "lessPopularPost":"Odesza x 20Syl �",
          "mostPopularPost":"Tour du Lac :) ✌�",
          "lessPopularPhoto":"https://external.xx.fbcdn.net/safe_image.php?d=AQASIkFZwV0Grthv&w=130&h=130&url=https%3A%2F%2Fi1.sndcdn.com%2Fartworks-000147238661-25my24-t500x500.jpg&cfs=1",
@@ -101,7 +99,7 @@
          "facebook":{
             "nbOfLikes":449,
             "nbOfFriends":310,
-            "averageFeedbackOnPost":"1.9217.96",
+            "averageFeedbackOnPost": 19.88,
             "lessPopularPost":"Odesza x 20Syl �",
             "mostPopularPost":"Tour du Lac :) ✌�",
             "lessPopularPhoto":"https://external.xx.fbcdn.net/safe_image.php?d=AQASIkFZwV0Grthv&w=130&h=130&url=https%3A%2F%2Fi1.sndcdn.com%2Fartworks-000147238661-25my24-t500x500.jpg&cfs=1",
@@ -110,7 +108,7 @@
          "twitter":{
             "nbOfFollowers":472,
             "nbOfLikes":346,
-            "averageFeedbackOnPost":"1.661.73",
+            "averageFeedbackOnPost":3.355,
             "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp � — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r"
          },
          "linkedin":{
@@ -242,7 +240,7 @@
          "percentScore":0.1212624584717608,
          "score":0.146,
          "nbOfComments":48,
-         "averageCommentOnPost":"1.92",
+         "averageCommentOnPost":1.92,
          "nbOfOtherUsersPostOnFeed":24,
          "nbOfPhotosWhereUserIsIdentified":25
       },
@@ -250,7 +248,7 @@
       "raw":{
          "facebook":{
             "nbOfComments":48,
-            "averageCommentOnPost":"1.92",
+            "averageCommentOnPost":1.92,
             "nbOfOtherUsersPostOnFeed":24,
             "nbOfPhotosWhereUserIsIdentified":25
          },
@@ -478,6 +476,27 @@
                   5
                ]
             ]
+         }
+      }
+   },
+   "general":{
+      "globalData":{
+         "primaryCircle":"public",
+         "secondaryCircle":"private"
+      },
+      "raw":{
+         "facebook":{
+            "name":"Romain Psd",
+            "ageMin":21
+         },
+         "twitter":{
+            "pseudo":"RomainPSD"
+         },
+         "linkedin":{
+
+         },
+         "instagram":{
+            "pseudo":"romainpsd"
          }
       }
    }
