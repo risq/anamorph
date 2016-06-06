@@ -512,7 +512,7 @@ module.exports = class DataManager {
             }
             else{
                 this.primaryCircle = 'public';
-                this.secondaryCircle = 'private';
+                this.secondaryCircle = 'public';
             }
         }
         else if(this.privateDistribution > this.publicDistribution){
