@@ -179,13 +179,33 @@
          "pejorativeWords":[],
          "meliorativeWords":[],
          "smiley":{
-            "happy":0
+            "smiley":":)",
+            "occ":1
          },
          "expressivity":1,
          "attitude":1,
          "expressivityDistribution":0.8,
          "attitudeDistribution":0.8
       },
+      "raw":{
+         "facebook":{
+            "pejorativeWords":[],
+            "meliorativeWords":[],
+            "smiley":[
+               {
+                  "smiley":":)",
+                  "occ":2
+               },
+               {
+                  "smiley":":D",
+                  "occ":2
+               },
+               {
+                  "smiley":"",
+                  "occ":1
+               }
+            ]
+         },
          "twitter":{
             "pejorativeWords":[],
             "meliorativeWords":[],
