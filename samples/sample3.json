@@ -150,8 +150,8 @@
          },
          "expressivity":0.022,
          "attitude":0.9,
-         "expressivityDistribution":0.5,
-         "attitudeDistribution":0
+         "expressivityDistribution":0.1,
+         "attitudeDistribution":0.1
       },
       "privateData":{
          "pejorativeWords":[],
@@ -172,29 +172,20 @@
          ],
          "expressivity":0.092,
          "attitude":0.9,
-         "expressivityDistribution":0.5,
-         "attitudeDistribution":1
+         "expressivityDistribution":0.1,
+         "attitudeDistribution":0.1
       },
-      "professionalData":{},
-      "raw":{
-         "facebook":{
-            "pejorativeWords":[],
-            "meliorativeWords":[],
-            "smiley":[
-               {
-                  "smiley":":)",
-                  "occ":35
-               },
-               {
-                  "smiley":":D",
-                  "occ":7
-               },
-               {
-                  "smiley":"",
-                  "occ":1
-               }
-            ]
+      "professionalData":{
+         "pejorativeWords":[],
+         "meliorativeWords":[],
+         "smiley":{
+            "happy":0
          },
+         "expressivity":1,
+         "attitude":1,
+         "expressivityDistribution":0.8,
+         "attitudeDistribution":0.8
+      },
          "twitter":{
             "pejorativeWords":[],
             "meliorativeWords":[],
