@@ -56,10 +56,10 @@ module.exports = class InstagramDataFetcher {
     return this.gram.get('/users/self/', {})
       .then(res => {
 
-          this.data.pseudo = res.username;
+          this.data.pseudo = res.data.username;
 
-          if(res.counts.media){
-            this.data.numberOfUserPhotos = res.counts.media;
+          if(res.data.counts.media){
+            this.data.numberOfUserPhotos = res.data.counts.media;
             this.data.nbOfPosts = this.data.numberOfUserPhotos;
           }
           else{
@@ -77,7 +77,7 @@ module.exports = class InstagramDataFetcher {
 
     return this.gram.get('/users/self/', {})
       .then(res => {
-        this.data.numberOfUserFollowers = res.counts.followed_by;
+        this.data.numberOfUserFollowers = res.data.counts.followed_by;
           dbg(`Number of user followers: ${this.data.numberOfUserFollowers}`);
       })
       .catch(err => dbg(`Error: ${err.message}`));
@@ -88,7 +88,7 @@ module.exports = class InstagramDataFetcher {
 
     return this.gram.get('/users/self/', {})
       .then(res => {
-        this.data.numberOfUserFollows = res.counts.follows;
+        this.data.numberOfUserFollows = res.data.counts.follows;
           dbg(`Number of user follows: ${this.data.numberOfUserFollows}`);
       })
       .catch(err => dbg(`Error: ${err.message}`));
@@ -101,8 +101,8 @@ module.exports = class InstagramDataFetcher {
 
     return this.gram.get('/users/self/media/recent', {})
       .then(res => {
-          numberOfPublications += res.length;
-          res.forEach(res => {
+          numberOfPublications += res.data.length;
+          res.data.forEach(res => {
             numberOfLikes += res.likes.count;
 
             //GET MOST POPULAR PHOTO
@@ -132,8 +132,8 @@ module.exports = class InstagramDataFetcher {
 
     return this.gram.get('/users/self/media/recent', {})
       .then(res => {
-        numberOfPublications += res.length;
-        res.forEach(res => numberOfComments += res.comments.count);
+        numberOfPublications += res.data.length;
+        res.data.forEach(res => numberOfComments += res.comments.count);
 
           this.data.nbOfComments = numberOfComments;
         this.data.averageOfGetComments = Math.round(numberOfComments / numberOfPublications);
@@ -151,8 +151,8 @@ module.exports = class InstagramDataFetcher {
 
     return this.gram.get('/users/self/media/recent', {})
       .then(res => {
-          numberOfPublications += res.length;
-          res.forEach((res => {
+          numberOfPublications += res.data.length;
+          res.data.forEach((res => {
 
             if(res.tags){
               numberOfTags += res.tags.length;
@@ -294,7 +294,7 @@ module.exports = class InstagramDataFetcher {
     return this.gram.get('/users/self/media/recent', {})
         .then(res => {
 
-          res.forEach((data => {
+          res.data.forEach((data => {
             var date = new Date(data.created_time*1000);
             var year = 'y'+date.getFullYear();
 
