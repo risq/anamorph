@@ -28,6 +28,7 @@ module.exports = class InstagramDataFetcher {
       mostUsedHashtags: [],
     };
     this.datePosts = [];
+    this.mostLikedPhoto = 0;
 
     this.pejorativeWordsList = ['horrible', 'nul', 'ringard', 'bof', 'con', 'débile', 'merde'];
     this.meliorativeWordsList = ['cool', 'super', 'chanmé', 'génial', 'magnifique', 'beau', 'content', 'gentil'];
@@ -110,7 +111,7 @@ module.exports = class InstagramDataFetcher {
               this.data.mostPopularPhoto = res.images.standard_resolution.url;
               this.mostLikedPhoto = res.likes.count;
             }
-            else if(this.data.mostPopularPhoto == '' && res.images.standard_resolution.url){
+            else if(this.data.mostPopularPhoto == '' && res.images.standard_resolution.url && this.mostLikedPhoto == 0){
               this.data.mostPopularPhoto = res.images.standard_resolution.url;
               this.mostLikedPhoto = res.likes.count;
             }
