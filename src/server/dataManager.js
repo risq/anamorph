@@ -389,13 +389,13 @@ module.exports = class DataManager {
                 score: this.clamp(this.getNormValue(this.sumScore,0, 500), 0, 1),
             },
             publicData: {
-                percentScore: this.publicPassiveIdentityDistribution,
+                percentDistribution: this.publicPassiveIdentityDistribution,
                 score: this.clamp(this.getNormValue(this.publicScore,0, 500), 0, 1),
                 totalRetweetForUserPosts: userData.twitter.totalRetweetForUserPosts || 0 ,
                 userMentions: userData.twitter.userMentions || 0,
             },
             privateData: {
-                percentScore: this.privatePassiveIdentityDistribution,
+                percentDistribution: this.privatePassiveIdentityDistribution,
                 score: this.clamp(this.getNormValue(this.privateScore,0, 500), 0, 1),
                 nbOfComments: userData.facebook.nbOfComments || 0,
                 averageCommentOnPost: userData.facebook.averageCommentOnPost || 0,
