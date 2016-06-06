@@ -1,8 +1,10 @@
 {
    "comment": "Donnée de romain",
-   "global": {
-     "primaryCircle": "private",
-     "secondaryCircle": "private"
+   "general": {
+      "globalData": {
+         "primaryCircle": "private",
+         "secondaryCircle": "private"
+      }
    },
    "activity":{
       "globalData":{

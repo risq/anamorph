@@ -1,8 +1,10 @@
 {
    "comment": "Beaucoup de donnée privée et publique, peu de pro, bcp de publication ",
-   "global": {
-     "primaryCircle": "pro",
-     "secondaryCircle": "public"
+   "general": {
+      "globalData": {
+         "primaryCircle": "private",
+         "secondaryCircle": "private"
+      }
    },
    "activity":{
       "globalData":{

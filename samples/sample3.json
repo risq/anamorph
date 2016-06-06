@@ -1,8 +1,10 @@
 {
-  "global": {
-    "primaryCircle": "public",
-    "secondaryCircle": "private"
-  },
+   "general": {
+      "globalData": {
+         "primaryCircle": "private",
+         "secondaryCircle": "private"
+      }
+   },
    "activity":{
       "globalData":{
          "postFrequency":0.1,

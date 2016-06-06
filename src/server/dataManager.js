@@ -492,7 +492,7 @@ module.exports = class DataManager {
         }
 
         return {
-            generalData: {
+            globalData: {
                 primaryCircle: this.primaryCircle,
                 secondaryCircle: this.secondaryCircle,
             },
