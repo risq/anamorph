@@ -157,10 +157,13 @@ module.exports = class DataManager {
         this.privateInfluenceDistribution = this.privateInfluence/this.globalInfluence;
 
 
+        this.globalAverageFeedbackOnPost = this.publicAverageFeedbackOnPost + this.privateAverageFeedbackOnPost;
+
         return {
             globalData: {
                 influence: this.clamp(this.getNormValue(this.globalInfluence,0,500), 0, 1),
                 nbOfLikes: this.publicNbOfLikes + userData.facebook.nbOfLike,
+                averageFeedbackOnPost: this.globalAverageFeedbackOnPost,
             },
             publicData: {
                 influence: this.clamp(this.getNormValue(this.publicInfluence,0, 500), 0, 1),
