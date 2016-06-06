@@ -130,12 +130,12 @@ module.exports = class TwitterDataFetcher {
 
                         data.forEach((data => {
 
-                           /* if (data.retweeted == true) {
+                            if (data.retweeted == true) {
                                 this.data.totalRetweets += 1;
                             }
                             else {
-                                this.data.totalTweets += 1;
-                            }*/
+                                //this.data.totalTweets += 1;
+                            }
 
                             this.data.totalRetweetForUserPosts += data.retweet_count;
                             this.data.totalLikesForUserPosts += data.favorite_count;
