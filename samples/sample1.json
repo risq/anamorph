@@ -231,20 +231,27 @@
          "score":0.7
       },
       "publicData":{
-         "percentScore":0.8787375415282392,
+         "percentDistribution":0.8787375415282392,
          "score":1,
          "totalRetweetForUserPosts":331,
          "userMentions":198
       },
       "privateData":{
-         "percentScore":0.1212624584717608,
+         "percentDistribution":0.1212624584717608,
          "score":0.146,
          "nbOfComments":48,
          "averageCommentOnPost":1.92,
          "nbOfOtherUsersPostOnFeed":24,
          "nbOfPhotosWhereUserIsIdentified":25
       },
-      "professionalData":{},
+      "professionalData":{
+         "percentDistribution":0.1212624584717608,
+         "score":0.146,
+         "nbOfComments":48,
+         "averageCommentOnPost":1.92,
+         "nbOfOtherUsersPostOnFeed":24,
+         "nbOfPhotosWhereUserIsIdentified":25
+      },
       "raw":{
          "facebook":{
             "nbOfComments":48,
@@ -482,7 +489,7 @@
    "general":{
       "globalData":{
          "primaryCircle":"public",
-         "secondaryCircle":"private"
+         "secondaryCircle":"public"
       },
       "raw":{
          "facebook":{
