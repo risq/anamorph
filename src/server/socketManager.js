@@ -41,8 +41,16 @@ module.exports = new class SocketManager {
 
   emitSamples(socket) {
     dbg('Emitting samples');
-    fs.readFileAsync('samples/sample1.json', 'utf8').then((contents) => {
-      socket.emit('samples', JSON.parse(contents));
+    Bluebird.props({
+      sample1: fs.readFileAsync('samples/sample1.json', 'utf8'),
+      sample2: fs.readFileAsync('samples/sample2.json', 'utf8'),
+      sample3: fs.readFileAsync('samples/sample3.json', 'utf8'),
+    }).then((samples) => {
+      socket.emit('samples', {
+        sample1: JSON.parse(samples.sample1),
+        sample2: JSON.parse(samples.sample2),
+        sample3: JSON.parse(samples.sample3),
+      });
     }).catch(err => {
       dbg('Error reading file', err);
     });

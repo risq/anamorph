@@ -1,4 +1,8 @@
 {
+  "global": {
+    "primaryCircle": "public",
+    "secondaryCircle": "private"
+  },
    "activity":{
       "globalData":{
          "postFrequency":0.1,
@@ -130,8 +134,7 @@
       "publicData":{
          "pejorativeWords":{
             "ennuyant":1,
-            "triste":2,
- 
+            "triste":2
          },
          "meliorativeWords":{
            "merci":4,
@@ -244,7 +247,7 @@
          "percentScore":0.7,
          "score":0.946,
          "nbOfComments":130,
-         "averageCommentOnPost":"5",
+         "averageCommentOnPost":"5"
       },
       "raw":{
          "facebook":{
@@ -282,13 +285,13 @@
             [
                "website",
                5
-            ],
+            ]
          ]
       },
       "privateData":{
          "favoriteArtists":[
             "M",
-            "adele",
+            "adele"
          ],
          "lastMoviesSeen":[],
          "pagesCategoryLiked":[
@@ -362,73 +365,71 @@
       "raw":{
          "facebook":{
             "favoriteArtists":[
-            "M",
-            "adele",
+              "M",
+              "adele"
             ],
-            "lastMoviesSeen":[
-
-            ],
+            "lastMoviesSeen":[],
             "pagesCategoryLiked":[
-            [
-               "Musician/Band",
-               2
-            ],
-            [
-               "Company",
-               24
-            ],
-            [
-               "Small Business",
-               3
-            ],
-            [
-               "Internet/Software",
-               2
-            ],
-            [
-               "Product/Service",
-               1
-            ],
-            [
-               "Media/News/Publishing",
-               10
-            ],
-            [
-               "Non-Profit Organization",
-               3
-            ],
-            [
-               "Artist",
-               1
-            ],
-            [
-               "Movie",
-               2
-            ],
-            [
-               "Producer",
-               1
-            ],
-            [
-               "Professional Services",
-               1
-            ],
-            [
-               "Entertainment Website",
-               1
-            ],
-            [
-               "TV Show",
-               1
-            ],
-            [
-               "Video Game",
-               1
-            ],
-            [
-               "App Page",
-               1
-            ]
+              [
+                 "Musician/Band",
+                 2
+              ],
+              [
+                 "Company",
+                 24
+              ],
+              [
+                 "Small Business",
+                 3
+              ],
+              [
+                 "Internet/Software",
+                 2
+              ],
+              [
+                 "Product/Service",
+                 1
+              ],
+              [
+                 "Media/News/Publishing",
+                 10
+              ],
+              [
+                 "Non-Profit Organization",
+                 3
+              ],
+              [
+                 "Artist",
+                 1
+              ],
+              [
+                 "Movie",
+                 2
+              ],
+              [
+                 "Producer",
+                 1
+              ],
+              [
+                 "Professional Services",
+                 1
+              ],
+              [
+                 "Entertainment Website",
+                 1
+              ],
+              [
+                 "TV Show",
+                 1
+              ],
+              [
+                 "Video Game",
+                 1
+              ],
+              [
+                 "App Page",
+                 1
+              ]
             ],
             "nbOfPagesLiked":2,
             "nbOfBooksLiked":0,
@@ -440,12 +441,10 @@
                [
                   "workshop",
                   4
-               ],
+               ]
             ]
          },
-         "linkedin":{
-
-         },
+         "linkedin":{},
          "instagram":{
             "mostUsedHashtags":[
                [

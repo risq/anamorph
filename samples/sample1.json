@@ -1,6 +1,9 @@
 {
    "comment": "Donnée de romain",
-
+   "global": {
+     "primaryCircle": "private",
+     "secondaryCircle": "private"
+   },
    "activity":{
       "globalData":{
          "postFrequency":0.58681729229674445,
@@ -457,9 +460,7 @@
                ]
             ]
          },
-         "linkedin":{
-
-         },
+         "linkedin":{},
          "instagram":{
             "mostUsedHashtags":[
                [
