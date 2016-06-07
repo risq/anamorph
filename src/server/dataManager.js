@@ -173,7 +173,7 @@ module.exports = class DataManager {
                 nbOfFollowers: this.publicNbOfFollowers,
                 nbOfRetweets: userData.twitter.totalRetweets || 0,
                 nbOfLikes: this.publicNbOfLikes,
-                likesScore: this.clamp(this.getNormValue(this.publicNbOfLikes,0, 1300), 0, 1),
+                likesScore: this.clamp(this.getNormValue(this.publicNbOfLikes,0, 3076), 0, 1),
                 averageFeedbackOnPost: this.publicAverageFeedbackOnPost,
                 mostPopularPhoto: userData.instagram.mostPopularPhoto || '',
                 mostPopularTweet: userData.twitter.mostPopularTweet || '',
