@@ -173,7 +173,7 @@ module.exports = class DataManager {
                 nbOfFollowers: this.publicNbOfFollowers,
                 nbOfRetweets: userData.twitter.totalRetweets || 0,
                 nbOfLikes: this.publicNbOfLikes,
-                likesScore: this.clamp(this.getNormValue(this.publicNbOfLikes,0, 500), 0, 1),
+                likesScore: this.clamp(this.getNormValue(this.publicNbOfLikes,0, 1300), 0, 1),
                 averageFeedbackOnPost: this.publicAverageFeedbackOnPost,
                 mostPopularPhoto: userData.instagram.mostPopularPhoto || '',
                 mostPopularTweet: userData.twitter.mostPopularTweet || '',
@@ -182,7 +182,7 @@ module.exports = class DataManager {
             privateData: {
                 influence: this.clamp(this.getNormValue(this.privateInfluence,0, 500), 0, 1),
                 nbOfLikes: userData.facebook.nbOfLike,
-                likesScore: this.clamp(this.getNormValue((userData.facebook.nbOfLike || 0),0, 500), 0, 1),
+                likesScore: this.clamp(this.getNormValue((userData.facebook.nbOfLike || 0),0, 1000), 0, 1),
                 nbOfFriends: userData.facebook.nbOfFriends || 0,
                 averageFeedbackOnPost: this.privateAverageFeedbackOnPost,
                 lessPopularPost: userData.facebook.lessPopularPost || '',

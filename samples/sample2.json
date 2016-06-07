@@ -67,14 +67,14 @@
    "influence":{
       "globalData":{
          "influence":0.90,
-         "nbOfLikes":423,
+         "nbOfLikes":2454,
          "averageFeedbackOnPost": 34.3280016610
       },
       "publicData":{
          "influence":0.8,
          "nbOfFollowers":669,
          "nbOfRetweets":239,
-         "nbOfLikes":1205,
+         "nbOfLikes":1305,
          "likesScore":1,
          "averageFeedbackOnPost":21.3280016610,
          "mostPopularPhoto":"http://images.google.fr/imgres?imgurl=http%3A%2F%2Fi.huffpost.com%2Fgen%2F1997672%2Fimages%2Fa-SELFIE-640x468.jpg&imgrefurl=http%3A%2F%2Fwww.huffingtonpost.fr%2F2014%2F08%2F28%2Fselfie-photo-gratte-ciel-vertige_n_5727388.html&h=468&w=640&tbnid=F00Gyke_PUtqcM%3A&docid=XfJiTUGFWecm3M&ei=oOFSV6nACqWfgAam64DwBA&tbm=isch&iact=rc&uact=3&dur=186&page=1&start=0&ndsp=77&ved=0ahUKEwipkJnaxo7NAhWlD8AKHaY1AE4QMwgjKAMwAw&bih=1271&biw=2560",
@@ -82,8 +82,8 @@
       },
       "privateData":{
          "influence":0.9,
-         "nbOfLikes":849,
-         "likesScore":0.998,
+         "nbOfLikes":1049,
+         "likesScore":1,
          "nbOfFriends":610,
          "averageFeedbackOnPost": 13,
          "lessPopularPost":"no more vodka !",
