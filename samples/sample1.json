@@ -1,124 +1,136 @@
 {
-   "comment": "Donnée de romain",
+   "comment": "Données de Romain",
    "activity":{
       "globalData":{
-         "postFrequency": 293.4,
-         "postFrequencyScore": 0.58681729229674445,
+         "postFrequency":58.22176272938744,
+         "postFrequencyScore":0.11644352545877489,
          "nbOfPhotos":360,
          "volumePhotos":0.72,
-         "nbOfShares":171,
-         "nbOfPosts":612,
+         "nbOfShares":169,
+         "nbOfPosts":2576,
          "volumePosts":1,
          "seniority":8,
-         "dominantProfile":"private",
+         "dominantProfile":"public",
          "typeProfile":"Publication tr�s fr�quente"
       },
       "publicData":{
-         "postFrequency": 173.1815,
-         "postFrequencyScore": 0.3463636363636364,
-         "nbOfShare":49,
-         "nbOfPosts":340,
-         "volumePosts":0.68,
+         "postFrequency":34.26828637890928,
+         "postFrequencyScore":0.06853657275781856,
+         "nbOfShare":47,
+         "nbOfPosts":2304,
+         "volumePosts":1,
          "nbOfPhotos":286,
          "volumePhotos":0.572,
-         "frequencyDistribution":0.5902410186448386,
-         "volumeDistribution":0.5555555555555556
+         "frequencyDistribution":0.5885820829263961,
+         "volumeDistribution":0.8944099378881988
       },
       "privateData":{
-         "postFrequency": 120.2265,
-         "postFrequencyScore": 0.24045365593310805,
+         "postFrequency":23.953476350478162,
+         "postFrequencyScore":0.04790695270095632,
          "nbOfPhotos":74,
          "volumePhotos":0.148,
          "nbOfShare":122,
          "nbOfPosts":272,
          "volumePosts":0.544,
-         "frequencyDistribution":0.4097589813551615,
-         "volumeDistribution":0.4444444444444444
+         "frequencyDistribution":0.41141791707360387,
+         "volumeDistribution":0.10559006211180125
       },
       "professionalData":{
          "postFrequency":0,
+         "postFrequencyScore":0,
+         "nbOfPhotos":0,
+         "volumePhotos":0,
          "nbOfShare":0,
-         "nbOfPosts":0
+         "nbOfPosts":0,
+         "volumePosts":0,
+         "frequencyDistribution":0,
+         "volumeDistribution":0
       },
       "raw":{
          "facebook":{
             "nbOfPhotos":74,
             "nbOfShare":122,
             "nbOfPosts":272,
-            "postFrequency":24.045365593310805
+            "postFrequency":23.953476350478162
          },
          "twitter":{
             "nbOfPhotos":97,
-            "nbOfShare":49,
-            "nbOfPosts":151,
-            "postFrequency":30.74025974025974
+            "nbOfShare":47,
+            "nbOfPosts":2115,
+            "postFrequency":30.494701473248902
          },
          "linkedin":{
-            "nbOfShare":0,
-            "nbOfPosts":0
+
          },
          "instagram":{
             "nbOfPhotos":189,
-            "postFrequency":3.8961038961038956
+            "postFrequency":3.7735849056603774
          }
       }
    },
    "influence":{
       "globalData":{
-         "influence":0.80,
-         "nbOfLikes":1354,
-         "averageFeedbackOnPost":52.235
+         "influence":1,
+         "nbOfLikes":1372,
+         "averageFeedbackOnPost":52.265
       },
       "publicData":{
-         "influence":0.7,
-         "nbOfFollowers":669,
-         "nbOfRetweets":49,
-         "nbOfLikes":905,
-         "likesScore":1,
-         "averageFeedbackOnPost":32.355,
+         "influence":1,
+         "nbOfFollowers":671,
+         "nbOfRetweets":47,
+         "nbOfLikes":923,
+         "likesScore":0.71,
+         "averageFeedbackOnPost":32.385,
          "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13269510_542881952565143_358970319_n.jpg?ig_cache_key=MTI2MTY5MDg3MTA0Njc4MTYwMQ%3D%3D.2",
          "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp � — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r",
-         "influenceDistribution":0.6703431372549019
+         "influenceDistribution":1
       },
       "privateData":{
-         "influence":0.9,
+         "influence":0.62,
          "nbOfLikes":449,
-         "likesScore":0.898,
+         "likesScore":0.449,
          "nbOfFriends":310,
-         "averageFeedbackOnPost":19.88,
+         "averageFeedbackOnPost":19.880000000000003,
          "lessPopularPost":"Odesza x 20Syl �",
          "mostPopularPost":"Tour du Lac :) ✌�",
          "lessPopularPhoto":"https://external.xx.fbcdn.net/safe_image.php?d=AQASIkFZwV0Grthv&w=130&h=130&url=https%3A%2F%2Fi1.sndcdn.com%2Fartworks-000147238661-25my24-t500x500.jpg&cfs=1",
          "mostPopularPhoto":"https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/13244820_10209734855754412_5036385389282738060_n.jpg?oh=c160af6d810ca498c6bda863c50f310d&oe=57CE586F",
-         "influenceDistribution":0.32965686274509803
+         "influenceDistribution":0.46199701937406856
       },
       "professionalData":{
-        "influence":0.9
+         "influence":0,
+         "nbOfLikes":0,
+         "likesScore":0,
+         "nbOfFriends":0,
+         "averageFeedbackOnPost":0,
+         "lessPopularPost":"",
+         "mostPopularPost":"",
+         "lessPopularPhoto":"",
+         "mostPopularPhoto":"",
+         "influenceDistribution":0
       },
       "raw":{
          "facebook":{
             "nbOfLikes":449,
             "nbOfFriends":310,
-            "averageFeedbackOnPost": 19.88,
+            "averageFeedbackOnPost":19.880000000000003,
             "lessPopularPost":"Odesza x 20Syl �",
             "mostPopularPost":"Tour du Lac :) ✌�",
             "lessPopularPhoto":"https://external.xx.fbcdn.net/safe_image.php?d=AQASIkFZwV0Grthv&w=130&h=130&url=https%3A%2F%2Fi1.sndcdn.com%2Fartworks-000147238661-25my24-t500x500.jpg&cfs=1",
             "mostPopularPhoto":"https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/13244820_10209734855754412_5036385389282738060_n.jpg?oh=c160af6d810ca498c6bda863c50f310d&oe=57CE586F"
          },
          "twitter":{
-            "nbOfFollowers":472,
-            "nbOfLikes":346,
-            "averageFeedbackOnPost":3.355,
+            "nbOfFollowers":475,
+            "nbOfLikes":361,
+            "averageFeedbackOnPost":3.385,
             "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp � — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r"
          },
          "linkedin":{
-            "nbOfReference":0,
-            "nbOfConnections":0,
-            "nbOfViewPerMonth":0
+            "nbOfConnections":0
          },
          "instagram":{
-            "nbOfFollowers":197,
-            "nbOfLikes":559,
+            "nbOfFollowers":196,
+            "nbOfLikes":562,
             "averageFeedbackOnPost":29,
             "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13269510_542881952565143_358970319_n.jpg?ig_cache_key=MTI2MTY5MDg3MTA0Njc4MTYwMQ%3D%3D.2"
          }
@@ -131,19 +143,15 @@
       },
       "publicData":{
          "pejorativeWords":{
-            "beau":5,
-            "cool":5,
-            "Beau":3,
-            "Cool":1,
-            "Super":1,
+            "beau":8,
+            "cool":6,
+            "super":1,
             "undefined":11
          },
          "meliorativeWords":{
-            "beau":5,
-            "cool":5,
-            "Beau":3,
-            "Cool":1,
-            "Super":1
+            "beau":8,
+            "cool":6,
+            "super":1
          },
          "smiley":{
             "undefined":11
@@ -154,15 +162,26 @@
          "attitudeDistribution":0
       },
       "privateData":{
-         "pejorativeWords":[],
-         "meliorativeWords":[],
+         "pejorativeWords":[
+
+         ],
+         "meliorativeWords":[
+            {
+               "word":"beau",
+               "occ":2
+            },
+            {
+               "word":"cool",
+               "occ":1
+            }
+         ],
          "smiley":[
             {
                "smiley":":)",
                "occ":35
             },
             {
-               "smiley":":D",
+               "smiley":":d",
                "occ":7
             },
             {
@@ -175,18 +194,43 @@
          "expressivityDistribution":1.7692307692307692,
          "attitudeDistribution":1
       },
-      "professionalData":{},
+      "professionalData":{
+         "pejorativeWords":[
+
+         ],
+         "meliorativeWords":[
+
+         ],
+         "smiley":[
+
+         ],
+         "expressivity":0,
+         "attitude":0.5,
+         "expressivityDistribution":0,
+         "attitudeDistribution":0
+      },
       "raw":{
          "facebook":{
-            "pejorativeWords":[],
-            "meliorativeWords":[],
+            "pejorativeWords":[
+
+            ],
+            "meliorativeWords":[
+               {
+                  "word":"beau",
+                  "occ":2
+               },
+               {
+                  "word":"cool",
+                  "occ":1
+               }
+            ],
             "smiley":[
                {
                   "smiley":":)",
                   "occ":35
                },
                {
-                  "smiley":":D",
+                  "smiley":":d",
                   "occ":7
                },
                {
@@ -196,8 +240,23 @@
             ]
          },
          "twitter":{
-            "pejorativeWords":[],
-            "meliorativeWords":[],
+            "pejorativeWords":[
+
+            ],
+            "meliorativeWords":[
+               {
+                  "word":"cool",
+                  "occ":6
+               },
+               {
+                  "word":"beau",
+                  "occ":5
+               },
+               {
+                  "word":"super",
+                  "occ":1
+               }
+            ],
             "smiley":[
                {
                   "smiley":":)",
@@ -208,15 +267,21 @@
                   "occ":1
                },
                {
-                  "smiley":":D",
+                  "smiley":":d",
                   "occ":1
                }
             ]
          },
-         "linkedin":{},
+         "linkedin":{
+
+         },
          "instagram":{
-            "pejorativeWords":[],
-            "meliorativeWords":[],
+            "pejorativeWords":[
+
+            ],
+            "meliorativeWords":[
+
+            ],
             "smiley":[
                {
                   "smiley":"",
@@ -228,16 +293,16 @@
    },
    "passiveIdentity":{
       "globalData":{
-         "score":0.7
+         "score":1
       },
       "publicData":{
-         "percentDistribution":0.8787375415282392,
+         "percentDistribution":0.8756388415672913,
          "score":1,
-         "totalRetweetForUserPosts":331,
+         "totalRetweetForUserPosts":316,
          "userMentions":198
       },
       "privateData":{
-         "percentDistribution":0.1212624584717608,
+         "percentDistribution":0.12436115843270869,
          "score":0.146,
          "nbOfComments":48,
          "averageCommentOnPost":1.92,
@@ -245,12 +310,12 @@
          "nbOfPhotosWhereUserIsIdentified":25
       },
       "professionalData":{
-         "percentDistribution":0.1212624584717608,
-         "score":0.146,
-         "nbOfComments":48,
-         "averageCommentOnPost":1.92,
-         "nbOfOtherUsersPostOnFeed":24,
-         "nbOfPhotosWhereUserIsIdentified":25
+         "percentDistribution":0,
+         "score":0,
+         "nbOfComments":0,
+         "averageCommentOnPost":0,
+         "nbOfOtherUsersPostOnFeed":0,
+         "nbOfPhotosWhereUserIsIdentified":0
       },
       "raw":{
          "facebook":{
@@ -260,11 +325,15 @@
             "nbOfPhotosWhereUserIsIdentified":25
          },
          "twitter":{
-            "totalRetweetForUserPosts":331,
+            "totalRetweetForUserPosts":316,
             "userMentions":198
          },
-         "linkedin":{},
-         "instagram":{}
+         "linkedin":{
+
+         },
+         "instagram":{
+
+         }
       }
    },
    "hobbies":{
@@ -286,11 +355,11 @@
                5
             ],
             [
-               "inspiration",
-               4
+               "threejs",
+               3
             ],
             [
-               "threejs",
+               "inspiration",
                3
             ],
             [
@@ -305,7 +374,9 @@
             "JAIN",
             "Louis The Child"
          ],
-         "lastMoviesSeen":[],
+         "lastMoviesSeen":[
+
+         ],
          "pagesCategoryLiked":[
             [
                "Musician/Band",
@@ -373,7 +444,15 @@
          "nbOfMoviesLiked":2,
          "nbOfArtistsLiked":100
       },
-      "professionalData":{},
+      "professionalData":{
+         "favoriteArtists":"",
+         "lastMoviesSeen":"",
+         "pagesCategoryLiked":"",
+         "nbOfPagesLiked":0,
+         "nbOfBooksLiked":0,
+         "nbOfMoviesLiked":0,
+         "nbOfArtistsLiked":0
+      },
       "raw":{
          "facebook":{
             "favoriteArtists":[
@@ -454,11 +533,11 @@
          "twitter":{
             "mostUsedHashtags":[
                [
-                  "inspiration",
-                  4
+                  "threejs",
+                  3
                ],
                [
-                  "threejs",
+                  "inspiration",
                   3
                ],
                [
@@ -467,7 +546,9 @@
                ]
             ]
          },
-         "linkedin":{},
+         "linkedin":{
+
+         },
          "instagram":{
             "mostUsedHashtags":[
                [
