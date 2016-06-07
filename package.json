@@ -12,6 +12,7 @@
     "url": "git@github.com:risq/anamorph.git"
   },
   "scripts": {
+    "start": "gulp production && node app.js",
     "deploy": "gulp deploy",
     "production": "gulp production",
     "demo": "gulp production && gulp server",
