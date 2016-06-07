@@ -67,7 +67,7 @@
    },
    "influence":{
       "globalData":{
-         "influence":0.90,
+         "influence":0.12,
          "nbOfLikes":1354,
          "averageFeedbackOnPost": 34.4010183
       },
@@ -239,7 +239,7 @@
    },
    "passiveIdentity":{
       "globalData":{
-         "score":0.7
+         "score":0.1
       },
       "publicData":{
          "percentScore":0.1,
