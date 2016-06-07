@@ -405,17 +405,17 @@ module.exports = class DataManager {
 
         return {
             globalData: {
-                score: this.clamp(this.getNormValue(this.sumScore,0, 500), 0, 1),
+                score: this.clamp(this.getNormValue(this.sumScore,0, 900), 0, 1),
             },
             publicData: {
                 percentDistribution: this.publicPassiveIdentityDistribution,
-                score: this.clamp(this.getNormValue(this.publicScore,0, 500), 0, 1),
+                score: this.clamp(this.getNormValue(this.publicScore,0, 600), 0, 1),
                 totalRetweetForUserPosts: userData.twitter.totalRetweetForUserPosts || 0 ,
                 userMentions: userData.twitter.userMentions || 0,
             },
             privateData: {
                 percentDistribution: this.privatePassiveIdentityDistribution,
-                score: this.clamp(this.getNormValue(this.privateScore,0, 500), 0, 1),
+                score: this.clamp(this.getNormValue(this.privateScore,0, 130), 0, 1),
                 nbOfComments: userData.facebook.nbOfComments || 0,
                 averageCommentOnPost: userData.facebook.averageCommentOnPost || 0,
                 nbOfOtherUsersPostOnFeed: userData.facebook.nbOfOtherUsersPostOnFeed || 0,
@@ -423,8 +423,8 @@ module.exports = class DataManager {
             },
             professionalData: {
                 percentDistribution: 0,
-                score: 0,
-                nbOfComments: 0,
+                score: 0.3,
+                nbOfComments: 45,
                 averageCommentOnPost: 0,
                 nbOfOtherUsersPostOnFeed: 0,
                 nbOfPhotosWhereUserIsIdentified: 0,
