@@ -1,5 +1,5 @@
 'use strict';
-
+const ip = require('ip');
 const clientManager = require('./clientManager');
 const dbg = require('debug')('anamorph:stateManager');
 
@@ -16,12 +16,13 @@ module.exports = new class StateManager {
         auth: {
           clientId: this.clientId,
           syncId: client.syncId,
-          rootUrl: 'http://127.0.0.1:3000', //todo: get the root base url here
+          rootUrl: 'http://127.0.0.1:8080', //todo: get the root base url here
           facebookUrl: authData.facebook.authUrl,
           twitterUrl: authData.twitter.authUrl,
           linkedinUrl: authData.linkedin.authUrl,
           instagramUrl: authData.instagram.authUrl,
-        }
+        },
+        localIp: ip.address(),
       }));
   }
 
