@@ -11,12 +11,12 @@ module.exports = class DataManager {
 
     validConnections(userData) {
         dbg('Valid Connections');
-        //this.userData = userData;
+        //(this.userData || 1) = userData;
 
         return new Bluebird((resolve, reject) => {
           userData.events.on('allDataFetched', () => {
             dbg('allDataFetched event fired');
-            resolve(dbg(JSON.stringify(this.getData(userData.data)), '\t'));
+            resolve(this.getData(userData.data));
             //resolve(JSON.stringify(this.getData(userData.data)));
           });
 
@@ -54,21 +54,21 @@ module.exports = class DataManager {
         //PROFILE TYPE
         //*30 = per month
         if(this.globalPostFrequency*30 < 20){
-            this.typeProfile = "Publication peu fréquente";
+            this.typeProfile = "Publication peu frï¿½quente";
         }
         else if(this.globalPostFrequency*30 >= 20 && this.globalPostFrequency*30 < 40){
-            this.typeProfile = "Publication fréquente";
+            this.typeProfile = "Publication frï¿½quente";
         }
         else if(this.globalPostFrequency*30 >= 40){
-            this.typeProfile = "Publication très fréquente";
+            this.typeProfile = "Publication trï¿½s frï¿½quente";
         }
 
         //DISTRIBUTION
-        this.publicFrequencyDistribution = this.publicPostFrequency/this.globalPostFrequency;
-        this.privateFrequencyDistribution = (userData.facebook.frequency || 0)/this.globalPostFrequency;
+        this.publicFrequencyDistribution = this.publicPostFrequency/(this.globalPostFrequency || 1);
+        this.privateFrequencyDistribution = (userData.facebook.frequency || 0)/(this.globalPostFrequency || 1);
 
-        this.publicVolumeDistribution = this.publicNbOfPosts/this.globalNbOfPosts;
-        this.privateVolumeDistribution = (userData.facebook.nbOfPosts || 0)/this.globalNbOfPosts;
+        this.publicVolumeDistribution = this.publicNbOfPosts/(this.globalNbOfPosts || 1);
+        this.privateVolumeDistribution = (userData.facebook.nbOfPosts || 0)/(this.globalNbOfPosts || 1);
 
         return {
             globalData: {
@@ -156,8 +156,8 @@ module.exports = class DataManager {
 
 
         //DISTRIBUTION
-        this.publicInfluenceDistribution = this.publicInfluence/this.globalInfluence;
-        this.privateInfluenceDistribution = this.privateInfluence/this.globalInfluence;
+        this.publicInfluenceDistribution = this.publicInfluence/(this.globalInfluence || 1);
+        this.privateInfluenceDistribution = this.privateInfluence/(this.globalInfluence || 1);
 
 
         this.globalAverageFeedbackOnPost = this.publicAverageFeedbackOnPost + this.privateAverageFeedbackOnPost;
@@ -242,14 +242,14 @@ module.exports = class DataManager {
         //PUBLIC
         if(this.publicPejorativeWords){
             this.nbOfPublicPejorativeWords = Object.keys(this.publicPejorativeWords).reduce((sum, value) => {
-                sum = sum + this.publicPejorativeWords[value];
+                sum = sum + this.publicPejorativeWords[value].occ;
                 return sum;
             }, 0);
         }
 
         if(this.publicMeliorativeWords){
             this.nbOfPublicMeliorativeWords = Object.keys(this.publicMeliorativeWords).reduce((sum, value) => {
-                sum = sum + this.publicMeliorativeWords[value];
+                sum = sum + this.publicMeliorativeWords[value].occ;
                 return sum;
             }, 0);
         }
@@ -257,14 +257,14 @@ module.exports = class DataManager {
         //PRIVATE
         if(userData.facebook.pejorativeWords){
             this.nbOfPrivatePejorativeWords = Object.keys(userData.facebook.pejorativeWords).reduce((sum, value) => {
-                sum = sum + userData.facebook.pejorativeWords[value];
+                sum = sum + userData.facebook.pejorativeWords[value].occ;
                 return sum;
             }, 0);
         }
 
         if(userData.facebook.meliorativeWords){
             this.nbOfPrivateMeliorativeWords = Object.keys(userData.facebook.meliorativeWords).reduce((sum, value) => {
-                sum = sum + userData.facebook.meliorativeWords[value];
+                sum = sum + userData.facebook.meliorativeWords[value].occ;
                 return sum;
             }, 0);
         }
@@ -294,10 +294,10 @@ module.exports = class DataManager {
         //ATTITUDE
         //PUBLIC
         if(this.nbOfPublicPejorativeWords < this.nbOfPublicMeliorativeWords){
-            this.publicAttitude = (this.nbOfPublicPejorativeWords/this.nbOfPublicMeliorativeWords)/2;
+            this.publicAttitude = (this.nbOfPublicPejorativeWords/(this.nbOfPublicMeliorativeWords || 1))/2;
         }
         else if(this.nbOfPublicPejorativeWords > this.nbOfPublicMeliorativeWords){
-            this.publicAttitude = 1 - (this.nbOfPublicMeliorativeWords/this.nbOfPublicPejorativeWords);
+            this.publicAttitude = 1 - (this.nbOfPublicMeliorativeWords/(this.nbOfPublicPejorativeWords || 1));
         }
         else{
             this.publicAttitude = (1/2);
@@ -305,16 +305,16 @@ module.exports = class DataManager {
 
         //PRIVATE
         if(this.nbOfPrivatePejorativeWords < this.nbOfPrivateMeliorativeWords){
-            this.privateAttitude = (this.nbOfPrivatePejorativeWords/this.nbOfPrivateMeliorativeWords)/2;
+            this.privateAttitude = (this.nbOfPrivatePejorativeWords/(this.nbOfPrivateMeliorativeWords || 1))/2;
         }
         else if(this.nbOfPrivatePejorativeWords > this.nbOfPrivateMeliorativeWords){
-            this.privateAttitude = 1 - (this.nbOfPrivateMeliorativeWords/this.nbOfPrivatePejorativeWords);
+            this.privateAttitude = 1 - (this.nbOfPrivateMeliorativeWords/(this.nbOfPrivatePejorativeWords || 1));
         }
         else{
             this.privateAttitude = (1/2);
         }
 
-        this.sumAttitude = this.publicAttitude || 0 + this.privateAttitude || 0;
+        this.sumAttitude = (this.publicAttitude || 0) + (this.privateAttitude || 0);
 
         //GLOBAL
         let globalNbPejorativeWords = this.nbOfPublicPejorativeWords || 0 + this.nbOfPrivatePejorativeWords || 0;
@@ -332,11 +332,11 @@ module.exports = class DataManager {
 
 
         //DISTRIBUTION
-        this.publicExpressivityDistribution = this.publicExpressivity/this.globalExpressivity;
-        this.privateExpressivityDistribution = this.privateExpressivity/this.globalExpressivity;
+        this.publicExpressivityDistribution = this.publicExpressivity / (this.globalExpressivity || 1);
+        this.privateExpressivityDistribution = this.privateExpressivity / (this.globalExpressivity || 1);
 
-        this.publicAttitudeDistribution = this.publicAttitude/this.sumAttitude;
-        this.privateAttitudeDistribution = this.privateAttitude/this.sumAttitude;
+        this.publicAttitudeDistribution = this.publicAttitude / (this.sumAttitude || 1);
+        this.privateAttitudeDistribution = this.privateAttitude / (this.sumAttitude || 1);
 
         return {
             globalData: {
@@ -399,8 +399,8 @@ module.exports = class DataManager {
         this.sumScore = this.publicScore + this.privateScore;
 
         //DISTRIBUTION
-        this.publicPassiveIdentityDistribution = this.publicScore/this.sumScore;
-        this.privatePassiveIdentityDistribution = this.privateScore/this.sumScore;
+        this.publicPassiveIdentityDistribution = this.publicScore/(this.sumScore || 1);
+        this.privatePassiveIdentityDistribution = this.privateScore/(this.sumScore || 1);
 
 
         return {
@@ -447,7 +447,7 @@ module.exports = class DataManager {
     }
 
     treatHobbiesCircle(userData){
-        this.publicMostUsedHashtags = userData.instagram.mostUsedHashtags.concat(userData.twitter.mostUsedHashtags);
+        this.publicMostUsedHashtags = userData.instagram.mostUsedHashtags ? userData.instagram.mostUsedHashtags.concat(userData.twitter.mostUsedHashtags) : [];
         this.hobbiesVolume = (userData.facebook.nbOfPagesLiked || 0) + (userData.facebook.nbOfMoviesLiked || 0)
             + (userData.facebook.nbOfBooksLiked || 0) + (userData.facebook.nbOfArtistsLiked || 0);
 
@@ -504,7 +504,6 @@ module.exports = class DataManager {
 
         this.privateDistribution = (this.privateFrequencyDistribution + this.privateVolumeDistribution + this.privateInfluenceDistribution +
             this.privateExpressivityDistribution + this.privateAttitudeDistribution + this.privatePassiveIdentityDistribution)/6;
-
 
         if(this.publicDistribution > this.privateDistribution){
             if(this.publicDistribution > 75){
@@ -600,21 +599,21 @@ module.exports = class DataManager {
     }
 
     getData(userData) {
-        if(!userData.facebook){
+        if (!userData.facebook) {
             dbg('FACEBOOK UNDEFINED');
-            userData.facebook = [];
+            userData.facebook = {};
         }
-        else if(!userData.twitter){
+        if (!userData.twitter) {
             dbg('TWITTER UNDEFINED');
-            userData.twitter = [];
+            userData.twitter = {};
         }
-        else if(!userData.instagram){
+        if (!userData.instagram) {
             dbg('INSTAGRAM UNDEFINED');
-            userData.instagram = [];
+            userData.instagram = {};
         }
-        else if(!userData.linkedin){
+        if (!userData.linkedin) {
             dbg('LINKEDIN UNDEFINED');
-            userData.linkedin = [];
+            userData.linkedin = {};
         }
 
       return {
