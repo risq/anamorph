@@ -494,8 +494,8 @@
    },
    "general":{
       "globalData":{
-         "primaryCircle":"public",
-         "secondaryCircle":"public"
+         "primaryCircle":"private",
+         "secondaryCircle":"private"
       },
       "raw":{
          "facebook":{
