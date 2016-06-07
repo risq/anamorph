@@ -25,30 +25,40 @@
     <div class="networks">
       <div class="connect">CONNEXION</div>
       <div class="top">
-        <a class="network" href="{{state.auth.twitterUrl}}" target="_blank">
+        <a class="network twitter" href="{{state.auth.twitterUrl}}" target="_blank">
           <div class="twitter-icon icon"></div>
           <div class="icon-check"></div>
         </a>
-        <a class="network" href="{{state.auth.facebookUrl}}" target="_blank">
+        <a class="network facebook" href="{{state.auth.facebookUrl}}" target="_blank">
           <div class="facebook-icon icon"></div>
           <div class="icon-check"></div>
         </a>
       </div>
       <div class="bottom">
-        <a class="network" href="https://api.instagram.com/oauth/authorize?client_id=208f9dfdb4b44a228b4c7f95b56bc58e&redirect_uri={{ rootUrl }}/insta?clientId={{ clientId }}&response_type=code&scope=basic+comments+relationships+likes+public_content+follower_list" target="_blank">
+        <a class="network instagram" href="https://api.instagram.com/oauth/authorize?client_id=208f9dfdb4b44a228b4c7f95b56bc58e&redirect_uri={{ rootUrl }}/insta?clientId={{ clientId }}&response_type=code&scope=basic+comments+relationships+likes+public_content+follower_list" target="_blank">
           <div class="instagram-icon icon"></div>
           <div class="icon-check"></div>
         </a>
-        <a class="network" href="{{state.auth.linkedinUrl}}" target="_blank">
+        <a class="network linkedin" href="{{state.auth.linkedinUrl}}" target="_blank">
           <div class="linkedin-icon icon"></div>
           <div class="icon-check"></div>
         </a>
       </div>
     </div>
+    <div class="creatingSilhouette creating">
+      <div class="connect">CRÉATION DE LA SILHOUETTE EN COURS</div>
+      <div class="top">
+          <div class="creation-icon icon"></div>
+      </div>
+      <div class="bottom">
+        <div class="subtext">Récupération des données en cours. Vous pouvez désormais ranger votre téléphone.</div>
+      </div>
+    </div>
   </div>
 
   <div class="helper">
-    Pour une expérience optimale, il est conseillé de se connecter à un maximum de réseaux possibles.
+    <div class="connect-description">Pour une expérience optimale, il est conseillé de se connecter à un maximum de réseaux possibles.</div>
+    <div class="creating">Vos données  sont visibles uniquement par vous et seront effacées une fois votre sortie de l’installation.</div>
   </div>
 
   <div class="valid-container">

@@ -37,13 +37,6 @@ export default class RemoteView {
 
     Facebook.on('login:status', this.onLoginStatus.bind(this));
     Facebook.on('get:name', this.onGetName.bind(this));
-
-    $('.network').on('click', () => {
-      alert('aaaaa');
-      console.log('rrrrrrrrrrrrrrrrrr');
-      $(this).addClass('check');
-
-    });
   }
 
   onRemoteRegisterStatus({err, id}) {
@@ -84,6 +77,18 @@ export default class RemoteView {
 
     $('.network').on('click', function() {
       $(this).addClass('check');
+
+      $('.valid-container').show();
+
+    });
+    $('.valid-container').on('click', function() {
+      if($('.twitter').hasClass('check') || $('.facebook').hasClass('check')
+          || $('.instagram').hasClass('check') || $('.linkedin').hasClass('check')) {
+        $('.valid-container').hide();
+        $('.networks').hide();
+        $('.connect-description').hide();
+        $('.creating').show();
+      }
     });
   }
 
