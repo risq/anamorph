@@ -4,6 +4,7 @@ const Bluebird = require('bluebird');
 const Nodegram = require('nodegram');
 
 const InstagramDataFetcher = require('../instagramDataFetcher');
+const config = require('../../../config/config');
 
 const dbg = require('debug')('anamorph:authManager:instagramAuth');
 
@@ -19,7 +20,7 @@ module.exports = class InstagramAuth {
     const nodegram = new Nodegram({
       clientId: '208f9dfdb4b44a228b4c7f95b56bc58e',
       clientSecret: '00afe917a374431296dcc65bd645fccf',
-      redirectUri: `http://localhost:8080/insta?clientId=${this.clientId}`,
+      redirectUri: `http://${config.server.ip}:${config.server.port}/insta?clientId=${this.clientId}`,
     });
 
     nodegram.getAuthUrl();
@@ -37,7 +38,7 @@ module.exports = class InstagramAuth {
     const nodegram = new Nodegram({
       clientId: '208f9dfdb4b44a228b4c7f95b56bc58e',
       clientSecret: '00afe917a374431296dcc65bd645fccf',
-      redirectUri: `http://localhost:8080/insta?clientId=${this.clientId}`,
+      redirectUri: `http://${config.server.ip}:${config.server.port}/insta?clientId=${this.clientId}`,
     });
 
     nodegram.getAuthUrl();

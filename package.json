@@ -30,6 +30,7 @@
     "node-linkedin": "^0.5.3",
     "node-twitter-api": "^1.7.1",
     "nodegram": "^0.2.1",
+    "qr-image": "^3.1.0",
     "shortid": "^2.2.4",
     "socket.io": "^1.4.5",
     "socket.io-client": "^1.4.4",

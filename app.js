@@ -1,7 +1,9 @@
 const path = require('path');
 const express = require('express');
+const qr = require('qr-image');
+const ip = require('ip');
 const dbg = require('debug')('anamorph:app');
-const config = require('./config/config.json');
+const config = require('./config/config');
 
 const socketManager = require('./src/server/socketManager');
 const clientManager = require('./src/server/clientManager');
@@ -52,6 +54,22 @@ app.get('/linkedin', (req, res) => {
 app.get('/validConnections', (req, res) => {
     clientManager.getClient(req.query.clientId)
         .onValidateConnections();
+});
+
+app.get('/qr/:id', function(req, res) {
+  const syncId = clientManager.getClientSyncId(req.params.id);
+
+  if (!syncId) {
+    // res.status(404).end();
+    qr.image(`http://${ip.address()}:${port}/remote/84FE7`, {
+      size: 24,
+    }).pipe(res);
+  } else {
+    res.type('png');
+    qr.image(`http://${ip.address()}:${port}/remote/${syncId}`, {
+      size: 24,
+    }).pipe(res);
+  }
 });
 
 

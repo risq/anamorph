@@ -24,8 +24,6 @@ module.exports = class Client {
     if (socket) {
       this.socket = socket;
       dbg(`Registered client ${this.id}`);
-
-      //this.emitRegisteredClient(this.id);
     }
   }
 
@@ -43,9 +41,10 @@ module.exports = class Client {
     if (socket) {
       dbg(`Registered remote for client ${this.id}`);
       this.remoteSocket = socket;
-     // this.remoteSocket.on('remote:auth:facebook', this.onFacebookAuthResponse.bind(this));
 
-     // this.emitRegisteredRemote(this.id);
+      if (this.socket) {
+        this.socket.emit('remoteRegistered');
+      }
     }
   }
 
@@ -64,7 +63,6 @@ module.exports = class Client {
 
   onFacebookAuthResponse(oauthToken) {
     dbg('onFacebookAuthResponse');
-//    this.userData.fetchFacebookData(authResponse.accessToken);
 
     this.authManager.getFacebookDataFetcher(oauthToken)
         .then(facebookDataFetcher => this.userData.fetchFacebookData(facebookDataFetcher));
@@ -101,15 +99,5 @@ module.exports = class Client {
   emitData(data) {
     dbg('emitData', data);
     this.socket.emit('socialData', data);
-  }
-
-  emitRegisteredClient(clientId) {
-    dbg('emitRegisteredClient', clientId);
-    this.socket.emit('registeredClient', clientId);
-  }
-
-  emitRegisteredRemote(clientId) {
-    dbg('emitRegisteredRemote', clientId);
-    this.socket.emit('registeredRemote', clientId);
   }
 };

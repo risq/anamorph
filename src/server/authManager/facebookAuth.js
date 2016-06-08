@@ -4,7 +4,7 @@ const Bluebird = require('bluebird');
 const fbgraph = require('fbgraph');
 
 const FacebookDataFetcher = require('../facebookDataFetcher');
-
+const config = require('../../../config/config');
 const dbg = require('debug')('anamorph:authManager:facebookAuth');
 
 module.exports = class FacebookAuth {
@@ -30,7 +30,7 @@ module.exports = class FacebookAuth {
       client_id:      '1674025106190653',
       client_secret:  'ae2b4058f9322103af2d9f2500821c46',
       scope:          'public_profile,email,user_likes,user_about_me,user_actions.music,user_actions.video,user_actions.books,user_birthday,user_friends,user_education_history,user_hometown,user_location,user_photos,user_posts,user_religion_politics,user_tagged_places,user_work_history',
-      redirect_uri:   `http://localhost:8080/facebook?clientId=${this.clientId}`,
+      redirect_uri:   `http://${config.server.ip}:${config.server.port}/facebook?clientId=${this.clientId}`,
     };
 
     var authUrl = fbgraph.getOauthUrl({

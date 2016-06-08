@@ -1,5 +1,4 @@
 'use strict';
-const ip = require('ip');
 const clientManager = require('./clientManager');
 const dbg = require('debug')('anamorph:stateManager');
 
@@ -22,7 +21,6 @@ module.exports = new class StateManager {
           linkedinUrl: authData.linkedin.authUrl,
           instagramUrl: authData.instagram.authUrl,
         },
-        localIp: ip.address(),
       }));
   }
 

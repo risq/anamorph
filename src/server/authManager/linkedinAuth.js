@@ -1,9 +1,9 @@
 'use strict';
-
 const Bluebird = require('bluebird');
-const LinkedinAPI = require('node-linkedin')('77cvm308kbnwo2', 'JUwiNWEddBpjSNbA');
 
 const LinkedinDataFetcher = require('../linkedinDataFetcher');
+const config = require('../../../config/config');
+const LinkedinAPI = require('node-linkedin')('77cvm308kbnwo2', 'JUwiNWEddBpjSNbA');
 
 const dbg = require('debug')('anamorph:authManager:linkedinAuth');
 
@@ -26,7 +26,7 @@ module.exports = class LinkedinAuth {
     initializeAuth() {
         dbg(`Initializing linkedin auth for client ${this.clientId}`);
 
-        LinkedinAPI.auth.setCallback(`http://localhost:8080/linkedin?clientId=${this.clientId}`);
+        LinkedinAPI.auth.setCallback(`http://${config.server.ip}:${config.server.port}/linkedin?clientId=${this.clientId}`);
 
         this.authData = {
             api: LinkedinAPI,

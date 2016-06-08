@@ -4,6 +4,7 @@ const Bluebird = require('bluebird');
 const TwitterAPI = require('node-twitter-api');
 
 const TwitterDataFetcher = require('../twitterDataFetcher');
+const config = require('../../../config/config');
 
 const dbg = require('debug')('anamorph:authManager:twitterAuth');
 
@@ -28,7 +29,7 @@ module.exports = class TwitterAuth {
     this.api = new TwitterAPI({
       consumerKey: 'ZJPdAmxSjyCGU8dJYYbuleyfY',
       consumerSecret: 'NFhrW1LbpEPZ6dhexbLO8Z1JX4FBcQuohRwsDnMhQQy3DLHx27',
-      callback: `http://localhost:8080/twitter?clientId=${this.clientId}`,
+      callback: `http://${config.server.ip}:${config.server.port}/twitter?clientId=${this.clientId}`,
     });
 
     return this.getRequestToken()

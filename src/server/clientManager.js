@@ -18,6 +18,10 @@ module.exports = new class ClientManager {
     return this.clients[id];
   }
 
+  getClientSyncId(id) {
+    return this.clients[id] ? this.clients[id].syncId : null;
+  }
+
   getClientBySyncId(syncId) {
     return this.clients.find(client => client && client.syncId === syncId);
   }
