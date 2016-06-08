@@ -9,7 +9,7 @@ const $state = $('.content');
 
 $.getJSON(`/config`, config => {
   dbg(config);
-  const io = socket(`http://${config.socket.domain}:${config.socket.port}`);
+  const io = socket(`http://${config.domain}:${config.port}`);
 
   io.on('state', state => {
     $state.html(stateTemplate.render({state}));

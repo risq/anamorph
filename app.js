@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 const port = process.env.PORT || config.server.port || 8080;
 
-app.get('/config', (req, res) => res.json(config.client));
+app.get('/config', (req, res) => res.json(config.server));
 
 app.get('/remote(/*)?', (req, res) => {
   res.sendFile(path.join(__dirname, './public', 'remote.html'));

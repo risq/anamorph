@@ -34,9 +34,6 @@ module.exports = function(env) {
         }
       ]
     },
-    externals: {
-      fb: "FB"
-    },
   }
 
   if(env !== 'test') {
