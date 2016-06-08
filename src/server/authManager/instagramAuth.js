@@ -18,8 +18,8 @@ module.exports = class InstagramAuth {
 
 
     const nodegram = new Nodegram({
-      clientId: '208f9dfdb4b44a228b4c7f95b56bc58e',
-      clientSecret: '00afe917a374431296dcc65bd645fccf',
+      clientId: config.api.instagram.key,
+      clientSecret: config.api.instagram.secret,
       redirectUri: `http://${config.server.domain}:${config.server.port}/insta?clientId=${this.clientId}`,
     });
 
@@ -36,8 +36,8 @@ module.exports = class InstagramAuth {
 
   getDataFetcher(oauthToken) {
     const nodegram = new Nodegram({
-      clientId: '208f9dfdb4b44a228b4c7f95b56bc58e',
-      clientSecret: '00afe917a374431296dcc65bd645fccf',
+      clientId: config.api.instagram.key,
+      clientSecret: config.api.instagram.secret,
       redirectUri: `http://${config.server.domain}:${config.server.port}/insta?clientId=${this.clientId}`,
     });
 

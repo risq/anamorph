@@ -27,8 +27,8 @@ module.exports = class TwitterAuth {
     dbg(`Initializing twitter auth for client ${this.clientId}`);
 
     this.api = new TwitterAPI({
-      consumerKey: 'ZJPdAmxSjyCGU8dJYYbuleyfY',
-      consumerSecret: 'NFhrW1LbpEPZ6dhexbLO8Z1JX4FBcQuohRwsDnMhQQy3DLHx27',
+      consumerKey: config.api.twitter.key,
+      consumerSecret: config.api.twitter.secret,
       callback: `http://${config.server.domain}:${config.server.port}/twitter?clientId=${this.clientId}`,
     });
 

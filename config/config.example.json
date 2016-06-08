@@ -1,0 +1,24 @@
+{
+  "server": {
+    "domain": "localhost",
+    "port": 80,
+  },
+  "api": {
+    "facebook": {
+      "key": "",
+      "secret": ""
+    },
+    "twitter": {
+      "key": "",
+      "secret": ""
+    },
+    "linkedin": {
+      "key": "",
+      "secret": ""
+    },
+    "instagram": {
+      "key": "",
+      "secret": ""
+    }
+  }
+}

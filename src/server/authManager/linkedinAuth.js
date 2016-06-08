@@ -3,7 +3,7 @@ const Bluebird = require('bluebird');
 
 const LinkedinDataFetcher = require('../linkedinDataFetcher');
 const config = require('../../../config/config');
-const LinkedinAPI = require('node-linkedin')('77cvm308kbnwo2', 'JUwiNWEddBpjSNbA');
+const LinkedinAPI = require('node-linkedin')(config.api.linkedin.key, config.api.linkedin.secret);
 
 const dbg = require('debug')('anamorph:authManager:linkedinAuth');
 

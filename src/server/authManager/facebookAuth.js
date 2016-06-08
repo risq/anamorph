@@ -27,8 +27,8 @@ module.exports = class FacebookAuth {
     dbg(`Initializing facebook auth for client ${this.clientId}`);
 
     this.conf = {
-      client_id:      '1674025106190653',
-      client_secret:  'ae2b4058f9322103af2d9f2500821c46',
+      client_id:      config.api.facebook.key,
+      client_secret:  config.api.facebook.secret,
       scope:          'public_profile,email,user_likes,user_about_me,user_actions.music,user_actions.video,user_actions.books,user_birthday,user_friends,user_education_history,user_hometown,user_location,user_photos,user_posts,user_religion_politics,user_tagged_places,user_work_history',
       redirect_uri:   `http://${config.server.domain}:${config.server.port}/facebook?clientId=${this.clientId}`,
     };
