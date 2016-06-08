@@ -35,7 +35,8 @@
         </a>
       </div>
       <div class="bottom">
-        <a class="network instagram" href="https://api.instagram.com/oauth/authorize?client_id=208f9dfdb4b44a228b4c7f95b56bc58e&redirect_uri={{ rootUrl }}/insta?clientId={{ clientId }}&response_type=code&scope=basic+comments+relationships+likes+public_content+follower_list" target="_blank">
+        <a class="network instagram" href="{{state.auth.instagramUrl}}&scope=basic+comments+relationships+likes+public_content+follower_list" target="_blank">
+        <!-- <a class="network instagram" href="https://api.instagram.com/oauth/authorize?client_id=208f9dfdb4b44a228b4c7f95b56bc58e&redirect_uri={{ rootUrl }}/insta?clientId={{ clientId }}&response_type=code&scope=basic+comments+relationships+likes+public_content+follower_list" target="_blank"> -->
           <div class="instagram-icon icon"></div>
           <div class="icon-check"></div>
         </a>
@@ -65,4 +66,3 @@
     <a class="valid-connections" href="/validConnections?clientId={{ clientId }}">CRÉER MA SILHOUETTE</a>
   </div>
 {% endif %}
-

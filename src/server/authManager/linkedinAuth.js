@@ -26,7 +26,7 @@ module.exports = class LinkedinAuth {
     initializeAuth() {
         dbg(`Initializing linkedin auth for client ${this.clientId}`);
 
-        LinkedinAPI.auth.setCallback(`http://${config.server.domain}:${config.server.port}/linkedin?clientId=${this.clientId}`);
+        LinkedinAPI.auth.setCallback(`http://${config.server.url}/linkedin?clientId=${this.clientId}`);
 
         this.authData = {
             api: LinkedinAPI,

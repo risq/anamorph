@@ -29,7 +29,7 @@ module.exports = class TwitterAuth {
     this.api = new TwitterAPI({
       consumerKey: config.api.twitter.key,
       consumerSecret: config.api.twitter.secret,
-      callback: `http://${config.server.domain}:${config.server.port}/twitter?clientId=${this.clientId}`,
+      callback: `http://${config.server.url}/twitter?clientId=${this.clientId}`,
     });
 
     return this.getRequestToken()

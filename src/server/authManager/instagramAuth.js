@@ -20,11 +20,11 @@ module.exports = class InstagramAuth {
     const nodegram = new Nodegram({
       clientId: config.api.instagram.key,
       clientSecret: config.api.instagram.secret,
-      redirectUri: `http://${config.server.domain}:${config.server.port}/insta?clientId=${this.clientId}`,
+      redirectUri: `http://${config.server.url}/insta?clientId=${this.clientId}`,
     });
 
     nodegram.getAuthUrl();
-
+    dbg(nodegram.redirectUri);
     this.authData = {
       authUrl: nodegram.getAuthUrl(),
     };
@@ -38,7 +38,7 @@ module.exports = class InstagramAuth {
     const nodegram = new Nodegram({
       clientId: config.api.instagram.key,
       clientSecret: config.api.instagram.secret,
-      redirectUri: `http://${config.server.domain}:${config.server.port}/insta?clientId=${this.clientId}`,
+      redirectUri: `http://${config.server.url}/insta?clientId=${this.clientId}`,
     });
 
     nodegram.getAuthUrl();

@@ -15,7 +15,6 @@ module.exports = new class StateManager {
         auth: {
           clientId: this.clientId,
           syncId: client.syncId,
-          rootUrl: 'http://127.0.0.1:8080', //todo: get the root base url here
           facebookUrl: authData.facebook.authUrl,
           twitterUrl: authData.twitter.authUrl,
           linkedinUrl: authData.linkedin.authUrl,

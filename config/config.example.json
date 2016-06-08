@@ -2,6 +2,7 @@
   "server": {
     "domain": "localhost",
     "port": 80,
+    "url": "localhost"
   },
   "api": {
     "facebook": {
