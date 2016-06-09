@@ -28,7 +28,6 @@ module.exports = class Client {
 
   unregister() {
     this.socket = null;
-    authManager.initializeAuth();
     this.unregisterRemote();
     dbg(`Unregistered client ${this.id}`);
   }
