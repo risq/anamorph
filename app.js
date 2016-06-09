@@ -61,12 +61,12 @@ app.get('/qr/:id', function(req, res) {
 
   if (!syncId) {
     // res.status(404).end();
-    qr.image(`http://${ip.address()}:${port}/remote/84FE7`, {
+    qr.image(`http://${config.server.url}/remote/84FE7`, {
       size: 24,
     }).pipe(res);
   } else {
     res.type('png');
-    qr.image(`http://${ip.address()}:${port}/remote/${syncId}`, {
+    qr.image(`http://${config.server.url}/remote/${syncId}`, {
       size: 24,
     }).pipe(res);
   }
