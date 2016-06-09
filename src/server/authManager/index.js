@@ -11,11 +11,10 @@ const dbg = require('debug')('anamorph:authManager');
 
 module.exports = class AuthManager {
   constructor(clientId) {
-    dbg('Initializing new AuthManager');
-    this.facebookAuth = new FacebookAuth(clientId);
-    this.twitterAuth = new TwitterAuth(clientId);
-    this.instagramAuth = new InstagramAuth(clientId);
-    this.linkedinAuth = new LinkedinAuth(clientId);
+    dbg('Creating new AuthManager');
+    this.clientId = clientId;
+
+    this.init();
   }
 
   getAuthData() {
@@ -30,6 +29,14 @@ module.exports = class AuthManager {
       linkedin: data.linkedin,
       instagram: data.instagram,
     }));
+  }
+
+  init() {
+    dbg('Initializing auth manager')
+    this.facebookAuth = new FacebookAuth(this.clientId);
+    this.twitterAuth = new TwitterAuth(this.clientId);
+    this.instagramAuth = new InstagramAuth(this.clientId);
+    this.linkedinAuth = new LinkedinAuth(this.clientId);
   }
 
   getFacebookDataFetcher(oauthToken) {
