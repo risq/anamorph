@@ -16,7 +16,6 @@ module.exports = class Client {
     this.syncId = '84FE7'; // shortid.generate();
     this.events = new events.EventEmitter();
     this.userData = new UserData();
-    this.authManager = new AuthManager(id);
     this.dataManager = new DataManager();
   }
 
@@ -42,6 +41,9 @@ module.exports = class Client {
     if (socket) {
       dbg(`Registered remote for client ${this.id}`);
       this.remoteSocket = socket;
+
+      dbg('Creating new authManager');
+      this.authManager = new AuthManager(this.id);
 
       if (this.socket) {
         this.socket.emit('remoteRegistered');
