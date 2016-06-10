@@ -1,39 +1,39 @@
 {
-   "comment": "Données de Romain",
+   comment: "Données de Romain",
    "activity":{
       "globalData":{
-         "postFrequency":58.22176272938744,
-         "postFrequencyScore":0.11644352545877489,
-         "nbOfPhotos":360,
-         "volumePhotos":0.72,
-         "nbOfShares":169,
-         "nbOfPosts":2576,
+         "postFrequency":58.5652,
+         "postFrequencyScore":0.1171304,
+         "nbOfPhotos":361,
+         "volumePhotos":0.722,
+         "nbOfShares":171,
+         "nbOfPosts":2589,
          "volumePosts":1,
          "seniority":8,
          "dominantProfile":"public",
          "typeProfile":"Publication tr�s fr�quente"
       },
       "publicData":{
-         "postFrequency":34.26828637890928,
-         "postFrequencyScore":0.06853657275781856,
-         "nbOfShare":47,
-         "nbOfPosts":2304,
+         "postFrequency":34.66413,
+         "postFrequencyScore":0.06932826,
+         "nbOfShare":49,
+         "nbOfPosts":2317,
          "volumePosts":1,
-         "nbOfPhotos":286,
-         "volumePhotos":0.572,
-         "frequencyDistribution":0.5885820829263961,
-         "volumeDistribution":0.8944099378881988
+         "nbOfPhotos":287,
+         "volumePhotos":0.574,
+         "frequencyDistribution":0.5918896,
+         "volumeDistribution":0.8949401
       },
       "privateData":{
-         "postFrequency":23.953476350478162,
-         "postFrequencyScore":0.04790695270095632,
+         "postFrequency":23.90107,
+         "postFrequencyScore":0.04780213,
          "nbOfPhotos":74,
          "volumePhotos":0.148,
          "nbOfShare":122,
          "nbOfPosts":272,
          "volumePosts":0.544,
-         "frequencyDistribution":0.41141791707360387,
-         "volumeDistribution":0.10559006211180125
+         "frequencyDistribution":0.4081104,
+         "volumeDistribution":0.1050599
       },
       "professionalData":{
          "postFrequency":0,
@@ -51,38 +51,38 @@
             "nbOfPhotos":74,
             "nbOfShare":122,
             "nbOfPosts":272,
-            "postFrequency":23.953476350478162
+            "postFrequency":23.90107
          },
          "twitter":{
-            "nbOfPhotos":97,
-            "nbOfShare":47,
-            "nbOfPosts":2115,
-            "postFrequency":30.494701473248902
+            "nbOfPhotos":96,
+            "nbOfShare":49,
+            "nbOfPosts":2126,
+            "postFrequency":30.96043
          },
          "linkedin":{
 
          },
          "instagram":{
-            "nbOfPhotos":189,
-            "postFrequency":3.7735849056603774
+            "nbOfPhotos":191,
+            "postFrequency":3.703704
          }
       }
    },
    "influence":{
       "globalData":{
          "influence":1,
-         "nbOfLikes":1372,
-         "averageFeedbackOnPost":52.265
+         "nbOfLikes":1368,
+         "averageFeedbackOnPost":83.095
       },
       "publicData":{
          "influence":1,
-         "nbOfFollowers":671,
-         "nbOfRetweets":47,
-         "nbOfLikes":923,
-         "likesScore":0.51,
-         "averageFeedbackOnPost":32.385,
-         "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13269510_542881952565143_358970319_n.jpg?ig_cache_key=MTI2MTY5MDg3MTA0Njc4MTYwMQ%3D%3D.2",
-         "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp � — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r",
+         "nbOfFollowers":682,
+         "nbOfRetweets":49,
+         "nbOfLikes":919,
+         "likesScore":0.2987646,
+         "averageFeedbackOnPost":63.215,
+         "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13392890_122056534883180_961849202_n.jpg?ig_cache_key=MTI2OTAyNjI3OTE3MDU1NDc4Mg%3D%3D.2",
+         "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp 🙆 — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r",
          "influenceDistribution":1
       },
       "privateData":{
@@ -90,12 +90,12 @@
          "nbOfLikes":449,
          "likesScore":0.449,
          "nbOfFriends":310,
-         "averageFeedbackOnPost":19.880000000000003,
-         "lessPopularPost":"Odesza x 20Syl �",
-         "mostPopularPost":"Tour du Lac :) ✌�",
+         "averageFeedbackOnPost":19.88,
+         "lessPopularPost":"Odesza x 20Syl 😍",
+         "mostPopularPost":"Tour du Lac :) ✌🚲",
          "lessPopularPhoto":"https://external.xx.fbcdn.net/safe_image.php?d=AQASIkFZwV0Grthv&w=130&h=130&url=https%3A%2F%2Fi1.sndcdn.com%2Fartworks-000147238661-25my24-t500x500.jpg&cfs=1",
          "mostPopularPhoto":"https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/13244820_10209734855754412_5036385389282738060_n.jpg?oh=c160af6d810ca498c6bda863c50f310d&oe=57CE586F",
-         "influenceDistribution":0.46199701937406856
+         "influenceDistribution":0.4545455
       },
       "professionalData":{
          "influence":0,
@@ -113,53 +113,53 @@
          "facebook":{
             "nbOfLikes":449,
             "nbOfFriends":310,
-            "averageFeedbackOnPost":19.880000000000003,
-            "lessPopularPost":"Odesza x 20Syl �",
-            "mostPopularPost":"Tour du Lac :) ✌�",
+            "averageFeedbackOnPost":19.88,
+            "lessPopularPost":"Odesza x 20Syl 😍",
+            "mostPopularPost":"Tour du Lac :) ✌🚲",
             "lessPopularPhoto":"https://external.xx.fbcdn.net/safe_image.php?d=AQASIkFZwV0Grthv&w=130&h=130&url=https%3A%2F%2Fi1.sndcdn.com%2Fartworks-000147238661-25my24-t500x500.jpg&cfs=1",
             "mostPopularPhoto":"https://scontent.xx.fbcdn.net/v/t1.0-0/s130x130/13244820_10209734855754412_5036385389282738060_n.jpg?oh=c160af6d810ca498c6bda863c50f310d&oe=57CE586F"
          },
          "twitter":{
-            "nbOfFollowers":475,
-            "nbOfLikes":361,
-            "averageFeedbackOnPost":3.385,
-            "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp � — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r"
+            "nbOfFollowers":484,
+            "nbOfLikes":380,
+            "averageFeedbackOnPost":35.215,
+            "mostPopularTweet":"Just playing &amp; doing parallax with @principleapp 🙆 — https://t.co/Rp6leJtICo on @dribbble https://t.co/jiU0f8UB5r"
          },
          "linkedin":{
             "nbOfConnections":0
          },
          "instagram":{
-            "nbOfFollowers":196,
-            "nbOfLikes":562,
-            "averageFeedbackOnPost":29,
-            "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13269510_542881952565143_358970319_n.jpg?ig_cache_key=MTI2MTY5MDg3MTA0Njc4MTYwMQ%3D%3D.2"
+            "nbOfFollowers":198,
+            "nbOfLikes":539,
+            "averageFeedbackOnPost":28,
+            "mostPopularPhoto":"https://scontent.cdninstagram.com/t51.2885-15/s640x640/sh0.08/e35/13392890_122056534883180_961849202_n.jpg?ig_cache_key=MTI2OTAyNjI3OTE3MDU1NDc4Mg%3D%3D.2"
          }
       }
    },
    "mood":{
       "globalData":{
-         "expressivity":0.052,
+         "expressivity":0.05,
          "attitude":0.5
       },
       "publicData":{
          "pejorativeWords":{
-            "beau":8,
+            "beau":7,
             "cool":6,
             "super":1,
             "undefined":11
          },
          "meliorativeWords":{
-            "beau":8,
+            "beau":7,
             "cool":6,
             "super":1
          },
          "smiley":{
             "undefined":11
          },
-         "expressivity":0.052,
+         "expressivity":0.05,
          "attitude":0.5,
          "expressivityDistribution":1,
-         "attitudeDistribution":0
+         "attitudeDistribution":0.5
       },
       "privateData":{
          "pejorativeWords":[
@@ -191,8 +191,8 @@
          ],
          "expressivity":0.092,
          "attitude":0.5,
-         "expressivityDistribution":1.7692307692307692,
-         "attitudeDistribution":1
+         "expressivityDistribution":1.84,
+         "attitudeDistribution":0.5
       },
       "professionalData":{
          "pejorativeWords":[
@@ -250,7 +250,7 @@
                },
                {
                   "word":"beau",
-                  "occ":5
+                  "occ":4
                },
                {
                   "word":"super",
@@ -296,14 +296,14 @@
          "score":1
       },
       "publicData":{
-         "percentDistribution":0.8756388415672913,
+         "percentDistribution":0.9894722,
          "score":1,
-         "totalRetweetForUserPosts":316,
+         "totalRetweetForUserPosts":6663,
          "userMentions":198
       },
       "privateData":{
-         "percentDistribution":0.12436115843270869,
-         "score":0.146,
+         "percentDistribution":0.01052783,
+         "score":0.5615385,
          "nbOfComments":48,
          "averageCommentOnPost":1.92,
          "nbOfOtherUsersPostOnFeed":24,
@@ -311,8 +311,8 @@
       },
       "professionalData":{
          "percentDistribution":0,
-         "score":0,
-         "nbOfComments":0,
+         "score":0.3,
+         "nbOfComments":45,
          "averageCommentOnPost":0,
          "nbOfOtherUsersPostOnFeed":0,
          "nbOfPhotosWhereUserIsIdentified":0
@@ -325,7 +325,7 @@
             "nbOfPhotosWhereUserIsIdentified":25
          },
          "twitter":{
-            "totalRetweetForUserPosts":316,
+            "totalRetweetForUserPosts":6663,
             "userMentions":198
          },
          "linkedin":{
@@ -344,14 +344,14 @@
          "mostUsedHashtags":[
             [
                "vscocam",
-               17
+               15
             ],
             [
                "vsco",
-               17
+               15
             ],
             [
-               "spring",
+               "landscape",
                5
             ],
             [
@@ -553,14 +553,14 @@
             "mostUsedHashtags":[
                [
                   "vscocam",
-                  17
+                  15
                ],
                [
                   "vsco",
-                  17
+                  15
                ],
                [
-                  "spring",
+                  "landscape",
                   5
                ]
             ]
