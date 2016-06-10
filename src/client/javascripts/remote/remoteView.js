@@ -18,6 +18,18 @@ export default class RemoteView {
       twitter: $root.find('.twitter'),
     };
 
+    $root.on('click', '.network', (e) => {
+      $(e.currentTarget).addClass('check');
+      $root.find('.valid-container').show();
+
+    });
+    $root.on('click', '.valid-connections', () => {
+        $root.find('.valid-container').hide();
+        $root.find('.networks').hide();
+        $root.find('.connect-description').hide();
+        $root.find('.creating').show();
+    });
+
     this.eventEmitter = new EventEmitter();
 
     this.status = `disconnected`;
@@ -67,19 +79,6 @@ export default class RemoteView {
       clientId: this.clientId,
       rootUrl: window.location.origin
     }));
-
-    $('.network').on('click', function() {
-      $(this).addClass('check');
-
-      $('.valid-container').show();
-
-    });
-    $('.valid-connections').on('click', function() {
-        $('.valid-container').hide();
-        $('.networks').hide();
-        $('.connect-description').hide();
-        $('.creating').show();
-    });
   }
 
   getSyncFromUrl(url) {
