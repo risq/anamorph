@@ -74,14 +74,11 @@ export default class RemoteView {
       $('.valid-container').show();
 
     });
-    $('.valid-container').on('click', function() {
-      if($('.twitter').hasClass('check') || $('.facebook').hasClass('check')
-          || $('.instagram').hasClass('check') || $('.linkedin').hasClass('check')) {
+    $('.valid-connections').on('click', function() {
         $('.valid-container').hide();
         $('.networks').hide();
         $('.connect-description').hide();
         $('.creating').show();
-      }
     });
   }
 
