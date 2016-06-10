@@ -20,14 +20,14 @@ export default class RemoteView {
 
     $root.on('click', '.network', (e) => {
       $(e.currentTarget).addClass('check');
-      $root.find('.valid-container').show();
+      $root.find('.valid-container').css({'display':'block'});
 
     });
     $root.on('click', '.valid-connections', () => {
-        $root.find('.valid-container').hide();
-        $root.find('.networks').hide();
-        $root.find('.connect-description').hide();
-        $root.find('.creating').show();
+        $root.find('.valid-container').css({'display':'none'});
+        $root.find('.networks').css({'display':'none'});
+        $root.find('.connect-description').css({'display':'none'});
+        $root.find('.creating').css({'display':'block'});
     });
 
     this.eventEmitter = new EventEmitter();
