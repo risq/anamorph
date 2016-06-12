@@ -24,12 +24,10 @@ export default class RemoteView {
 
     });
     $root.on('click', '.valid-connections', () => {
-       setTimeout(function(){
-        $root.find('.valid-container').css({'display':'none'});
-        $root.find('.networks').css({'display':'none'});
-        $root.find('.connect-description').css({'display':'none'});
-        $root.find('.creating').css({'display':'block'});
-      }, 10);
+        $root.find('.valid-container').toggle();
+        $root.find('.networks').toggle();
+        $root.find('.connect-description').toggle();
+        $root.find('.creating').toggle();
     });
 
     this.eventEmitter = new EventEmitter();
