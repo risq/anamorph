@@ -24,6 +24,8 @@ export default class RemoteView {
 
     });
     $root.on('click', '.valid-connections', () => {
+        $root.find('.valid-container').css({'background-color': '#FFF'});
+        $root.find('.valid-connections').css({'color': '#000'});
         $root.find('.valid-container').toggle();
         $root.find('.networks').toggle();
         $root.find('.connect-description').toggle();
